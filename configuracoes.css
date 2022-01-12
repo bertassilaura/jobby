@@ -1,0 +1,212 @@
+/* ------------------------- Corpo ------------------------------ */
+
+body{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    flex-flow: row nowrap;
+    margin: 0;
+    font-family: "Nunito";
+}
+
+#mobile-header{
+    display: none;
+}
+
+/* ------------------------- Barra Lateral ------------------------------ */
+
+#side-bar{
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 0 0 80px;
+    background-color: #41529F;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 80px;
+}
+
+#side-bar a{
+    width: 30px;
+    height: 30px;
+    margin-bottom: 30px;
+}
+
+.side-bar_icon{
+    width: 30px;
+    height: 30px;
+}
+
+/* ------------------------- Conteúdo ------------------------------ */
+
+.content{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 20px;
+}
+
+.top_container{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    flex: 2;
+    width: 100%;
+}
+
+#welcome_container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-left: 20px;
+}
+
+#welcome_text{
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    margin-left: 10px;
+}
+
+#avatar{
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+}
+
+.logo_container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    margin-right: 20px;
+}
+
+#logo{
+    height: 30%;
+    margin-right: 10px;
+}
+
+.logo_text{
+    font-size: 24;
+    font-weight: 400;
+    color: #41529F;
+}
+
+.center_container{
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 10;
+    width: 80%;
+}
+
+.title_container{
+    margin-bottom: 20px;
+}
+
+.title_container h1{
+    font-size: 26px;
+    color: #41529F;
+}
+
+.options{
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.config_option{
+    display: flex;
+    flex-flow: row nowrap;
+    width: fit-content;
+    align-items: center;
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+
+.config_icon{
+    font-size: 24px;
+}
+
+.config_text{
+    font-size: 24px;
+    margin-left: 10px;
+}
+
+.bottom_container{
+    display: flex;
+    flex: 1;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 20px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.fa-arrow-left{
+    font-size: 20px;
+    color: #41529F;
+}
+
+#voltar{
+    font-size: 16px;
+    color: #41529F;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+
+/* ------------------------- Mobile ------------------------------ */
+
+@media only screen and (max-width: 768px) {
+
+    
+    #side-bar {
+      display: none;
+    }
+
+    #mobile-header{
+        display: flex;
+        flex: 1;
+        background-color: #41529F;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+    }
+
+    .fa-bars{
+        color: white;
+        font-size: 40px;
+        margin-left: 20px;
+    }
+
+    .logo_container{
+        display: none;
+    }
+
+    #welcome_container{
+        margin: 0px;
+    }
+
+    #white_logo{
+        height: 40px;
+    }
+
+    .content{
+        padding: 0px 0px 0px 0px;
+        align-items: center;
+    }
+
+    .top_container{
+        width: 80%;
+    }
+
+    .bottom_container{
+        justify-content: center;
+    }
+    
+  }
