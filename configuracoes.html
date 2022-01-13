@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="configuracoes.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
+    <script src="./side-bar_mobile.js"> </script>
     <title>Configurações</title>
 </head>
 
 <body>
-    <header id="side-bar">
+    <nav id="side-bar">
         <a href="">
             <img src="./imagens/home_icon.png" class="side-bar_icon">
         </a>
@@ -27,20 +28,29 @@
         <a href="">
             <img src="./imagens/config_icon.png" class="side-bar_icon">
         </a>
-    </header>
+    </nav>
 
-    <div class="content">
+    <nav id="mobile-side-bar">
+        <a class="fas fa-times" onclick="close_side_bar()"></a>
+        <a class="mobile-side-bar_option" href="">Home</a>
+        <a class="mobile-side-bar_option" href="">Time Tracker</a>
+        <a class="mobile-side-bar_option" href="">Cronometro</a>
+        <a class="mobile-side-bar_option" href="">Relatórios</a>
+        <a class="mobile-side-bar_option" href="">Configurações</a>
+    </nav>
 
-        <header id="mobile-header">
-            <span class="fas fa-bars"></span>
+    <div id="content">
+
+        <div id="mobile-header">
+            <a class="fas fa-bars" onclick="open_side_bar()"></a>
             <img src="./imagens/jobby_white_logo.png" id="white_logo"/>
-        </header>
+        </div>
 
         <div class="top_container">
             <div id="welcome_container">
                 <img id="avatar" src="./imagens/avatar.jpg"/>
                 <div id="welcome_text">
-                    <span>Olá, Jonah!</span>
+                    <span class="hello">Olá, Jonah!</span>
                     <span>Bem-vindo(a) de volta!</span>
                 </div>
             </div>
@@ -75,8 +85,10 @@
         </div>
 
         <div class="bottom_container">
-            <span class="fas fa-arrow-left"></span>
-            <span id="voltar">Voltar</span>
+            <div class="back_button">
+                <span class="fas fa-arrow-left"></span>
+                <span id="voltar">Voltar</span>
+            </div>
         </div>
 
     </div>
