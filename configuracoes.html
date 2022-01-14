@@ -14,80 +14,80 @@
 <body>
     <nav id="side-bar">
         <a href="">
-            <img src="./imagens/home_icon.png" class="side-bar_icon">
+            <img src="./imagens/home_icon.png" class="side-bar__icon">
         </a>
         <a href="">
-            <img src="./imagens/clock_icon.png" class="side-bar_icon">
+            <img src="./imagens/clock_icon.png" class="side-bar__icon">
         </a>
         <a href="">
-            <img src="./imagens/tracker_icon.png" class="side-bar_icon">
+            <img src="./imagens/tracker_icon.png" class="side-bar__icon">
         </a>
         <a href="">
-            <img src="./imagens/report_icon.png" class="side-bar_icon">
+            <img src="./imagens/report_icon.png" class="side-bar__icon">
         </a>
         <a href="">
-            <img src="./imagens/config_icon.png" class="side-bar_icon">
+            <img src="./imagens/config_icon.png" class="side-bar__icon">
         </a>
     </nav>
 
     <nav id="mobile-side-bar">
-        <a class="fas fa-times" onclick="close_side_bar()"></a>
-        <a class="mobile-side-bar_option" href="">Home</a>
-        <a class="mobile-side-bar_option" href="">Time Tracker</a>
-        <a class="mobile-side-bar_option" href="">Cronometro</a>
-        <a class="mobile-side-bar_option" href="">Relatórios</a>
-        <a class="mobile-side-bar_option" href="">Configurações</a>
+        <a id="close-side-bar" class="fas fa-times mobile-side-bar__option" onclick="close_side_bar()"></a>
+        <a class="mobile-side-bar__option" href="">Home</a>
+        <a class="mobile-side-bar__option" href="">Time Tracker</a>
+        <a class="mobile-side-bar__option" href="">Cronometro</a>
+        <a class="mobile-side-bar__option" href="">Relatórios</a>
+        <a class="mobile-side-bar__option" href="">Configurações</a>
     </nav>
 
     <div id="content">
 
         <div id="mobile-header">
-            <a class="fas fa-bars" onclick="open_side_bar()"></a>
-            <img src="./imagens/jobby_white_logo.png" id="white_logo"/>
+            <a id="open-side-bar" class="fas fa-bars" onclick="open_side_bar()"></a>
+            <img id="white-logo" src="./imagens/jobby_white_logo.png"/>
         </div>
 
-        <div class="top_container">
+        <div id="top-container">
             <div id="welcome_container">
                 <img id="avatar" src="./imagens/avatar.jpg"/>
-                <div id="welcome_text">
-                    <span class="hello">Olá, Jonah!</span>
-                    <span>Bem-vindo(a) de volta!</span>
+                <div class="welcome-text">
+                    <span class="welcome-text__hello">Olá, Jonah!</span>
+                    <span class="welcome-text__welcome">Bem-vindo(a) de volta!</span>
                 </div>
             </div>
-            <div class="logo_container">
-                <img src="./imagens/jobby_logo.png" id="logo"/>
-                <h2 class="logo_text">jobby</h2>
+            <div class="logo">
+                <img class="logo__image" src="./imagens/jobby_logo.png"/>
+                <h2 class="logo__text">jobby</h2>
             </div>
         </div>
 
-        <div class="center_container">
-            <div class="title_container">
+        <div id="center-container">
+            <div class="title-container">
                 <h1>Configurações</h1>
             </div>
 
-            <div class="options">
-                <div class="config_option">
-                    <span class="far fa-user-circle config_icon"></span>
-                    <span class="config_text">Minha Conta</span>
+            <div id="options">
+                <div class="option">
+                    <span class="far fa-user-circle option__icon"></span>
+                    <span class="option__text">Minha Conta</span>
                 </div>
 
-                <div class="config_option">
-                    <span class="far fa-clock config_icon"></span>
-                    <span class="config_text">Meus Horários</span>
+                <div class="option">
+                    <span class="far fa-clock option__icon"></span>
+                    <span class="option__text">Meus Horários</span>
                 </div>
 
-                <div class="config_option">
-                    <span class="fas fa-tint config_icon"></span>
-                    <span class="config_text">Minha Hidratação</span>
+                <div class="option">
+                    <span class="fas fa-tint option__icon"></span>
+                    <span class="option__text">Minha Hidratação</span>
                 </div>
             </div>
 
         </div>
 
-        <div class="bottom_container">
-            <div class="back_button">
-                <span class="fas fa-arrow-left"></span>
-                <span id="voltar">Voltar</span>
+        <div id="bottom_container">
+            <div class="back-button">
+                <span class="fas fa-arrow-left back-button__icon"></span>
+                <span class="back-button__text">Voltar</span>
             </div>
         </div>
 

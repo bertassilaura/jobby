@@ -1,13 +1,17 @@
 /* ------------------------- Corpo ------------------------------ */
 
+html{
+    font-size: 24px;
+}
+
 body{
+    overflow: hidden;
     display: flex;
     height: 100vh;
     width: 100%;
     flex-flow: row nowrap;
     margin: 0;
     font-family: "Nunito";
-    overflow: hidden;
 }
 
 #mobile-header{
@@ -32,7 +36,7 @@ body{
     margin-bottom: 30px;
 }
 
-.side-bar_icon{
+.side-bar__icon{
     width: 30px;
     height: 30px;
 }
@@ -50,7 +54,7 @@ body{
 
 /* ------------------------- Topo do Conteúdo ------------------------------ */
 
-.top_container{
+#top-container{
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-evenly;
@@ -66,17 +70,21 @@ body{
     margin-left: 20px;
 }
 
-#welcome_text{
+.welcome-text{
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-left: 10px;
 }
 
-.hello{
-    font-size: 20px;
+.welcome-text__hello{
+    font-size: 0.83rem;
     font-weight: 600;
     color: #41529F;
+}
+
+.welcome-text__welcome{
+    font-size: 0.83rem;
 }
 
 #avatar{
@@ -86,7 +94,7 @@ body{
     object-fit: cover;
 }
 
-.logo_container{
+.logo{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -94,41 +102,41 @@ body{
     margin-right: 20px;
 }
 
-#logo{
+.logo__image{
     height: 30%;
     margin-right: 10px;
 }
 
-.logo_text{
-    font-size: 24;
+.logo__text{
+    font-size: 1rem;
     font-weight: 400;
     color: #41529F;
 }
 
 /* ------------------------- Centro do Conteúdo ------------------------------ */
 
-.center_container{
+#center-container{
     display: flex;
     flex-flow: column nowrap;
     flex: 10;
     width: 80%;
 }
 
-.title_container{
+.title-container{
     margin-bottom: 20px;
 }
 
-.title_container h1{
-    font-size: 26px;
+.title-container h1{
+    font-size: 1.08rem;
     color: #41529F;
 }
 
-.options{
+#options{
     display: flex;
     flex-flow: column nowrap;
 }
 
-.config_option{
+.option{
     display: flex;
     color: black;
     flex-flow: row nowrap;
@@ -139,24 +147,24 @@ body{
     transition: 0.5s;
 }
 
-.config_option:hover {
+.option:hover {
     color: #61BBB6;
 }
 
-.config_icon{
-    font-size: 24px;
+.option__icon{
+    font-size: 1rem;
     color: inherit;
 }
 
-.config_text{
-    font-size: 24px;
+.option__text{
+    font-size: 1rem;
     margin-left: 10px;
     color: inherit;
 }
 
 /* ------------------------- Fundo do Conteúdo ------------------------------ */
 
-.bottom_container{
+#bottom-container{
     display: flex;
     flex: 1;
     width: 100%;
@@ -165,7 +173,7 @@ body{
     padding-right: 20px;
 }
 
-.back_button{
+.back-button{
     display: flex;
     cursor: pointer;
     align-items: center;
@@ -174,32 +182,36 @@ body{
     transition: 0.5s;
 }
 
-.back_button:hover{
+.back-button:hover{
     color: #61BBB6;
 }
 
-.fa-arrow-left{
-    font-size: 20px;
+.back-button__icon{
+    font-size: 0.83rem;
     color: inherit;
 }
 
-#voltar{
-    font-size: 16px;
+.back-button__text{
+    font-size: 0.66rem;
     color: inherit;
     font-weight: bold;
     margin-left: 10px;
 }
 
+/* ------------------------- Mobile ------------------------------ */
+
 #mobile-side-bar{
     display: none;
 }
 
-
-/* ------------------------- Mobile ------------------------------ */
-
 @media only screen and (max-width: 768px) {
 
-    
+    html{
+        font-size: 22px;
+    }
+
+/*----------  Header  ----------*/
+
     #side-bar {
       display: none;
     }
@@ -214,39 +226,42 @@ body{
         align-items: center;
     }
 
-    .fa-bars{
+    #open-side-bar{
         color: white;
-        font-size: 30px;
+        font-size: 1.25rem;
         margin-left: 20px;
         transition: 0.5s;
     }
 
-    .logo_container{
-        display: none;
+    #white-logo{
+        height: 40px;
+        margin-right: 20px;
     }
+
+/*----------  Alteração Content  ----------*/
 
     #welcome_container{
         margin: 0px;
     }
 
-    #white_logo{
-        height: 40px;
-        margin-right: 20px;
+    .logo{
+        display: none;
     }
 
     #content{
-        padding: 0px 0px 0px 0px;
+        padding: 0px 0px 10px 0px;
         align-items: center;
-        transition: 0.5s;
     }
 
-    .top_container{
+    #top-container{
         width: 80%;
     }
 
-    .bottom_container{
+    #bottom-container{
         justify-content: center;
     }
+
+/*----------  Side-bar  ----------*/
 
     #mobile-side-bar{
         display: flex;
@@ -263,29 +278,33 @@ body{
         transition: 0.5s;
     }
 
-    .fa-times{
-        color: white;
-        font-size: 30px;
+    #close-side-bar{
         margin-bottom: 50px;
         margin-top: 20px;
-        transition: 0.5s;
-        cursor: pointer;
     }
 
-    .fa-times:hover{
+    #close-side-bar:hover{
         color: #b4e4e1;
     }
 
-    .mobile-side-bar_option{
-        font-size: 30px;
+    .mobile-side-bar__option{
+        font-size: 1.5rem;
         color: white;
         margin-bottom: 30px;
         transition: 0.5s;
         text-decoration: none;
+        cursor: pointer;
     }
 
-    .mobile-side-bar_option:hover{
+    .mobile-side-bar__option:hover{
         color: #b4e4e1;
     }
     
   }
+
+  @media only screen and (max-width: 600px) {
+
+    html{
+        font-size: 20px;
+    }
+}
