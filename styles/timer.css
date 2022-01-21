@@ -220,7 +220,7 @@ body{
 #configurations{
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-between;
+    justify-content: center;
     flex: 1;
 }
 
@@ -253,7 +253,7 @@ body{
     padding: 5px 8px;
     border: 2px solid #E1E1E1;
     border-radius: 8px;
-    margin-top: 8px;
+    margin-top: 10px;
 }
 
 .border-container .border-container__pill,
@@ -393,7 +393,6 @@ input[type=number] {
     width: 100%;
     flex-flow: row nowrap;
     justify-content: flex-end;
-    padding-right: 20px;
 }
 
 .back-button{
@@ -403,7 +402,7 @@ input[type=number] {
     width: fit-content;
     color: #41529F;
     transition: 0.5s;
-    margin-right: 5px;
+    margin-right: 25px;
 }
 
 .back-button:hover{
@@ -479,7 +478,7 @@ input[type=number] {
     }
 
     #content{
-        padding: 0px 0px 10px 0px;
+        padding: 0px 0px 0px 0px;
         align-items: center;
     }
 
@@ -501,8 +500,12 @@ input[type=number] {
     .border-container{
         width: auto;
         min-width: fit-content;
-        justify-content: center;
+        justify-content: flex-end;
     }
+
+    .border-container__text{
+    margin-right: 5px;
+}
 
     .configuration-title{
         display: none;
@@ -511,6 +514,10 @@ input[type=number] {
     #break-popup{
         width: 80vw;
         height: 50vh;
+    }
+
+    .clock{
+        margin-top: 5px;
     }
 
 /*----------  Side-bar  ----------*/

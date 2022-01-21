@@ -183,7 +183,6 @@ body{
     width: 100%;
     flex-flow: row nowrap;
     justify-content: flex-end;
-    padding-right: 20px;
 }
 
 .back-button{
@@ -193,7 +192,7 @@ body{
     width: fit-content;
     color: #41529F;
     transition: 0.5s;
-    margin-right: 5px;
+    margin-right: 25px;
 }
 
 .back-button:hover{
@@ -269,7 +268,7 @@ body{
     }
 
     #content{
-        padding: 0px 0px 10px 0px;
+        padding: 0px 0px 0px 0px;
         align-items: center;
     }
 
