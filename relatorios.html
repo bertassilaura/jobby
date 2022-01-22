@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
+    <link rel="stylesheet" href="./styles/relatorios.css"/>
+    <title>Relatórios</title>
+</head>
+<body>
+
+    <div style="display: flex; flex-flow: column nowrap;">
+
+
+        <div class="border-container" style="display: flex; flex-flow: row nowrap; justify-content: space-around;">
+            <button class="btn" id="btn-semanal" onclick="semanal(data_entries)">Semanal</button>
+            <button class="btn" id="btn-mensal" onclick="mensal(data_entries)">Mensal</button>
+            <button class="btn" onclick="refresh()">Refresh</button>
+        </div>
+
+        <div class="border-container">
+            <div>
+                <h2>De <span id="inicio-periodo">00/00</span> a <span id="fim-periodo">00/00</span>:</h2>
+
+                <div id="legenda-pizza">
+
+                </div>
+            </div>
+
+            <div id="pizza">
+
+            </div>
+
+        </div>
+
+        <div class="border-container">
+            <h2>Você pausou por: <span id="tempo-pausa"></span> minutos</h2>
+        </div>
+
+
+        <div id="line-graph" class="border-container">
+
+        </div>
+
+
+    </div>
+
+</body>
+
+<script src="./scripts/relatorios.js"></script>
+
+</html>

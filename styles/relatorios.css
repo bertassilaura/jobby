@@ -1,0 +1,73 @@
+html{
+    font-size: 24px;
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    flex-flow: row nowrap;
+    justify-content: center;
+    font-family: "Nunito";
+}
+
+.legenda__linha{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.legenda__color{
+    width: 10px;
+    height: 10px;
+
+}
+
+.legenda__text{
+    margin-left: 5px;
+    font-size: 0.8rem;
+    
+}
+
+.line-graph__days{
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+}
+
+.line-graph__scale{
+    font-size: 14px;
+}
+
+.border-container{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #41529F;
+    border-radius: 10px;
+    padding: 20px 10px 20px 20px;
+    margin-bottom: 10px;
+}
+
+.btn{
+    background-color: #61BBB6;
+    border: 1px solid #61BBB6;
+    color: #fff;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btn:hover{
+    background-color: #fff;
+    color: #61BBB6;
+}
+
+.btn.disabled {
+    background-color: #fff;
+    color: #61BBB6;
+    pointer-events: none;
+}
