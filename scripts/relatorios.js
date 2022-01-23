@@ -128,9 +128,8 @@ function createPieChart(data_entries){
         valores_ordenados.push("outros")
     }
 
-    console.log("Valores Pizza:", values)
 
-    let colors = ["rgb(65, 82, 159)", "rgb(13, 126, 131)", "rgb(97, 187, 182)", "rgb(216, 180, 226)", "rgb(218, 98, 125)","rgb(255, 218, 185)"]
+    let colors = ["rgb(65, 82, 159)", "rgb(13, 126, 131)", "rgb(97, 187, 182)", "rgb(216, 180, 226)","rgb(220, 123, 247)", "rgb(100, 141, 229)"]
     let i = 0;
     let percorrido = 0;
     let paths = "";
@@ -207,7 +206,6 @@ function createLineChart(data_entries, semanal){
         maximo = maximo < values_passada[i]? values_passada[i]: maximo;
     }
 
-    console.log("Maximo:", maximo)
     maximo = Math.ceil(maximo/3600)*3600;
 
     d_atual += `M ${values_atual.hasOwnProperty(0)? lineCoordinates(values_atual[0], maximo, 0, n): lineCoordinates(0, maximo, 0, n)}`;
@@ -216,9 +214,6 @@ function createLineChart(data_entries, semanal){
         d_atual += `L ${values_atual.hasOwnProperty(i)? lineCoordinates(values_atual[i], maximo, i, n): lineCoordinates(0, maximo, i, n)}`;
         d_passada += `L ${values_passada.hasOwnProperty(i)? lineCoordinates(values_passada[i], maximo, i, n): lineCoordinates(0, maximo, i, n)}`
     }
-
-    console.log("Linhas Atual:", values_atual);
-    console.log("Linhas Passada:", values_passada);
 
     y_scale = createYScale(maximo);
 
@@ -350,7 +345,7 @@ function getRandomArbitrary(min, max) {
 
 function generateData(n_entradas){
     let dados = [];
-    let atividades = ["cronograma", "estudo", "trabalho", "pixel", "prática", "televisão", "livros", "manga"]
+    let atividades = ["Cronômetro", "Estudo", "Trabalho", "Pixel", "Prática", "Televisão", "Livros", "Manga"]
     for(let i = 0; i < n_entradas; i++){
         let atividade = atividades[getRandomArbitrary(0,7)];
         let data = new Date();
@@ -371,11 +366,16 @@ function generateData(n_entradas){
 
 function refresh(){
     data_entries = generateData(60);
-    semanal(data_entries)
+    let period = document.getElementById("period").value;
+    if(period == "semanal"){
+        semanal(data_entries);
+    }
+    else{
+        mensal(data_entries);
+    }
 }
 
 function periodChange(){
-    console.log("here")
     let period = document.getElementById("period").value;
     if(period == "semanal"){
         semanal(data_entries);
@@ -387,7 +387,6 @@ function periodChange(){
 
 document.getElementById("period").addEventListener("change", periodChange);
 
-console.log(document.getElementById("period").value)
 
 let data_entries = generateData(60);
 
