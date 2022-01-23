@@ -95,7 +95,7 @@ function createPieChart(data_entries){
     }
 
     if (Object.keys(values).length == 1){
-        return(`<svg viewBox="0 0 500 500" style="width: 250px;"> <circle cx="250" cy="250" r="250" fill="${colors[0]}" </svg>`)
+        return(`<svg viewBox="0 0 500 500" style="height: 100%;"> <circle cx="250" cy="250" r="250" fill="${colors[0]}" </svg>`)
     }
 
     let valores_ordenados = [];
@@ -147,9 +147,9 @@ function createPieChart(data_entries){
         i += 1;
     }
 
-    let svg = `<svg viewBox="0 0 500 500" style="width: 250px;"> ${paths} </svg>`
+    let svg = `<svg viewBox="0 0 500 500" style="height: 100%;"> ${paths} </svg>`
     document.getElementById("pizza").innerHTML = svg;
-    document.getElementById("legenda-pizza").innerHTML = legenda;
+    document.getElementById("pizza-legend").innerHTML = legenda;
 }
 
 function percentToRad(percent){
@@ -223,7 +223,7 @@ function createLineChart(data_entries, semanal){
     y_scale = createYScale(maximo);
 
     let svg = `        
-    <svg viewBox="0 0 800 260" style="width: 500px;">
+    <svg viewBox="0 0 800 260" style="width: 100%;">
 
     ${x_scale}
     ${y_scale}
@@ -243,7 +243,7 @@ function createLineChart(data_entries, semanal){
 
     document.getElementById("line-graph").innerHTML = svg;
 
-};
+}
 
 function lineCoordinates(value, maximo, n_entrada, n_entradas){
     let yOffset = 10;
@@ -278,7 +278,7 @@ function createXScale(semanal){
     }
 
     for(i in values){
-        scale += `<text class="line-graph__days" x="${xCoordinate(i, n) - textXOffset(values[i])}" y="247.5" fill="#61BBB6">${values[i]}</text>`
+        scale += `<text class="line-graph__days" x="${xCoordinate(i, n) - textXOffset(values[i])}" y="247.5" fill="${i==0 || i==n - 1 ? "#41529F":"#61BBB6"}">${values[i]}</text>`
     }
 
     return scale;
@@ -312,8 +312,6 @@ function createYScale(maximo){
 // =================== Comandos Gerais =========================
 
 function semanal(data_entries){
-    document.getElementById("btn-semanal").classList.add("disabled");
-    document.getElementById("btn-mensal").classList.remove("disabled");
     let dados_filtrados = filterWeek(data_entries);
 
     let intervalos = getWeekIntervals();
@@ -328,8 +326,6 @@ function semanal(data_entries){
 }
 
 function mensal(data_entries){
-    document.getElementById("btn-mensal").classList.add("disabled");
-    document.getElementById("btn-semanal").classList.remove("disabled");
     let dados_filtrados = filterMonth(data_entries);
 
     let intervalos = getMonthIntervals();
@@ -378,7 +374,20 @@ function refresh(){
     semanal(data_entries)
 }
 
+function periodChange(){
+    console.log("here")
+    let period = document.getElementById("period").value;
+    if(period == "semanal"){
+        semanal(data_entries);
+    }
+    else{
+        mensal(data_entries);
+    }
+}
 
+document.getElementById("period").addEventListener("change", periodChange);
+
+console.log(document.getElementById("period").value)
 
 let data_entries = generateData(60);
 
