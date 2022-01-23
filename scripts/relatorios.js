@@ -190,6 +190,8 @@ function createLineChart(data_entries, semanal){
             values_passada[entry.data.getDay()] = values_passada.hasOwnProperty(entry.data.getDay())? values_passada[entry.data.getDay()] + entry.tempo_atividade: entry.tempo_atividade;
         }
         n = 7;
+        document.querySelector(".legend-item--atual .legend-text").innerHTML = "Semana Atual";
+        document.querySelector(".legend-item--passada .legend-text").innerHTML = "Semana Passada";
     }
     else{
         for(let entry of data_entries.atual){
@@ -199,6 +201,8 @@ function createLineChart(data_entries, semanal){
             values_passada[entry.data.getDate() - 1] = values_passada.hasOwnProperty(entry.data.getDate() - 1)? values_passada[entry.data.getDate() - 1] + entry.tempo_atividade: entry.tempo_atividade;
         }
         n = 31;
+        document.querySelector(".legend-item--atual .legend-text").innerHTML = "Mês Atual";
+        document.querySelector(".legend-item--passada .legend-text").innerHTML = "Mês Passado";
     }
 
     for(let i = 0; i < n; i++){

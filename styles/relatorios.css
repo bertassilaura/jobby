@@ -403,7 +403,8 @@ body{
 .legend-item{
     display: flex;
     flex-flow: row nowrap;
-    justify-content: center;
+    justify-content: flex-start;
+    flex: 1;
     align-items: center;
     font-size: 0.6rem;
     font-weight: 600;
