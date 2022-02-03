@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="./styles/modelo_base.css"/>
+    <link rel="stylesheet" href="./styles/assets.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
     <script src="./scripts/side-bar_mobile.js"> </script>
@@ -12,8 +12,9 @@
 </head>
 
 <body>
+
     <nav id="side-bar">
-        <a class="side-bar__icon far fa-clock" href="">
+        <a class="side-bar__icon disabled far fa-clock" href="">
         </a>
         <a class="side-bar__icon far fa-hourglass" href="./timer.html">
         </a>
@@ -23,9 +24,10 @@
         </a>
     </nav>
 
+
     <nav id="mobile-side-bar">
         <a id="close-side-bar" class="fas fa-times mobile-side-bar__option" onclick="close_side_bar()"></a>
-        <a class="mobile-side-bar__option" href="">Cronômetro</a>
+        <a class="mobile-side-bar__option disabled" href="">Cronômetro</a>
         <a class="mobile-side-bar__option" href="./timer.html">Time Tracker</a>
         <a class="mobile-side-bar__option" href="./relatorios.html">Relatórios</a>
         <a class="mobile-side-bar__option" href="./configuracoes.html">Configurações</a>
@@ -54,8 +56,24 @@
 
         <div id="center-container">
             <div class="title-container">
-                <h1>Base</h1>
+                <span class="fas fa-clock title-container__icon"></span>
+                <h1 class="title-container__text">Meus Horários</h1>
             </div>
+
+            <button class="btn" onclick="window.location.assign('www.brandonsanderson.com');">
+                <span class="fas fa-plus btn__icon"></span>
+                <span class="btn__text">Adicionar</span>
+            </button>
+
+            <br/>
+
+            <div class="custom-select">
+                <select id="duration-scale">
+                    <option value="horas" selected>horas</option>
+                    <option value="min">minutos</option>
+                </select>
+            </div>
+
 
         </div>
 
@@ -68,4 +86,7 @@
 
     </div>
 </body>
+
+<script src="./scripts/selector.js"></script>
+
 </html>

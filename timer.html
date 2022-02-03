@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="./styles/timer.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
+    <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
+    <script src="./scripts/side-bar_mobile.js"> </script>
+    <title>Cronômetro</title>
+</head>
+
+<body>
+
+    <nav id="side-bar">
+        <a class="side-bar__icon far fa-clock" href="">
+        </a>
+        <a class="side-bar__icon disabled far fa-hourglass" href="./timer.html">
+        </a>
+        <a class="side-bar__icon far fa-chart-bar" href="./relatorios.html">
+        </a>
+        <a class="side-bar__icon fas fa-cog" href="./configuracoes.html">
+        </a>
+    </nav>
+
+
+    <nav id="mobile-side-bar">
+        <a id="close-side-bar" class="fas fa-times mobile-side-bar__option" onclick="close_side_bar()"></a>
+        <a class="mobile-side-bar__option" href="">Cronômetro</a>
+        <a class="mobile-side-bar__option disabled" href="./timer.html">Time Tracker</a>
+        <a class="mobile-side-bar__option" href="./relatorios.html">Relatórios</a>
+        <a class="mobile-side-bar__option" href="./configuracoes.html">Configurações</a>
+    </nav>
+
+    <div id="content">
+
+        <div id="mobile-header">
+            <a id="open-side-bar" class="fas fa-bars" onclick="open_side_bar()"></a>
+            <img id="white-logo" src="./imagens/jobby_white_logo.png"/>
+        </div>
+
+        <div id="top-container">
+            <div id="welcome_container">
+                <img id="avatar" src="./imagens/avatar.jpg"/>
+                <div class="welcome-text">
+                    <span class="welcome-text__hello">Olá, Jonah!</span>
+                    <span class="welcome-text__welcome">Bem-vindo(a) de volta!</span>
+                </div>
+            </div>
+            <div class="logo">
+                <img class="logo__image" src="./imagens/jobby_logo.png"/>
+                <h2 class="logo__text">jobby</h2>
+            </div>
+        </div>
+
+        <div id="center-container">
+            <div class="title-container">
+                <span class="fas fa-clock title-container__icon"></span>
+                <h1 class="title-container__text">Cronômetro</h1>
+            </div>
+
+            <div class="clock">
+                <div class="clock-container">
+        
+                    <div class="clock-circle">
+                        <svg viewBox="0 0 230 230" style="width: 200px; height:200px; transition:1s;">
+                            <path id="clock-path" d="M115,5 A 110 110 1 0 1 115 225 A 110 110 1 0 1 115 5 z" fill="none" stroke="#41529F" stroke-width="10" stroke-linecap="round" style="transition-duration: 1s; transition-timing-function: linear;"></path>
+                            <path id="break-interval-path" d="M115,12 A 103,103 1 0 1 115 218 A 103 103 1 0 1 115 12 z" fill="none" stroke="#61BBB6" stroke-width="5" stroke-linecap="round" style="transition-duration: 1s; transition-timing-function: linear; opacity: 0.6;"></path>
+                        </svg>
+                    </div>
+        
+        
+                    <div class="clock-text">
+                        <span id="hour">00</span>:<span id="minute">00</span>:<span id="second">00</span>
+                    </div>
+        
+                </div>
+                <div class="clock-controls">
+                    <button id="stop-button" class="clock-button fas fa-stop" onclick="stop()"></button>
+                    <button id="pause-button" class="clock-button fas fa-pause" onclick="pause()"></button>
+                    <button id="play-button" class="clock-button fas fa-play" onclick="play()"></button>
+                </div>
+            </div>
+
+            <div id="configurations">
+                <div class="configuration-title">
+                    <span class="far fa-edit configuration-title__icon"></span>
+                    <span class="configuration-title__text">Configurações</span>
+                </div>
+
+                <div class="border-container">
+                    <span class="border-container__text">Duração de</span>
+                        <input type="number" class="number-input" id="duration-hour" required/>
+                        <span class="border-container__pill">Horas</span>
+                        <input type="number" class="number-input" id="duration-minute" required/>
+                        <span class="border-container__pill">Minutos</span>
+                </div>
+
+                <div class="border-container">
+                    <span class="border-container__text">Pausa de</span>
+                    <input type="number" class="number-input" id="break-hour" required/>
+                    <span class="border-container__pill">Horas</span>
+                    <input type="number" class="number-input" id="break-minute" required/>
+                    <span class="border-container__pill">Minutos</span>
+                </div>
+
+                <div class="border-container">
+                    <span class="border-container__text">Repetir a cada</span>
+                        <input type="number" class="number-input" id="repeat-hour" required/>
+                        <span class="border-container__pill">Horas</span>
+                        <input type="number" class="number-input" id="repeat-minute" required/>
+                        <span class="border-container__pill">Minutos</span>
+                </div>
+            </div>
+
+
+            <div id="break-popup">
+                <div class="break-popup__top">
+                    <svg class="break-popup__circle" viewBox="0 0 230 230">
+                        <path id="break-path" d="M115,10 A 90 90 1 0 1 115 190 A 90 90 1 0 1 115 10 z" fill="none" stroke="#41529F" stroke-width="20" stroke-linecap="round" style="transition-duration: 1s; transition-timing-function: linear;"></path>
+                    </svg>
+                </div>
+                <div class="break-popup__main">
+                    <span class="far fa-pause-circle break-popup__icon"></span>
+                    <div class="break-popup__title-container">
+                        <h2 class="break-popup__title">Hora de Pausar!</h2>
+                        <svg class="break-rule" viewBox="0 0 100 10">
+                            <path d="M 0 1 L 100 1" fill="none" stroke="#41529F" stroke-width="10" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span class="break-popup__text">Que tal se alongar?</span>
+                    <button class="break-popup__button">Vamos lá!</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="bottom-container">
+            <div class="back-button">
+                <span class="fas fa-arrow-left back-button__icon"></span>
+                <span class="back-button__text">Voltar</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script src="./scripts/timer.js"></script>
+
+</html>
