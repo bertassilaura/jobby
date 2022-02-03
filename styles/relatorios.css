@@ -516,11 +516,11 @@ body{
 
     #mobile-header{
         display: flex;
-        flex: 1;
         background-color: #41529F;
         flex-flow: row nowrap;
         justify-content: space-between;
         width: 100%;
+        height: 50px;
         align-items: center;
     }
 

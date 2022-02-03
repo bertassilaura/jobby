@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/x-icon" href="./imagens/favicon.ico"/>
     <link rel="stylesheet" href="./styles/adicionar_horario.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
@@ -60,7 +61,7 @@
             </div>
 
             <div class="add-time">
-                <form action="">
+                <form action="" id="add-time-form">
                     <div class="add-time__line-1">
                         <div class="input-name">
                             <div class="input-label">
@@ -68,7 +69,7 @@
                                 <label class="input-label__text" for="name">Nome da Atividade</label>
                             </div>
                             <div class="border-container">
-                                <input id="name" class="text-input" type="text" placeholder="Yoga" required/>
+                                    <input id="name" class="text-input" type="text" placeholder="Yoga" required/>
                             </div>
                         </div>
 
@@ -78,9 +79,9 @@
                                 <label class="input-label__text" for="duration-hour">Duração</label>
                             </div>
                             <div class="input-duration__inputs">
-                                <input class="number-input" id="duration-hour" type="number" max="99" required/>
+                                <input class="number-input" id="duration-hour" type="number" min="0" max="99" required/>
                                 <span class="pill">Horas</span>
-                                <input class="number-input" id="duration-minute" type="number" max="59" required/>
+                                <input class="number-input" id="duration-minute" type="number" min="0" max="59" required/>
                                 <span class="pill">Minutos</span>
                             </div>
                         </div>
@@ -97,9 +98,9 @@
                         <div class="border-container border-container--breakable">
                             <label for="break-hour" class="border-container__text">Pausa de</label>
                             <div>
-                                <input type="number" class="number-input" id="break-hour" max="99" required/>
+                                <input type="number" class="number-input" id="break-hour" min="0" max="99" required/>
                                 <span class="pill">Horas</span>
-                                <input type="number" class="number-input" id="break-minute" max="59" required/>
+                                <input type="number" class="number-input" id="break-minute" min="0" max="59" required/>
                                 <span class="pill">Minutos</span>
                             </div>
                         </div>
@@ -107,18 +108,19 @@
                         <div class="border-container border-container--breakable">
                             <label for="repeat-hour" class="border-container__text">Repetir a cada</label>
                             <div>
-                                <input type="number" class="number-input" id="repeat-hour" max="99" required/>
+                                <input type="number" class="number-input" id="repeat-hour" min="0" max="99" required/>
                                 <span class="pill">Horas</span>
-                                <input type="number" class="number-input" id="repeat-minute" max="59" required/>
+                                <input type="number" class="number-input" id="repeat-minute" min="0" max="59" required/>
                                 <span class="pill">Minutos</span>
                             </div>
                         </div>
                         
                     </div>
 
-                    <button class="add-time__save-button">
+                    <button type="button" class="add-time__save-button" onclick="validate_form('add-time-form')">
                         Salvar
                     </button>
+                    
                 </form>
             </div>
         </div>
@@ -132,5 +134,5 @@
 
     </div>
 </body>
-<script src="./scripts/selector.js"></script>
+<script src="./scripts/adicionar_horario.js"></script>
 </html>
