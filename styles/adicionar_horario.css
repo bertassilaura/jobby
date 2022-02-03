@@ -299,6 +299,43 @@ input[type=number] {
     color: #fff;
 }
 
+/* ----------- Input Error -----------------------*/
+
+.error-message{
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    z-index: 99;
+  }
+
+.error-message__border{
+    position: relative;
+    top: 16px;
+    left: -40px;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #41529F;
+    z-index: 99;
+
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 2px solid #41529F;
+}
+
+.error-message__arrow{
+    width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 20px solid #41529F;
+}
 
 /* ------------------------- Fundo do Conteúdo ------------------------------ */
 

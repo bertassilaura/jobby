@@ -54,6 +54,8 @@ function configurate_custom_selects(){
                 }
                 }
                 h.click();
+                let event = new Event("change");
+                s.dispatchEvent(event);
             });
             custom_select_options.appendChild(select_option);
         }
