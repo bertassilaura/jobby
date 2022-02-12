@@ -269,6 +269,27 @@ body{
     background-color: rgba(0, 0, 0, 0.1);
   }
 
+/*----------  Switch  ----------*/
+
+.switch{
+    padding: 2px;
+    width: 70px;
+}
+
+.switch input{
+    display: none;
+}
+
+.switch__svg{
+    width: 100%;
+    transition: 1s;
+}
+
+.switch__text{
+    pointer-events: none;
+}
+
+
 /* ------------------------- Fundo do Conteúdo ------------------------------ */
 
 #bottom-container{
@@ -354,7 +375,7 @@ body{
     }
 
     #welcome_container{
-        margin: 0px;
+        margin: 5px 0px 2px 0px;
     }
 
     .logo{

@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./styles/configuracoes_horario.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
-    <script src="./scripts/side-bar_mobile.js"> </script>
     <title>Meus Horários</title>
 </head>
 
@@ -27,7 +26,7 @@
 
 
     <nav id="mobile-side-bar">
-        <a id="close-side-bar" class="fas fa-times mobile-side-bar__option" onclick="close_side_bar()"></a>
+        <a id="close-side-bar" class="fas fa-times mobile-side-bar__option"></a>
         <a class="mobile-side-bar__option" href="">Cronômetro</a>
         <a class="mobile-side-bar__option" href="./timer.html">Time Tracker</a>
         <a class="mobile-side-bar__option" href="./relatorios.html">Relatórios</a>
@@ -37,7 +36,7 @@
     <div id="content">
 
         <div id="mobile-header">
-            <a id="open-side-bar" class="fas fa-bars" onclick="open_side_bar()"></a>
+            <a id="open-side-bar" class="fas fa-bars"></a>
             <img id="white-logo" src="./imagens/jobby_white_logo.png"/>
         </div>
 
@@ -70,142 +69,10 @@
                         <span class="custom-times__header__text custom-times__header__text--pausas">Pausas</span>
                     </div>
 
-                    <div class="custom-times__item">
-                        <div class="time">
-                            <div class="time__item">Trabalho</div>
-                            <div class="time__item">4h30min</div>
-                            <div class="time__item time__item--pausas">10min a cada 1h</div>
-                        </div>
-
-                        <div class="custom-times__edit">
-                            <button class="btn_edit">
-                                <span class="fas fa-pen btn_edit__icon"></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="custom-times__item">
-                        <div class="time">
-                            <div class="time__item">Trabalho</div>
-                            <div class="time__item">4h30min</div>
-                            <div class="time__item time__item--pausas">10min a cada 1h</div>
-                        </div>
-
-                        <div class="custom-times__edit">
-                            <button class="btn_edit">
-                                <span class="fas fa-pen btn_edit__icon"></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="custom-times__item">
-                        <div class="time">
-                            <div class="time__item">Trabalho</div>
-                            <div class="time__item">4h30min</div>
-                            <div class="time__item time__item--pausas">10min a cada 1h</div>
-                        </div>
-
-                        <div class="custom-times__edit">
-                            <button class="btn_edit">
-                                <span class="fas fa-pen btn_edit__icon"></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    
-                    <div class="custom-times__item">
-                        <div class="time">
-                            <div class="time__item">Trabalho</div>
-                            <div class="time__item">4h30min</div>
-                            <div class="time__item time__item--pausas">10min a cada 1h</div>
-                        </div>
-
-                        <div class="custom-times__edit">
-                            <button class="btn_edit">
-                                <span class="fas fa-pen btn_edit__icon"></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    
-                    <div class="custom-times__item">
-                        <div class="time">
-                            <div class="time__item">Trabalho</div>
-                            <div class="time__item">4h30min</div>
-                            <div class="time__item time__item--pausas">10min a cada 1h</div>
-                        </div>
-
-                        <div class="custom-times__edit">
-                            <button class="btn_edit">
-                                <span class="fas fa-pen btn_edit__icon"></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    
-                    <div class="custom-times__item">
-                        <div class="time">
-                            <div class="time__item">Trabalho</div>
-                            <div class="time__item">4h30min</div>
-                            <div class="time__item time__item--pausas">10min a cada 1h</div>
-                        </div>
-
-                        <div class="custom-times__edit">
-                            <button class="btn_edit">
-                                <span class="fas fa-pen btn_edit__icon"></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    
-                    <div class="custom-times__item">
-                        <div class="time">
-                            <div class="time__item">Trabalho</div>
-                            <div class="time__item">4h30min</div>
-                            <div class="time__item time__item--pausas">10min a cada 1h</div>
-                        </div>
-
-                        <div class="custom-times__edit">
-                            <button class="btn_edit">
-                                <span class="fas fa-pen btn_edit__icon"></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    
-                    <div class="custom-times__item">
-                        <div class="time">
-                            <div class="time__item">Trabalho</div>
-                            <div class="time__item">4h30min</div>
-                            <div class="time__item time__item--pausas">10min a cada 1h</div>
-                        </div>
-
-                        <div class="custom-times__edit">
-                            <button class="btn_edit">
-                                <span class="fas fa-pen btn_edit__icon"></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    
-                    <div class="custom-times__item">
-                        <div class="time">
-                            <div class="time__item">Trabalho</div>
-                            <div class="time__item">4h30min</div>
-                            <div class="time__item time__item--pausas">10min a cada 1h</div>
-                        </div>
-
-                        <div class="custom-times__edit">
-                            <button class="btn_edit">
-                                <span class="fas fa-pen btn_edit__icon"></span>
-                            </button>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
-            <button class="btn-add-time" onclick="window.location.assign('./adicionar_horario.html');">
+            <button class="btn-add-time">
                 <span class="fas fa-plus btn-add-time__icon"></span>
                 <span class="btn-add-time__text"> adicionar horário </span>
             </button>
@@ -221,4 +88,9 @@
 
     </div>
 </body>
+
+<script src="./scripts/side-bar_mobile.js"> </script>
+<script src="./scripts/back.js"></script>
+<script src="./scripts/configuracoes_horario.js"></script>
+
 </html>

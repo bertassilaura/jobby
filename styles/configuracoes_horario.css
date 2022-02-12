@@ -247,6 +247,7 @@ body{
 
 .time__item{
     display: flex;
+    text-align: center;
     justify-content: center;
     align-items: center;
     width: 28%;
@@ -412,7 +413,7 @@ body{
     }
 
     #welcome_container{
-        margin: 0px;
+        margin: 5px 0px 2px 0px;
     }
 
     .logo{
