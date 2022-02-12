@@ -390,6 +390,7 @@ function periodChange(){
 }
 
 document.getElementById("period").addEventListener("change", periodChange);
+document.querySelector(".refresh-btn").addEventListener("click", refresh)
 
 
 let data_entries = generateData(60);

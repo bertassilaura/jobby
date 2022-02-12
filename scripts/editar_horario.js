@@ -1,4 +1,4 @@
-// ================================== Classes de Tempo ========================================
+// =================== Classes de tempo ========================
 
 function TimeInterval(hours, minutes){
     this.hours = hours,
@@ -10,6 +10,42 @@ function CustomTime(name, time, breakTime, breakInterval){
     this.time = time,
     this.breakTime = breakTime,
     this.breakInterval = breakInterval
+}
+
+// =================== Mock up data ========================
+
+let customTimes = {
+    1: {name: "Trabalho", time: new TimeInterval(3, 0), breakTime: new TimeInterval(0,30), breakInterval: new TimeInterval(1, 30)},
+    2: {name: "Estudo", time: new TimeInterval(2, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(1, 0)},
+    3: {name: "Pixel", time: new TimeInterval(2, 0), breakTime: new TimeInterval(1,0), breakInterval: new TimeInterval(1, 0)},
+    4: {name: "Prática", time: new TimeInterval(4, 0), breakTime: new TimeInterval(1,0), breakInterval: new TimeInterval(2, 0)},
+    5: {name: "Filme", time: new TimeInterval(2, 30), breakTime: new TimeInterval(0,10), breakInterval: new TimeInterval(2, 30)},
+    6: {name: "Livros", time: new TimeInterval(8, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(2, 0)},
+    7: {name: "Manga", time: new TimeInterval(1, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(0, 30)},
+    8: {name: "Academia", time: new TimeInterval(2, 0), breakTime: new TimeInterval(0,30), breakInterval: new TimeInterval(0, 45)}
+}
+
+// ================================== Pegar Dados ========================================
+
+function getData(){
+    let queryString = window.location.search
+    let params = new URLSearchParams(queryString);
+    let id = parseInt(params.get("id"))
+
+    if (queryString == "" || queryString == null || !(id in customTimes)){
+        alert("Página inválida")
+        window.location.href = "./configuracoes_horario.html"
+    }
+
+    let data = customTimes[id]
+
+    document.querySelector("#name").value = data.name
+    document.querySelector("#duration-hour").value = data.time.hours
+    document.querySelector("#duration-minute").value = data.time.minutes
+    document.querySelector("#break-hour").value = data.breakTime.hours
+    document.querySelector("#break-minute").value = data.breakTime.minutes
+    document.querySelector("#repeat-hour").value = data.breakInterval.hours
+    document.querySelector("#repeat-minute").value = data.breakInterval.minutes
 }
 
 // ================================== Mensagens de Erro ========================================
@@ -114,7 +150,6 @@ function validate_combo(id){
     valid_combo(elemento_hour, elemento_minute);
 }
 
-
 function CreateTime(){
     let name = document.getElementById("name").value;
     let time = new TimeInterval(document.getElementById("duration-hour").value, document.getElementById("duration-minute").value)
@@ -137,5 +172,10 @@ function submit_form(){
     }
 }
 
+// ================================== Comandos ========================================
 
-document.getElementById("add-time-button").addEventListener("click", submit_form);
+
+getData()
+document.getElementById("edit-time-button").addEventListener("click", submit_form);
+
+

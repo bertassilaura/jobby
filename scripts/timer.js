@@ -1,3 +1,5 @@
+// ================================== Clock ========================================
+
 class Countdown{
     constructor(hours, minutes){
     this.hours = hours;
@@ -45,6 +47,7 @@ function Clock(time, breakInterval, breakTime){
             this.breakStatus = true;
             document.getElementById("break-popup").style.display = "flex";
             document.getElementById("break-path").style.strokeDashoffset = 0;
+            notification("pristine.mp3")
             this.breakCountdown.hours = this.breakTime.hours;
             this.breakCountdown.minutes = this.breakTime.minutes;
             this.breakCountdown.seconds = 0;
@@ -90,6 +93,7 @@ function Clock(time, breakInterval, breakTime){
         document.getElementById("break-popup").style.display = "none";
         document.getElementById("configurations").style.display = "flex";
         clearInterval(this.interval);
+        notification("eventually.mp3")
         let passed_time = this.time.totalSeconds() - this.timeCountdown.totalSeconds();
         let n_breaks = Math.floor(passed_time/ this.breakInterval.totalSeconds());
         let total_break_time = n_breaks * this.breakTime.totalSeconds();
@@ -133,28 +137,148 @@ function svg_start(target){
     circle.style.strokeDasharray = path_length + " " + path_length; 
 }
 
+// ================================== Notification ========================================
+
+function notification(name){
+    const audio = new Audio(`./sounds/${name}`);
+    audio.play()
+}
+
+// ================================== Check Inputs ========================================
+
+// ========= Mensagens de Erro ===========
+
+function errorMessage(elemento, message){
+    let rect = elemento.getBoundingClientRect();
+
+    let error_message = createErrorMessage(message);
+    error_message.style.top = (rect.bottom) + "px";
+    error_message.style.left = (rect.left + (rect.right - rect.left)/16) + "px";
+
+    document.body.appendChild(error_message);
+    setTimeout(()=>{document.body.addEventListener("click", closeMessages)}, 1)
+}
+
+function createErrorMessage(message){
+    let error_message = document.createElement("div");
+    error_message.classList.add("error-message");
+
+    let arrow = document.createElement("div");
+    arrow.classList.add("error-message__arrow");
+
+    let border = document.createElement("div");
+    border.classList.add("error-message__border");
+    border.innerHTML = `<span><span class="fas fa-exclamation-circle"> </span>  ${message}</span>`;
+
+    error_message.appendChild(arrow);
+    error_message.appendChild(border);
+    return(error_message);
+}
+
+function closeMessages(){
+    let messages = document.querySelectorAll(".error-message");
+    for (message of messages){
+        message.remove();
+    }
+    document.body.removeEventListener("click", closeMessages)
+}
+
+function empty(elemento){
+    if (elemento.value == null || elemento.value == ""){
+        errorMessage(elemento, "Preencha este campo");
+        throw "inputException";
+    }
+}
+
+function is_number(elemento){
+    if (Math.floor(elemento.value) != Number(elemento.value)){
+        errorMessage(elemento, `O valor deve ser um número inteiro`);
+        throw "inputException";
+    }
+}
+
+function min(elemento, limit){
+    if (Number(elemento.value) < limit){
+        errorMessage(elemento, `O valor deve ser maior ou igual a ${limit}`);
+        throw "inputException";
+    }
+}
+
+function max(elemento, limit){
+    if (Number(elemento.value) > limit){
+        errorMessage(elemento, `O valor deve ser menor ou igual a ${limit}`);
+        throw "inputException";
+    }
+}
+
+function validate_solo(id){
+    let elemento = document.getElementById(id);
+
+    empty(elemento);
+
+    if (elemento.min !== ""){
+        min(elemento, elemento.min)
+    }
+    if (elemento.max !== ""){
+        max(elemento, elemento.max)
+    }
+    if (elemento.type == "number"){
+        is_number(elemento)
+    }
+}
+
+function valid_combo(elemento_hour, elemento_minute){
+    if (elemento_hour.value == 0 && elemento_minute.value == 0){
+        errorMessage(elemento_hour, `Hora e minutos não podem estar ambos zerados`);
+        throw "inputException";
+    }
+}
+
+function validate(id){
+    validate_solo(id + "-hour");
+    validate_solo(id + "-minute");
+
+    let elemento_hour = document.getElementById(id + "-hour");
+    let elemento_minute = document.getElementById(id + "-minute");
+
+    valid_combo(elemento_hour, elemento_minute);
+}
+
+// ================================== Buttons ========================================
+
 function play(){
     if (!configured){
 
-        let hour = document.getElementById("duration-hour").value;
-        let minute = document.getElementById("duration-minute").value;
-        let time = new Countdown(hour, minute);
+        try{
+            validate("duration")
+            validate("break")
+            validate("repeat")
 
-        hour = document.getElementById("repeat-hour").value;
-        minute = document.getElementById("repeat-minute").value;
-        let breakInterval = new Countdown(hour, minute);
-        
-        hour = document.getElementById("break-hour").value;
-        minute = document.getElementById("break-minute").value;
-        let breakTime = new Countdown(hour, minute);
-
-        clock = new Clock(time, breakInterval, breakTime);
-        configured = true;
+            let hour = document.getElementById("duration-hour").value;
+            let minute = document.getElementById("duration-minute").value;
+            let time = new Countdown(hour, minute);
+    
+            hour = document.getElementById("repeat-hour").value;
+            minute = document.getElementById("repeat-minute").value;
+            let breakInterval = new Countdown(hour, minute);
+            
+            hour = document.getElementById("break-hour").value;
+            minute = document.getElementById("break-minute").value;
+            let breakTime = new Countdown(hour, minute);
+    
+            clock = new Clock(time, breakInterval, breakTime);
+            configured = true;
+        }
+        catch(e){
+            console.log(e)
+        }
     }
+    if (configured){
     clock.start();
     document.getElementById("stop-button").style.display = "inline";
     document.getElementById("pause-button").style.display = "inline";
     document.getElementById("play-button").style.display = "none";
+    }
 }  
 
 function pause(){
@@ -180,3 +304,7 @@ let clock = null;
 svg_start("clock-path");
 svg_start("break-interval-path");
 svg_start("break-path");
+
+document.querySelector("#play-button").addEventListener("click", play)
+document.querySelector("#pause-button").addEventListener("click", pause)
+document.querySelector("#stop-button").addEventListener("click", stop)
