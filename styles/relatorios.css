@@ -555,6 +555,7 @@ body{
         padding: 0px 0px 0px 0px;
         align-items: center;
         scrollbar-width: 0px;
+        height: fit-content;
         overflow-y: scroll;
         overflow-x: hidden;
     }
