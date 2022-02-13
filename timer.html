@@ -117,20 +117,44 @@
 
             <div id="break-popup">
                 <div class="break-popup__top">
+                    <span class="break-popup__corner-button fas fa-times" id="break-popup-close"></span>
+                    <span class="break-popup__corner-button fas fa-arrow-left" id="break-popup-back"></span>
                     <svg class="break-popup__circle" viewBox="0 0 230 230">
                         <path id="break-path" d="M115,10 A 90 90 1 0 1 115 190 A 90 90 1 0 1 115 10 z" fill="none" stroke="#41529F" stroke-width="20" stroke-linecap="round" style="transition-duration: 1s; transition-timing-function: linear;"></path>
                     </svg>
                 </div>
-                <div class="break-popup__main">
-                    <span class="far fa-pause-circle break-popup__icon"></span>
-                    <div class="break-popup__title-container">
-                        <h2 class="break-popup__title">Hora de Pausar!</h2>
-                        <svg class="break-rule" viewBox="0 0 100 10">
-                            <path d="M 0 1 L 100 1" fill="none" stroke="#41529F" stroke-width="10" stroke-linecap="round"/>
-                        </svg>
+                <div class="break-popup__main" id="break-start">
+                        <span class="far fa-pause-circle break-popup__icon"></span>
+                        <div class="break-popup__title-container">
+                            <h2 class="break-popup__title">Hora de Pausar!</h2>
+                            <svg class="break-rule" viewBox="0 0 100 10">
+                                <path d="M 0 1 L 100 1" fill="none" stroke="#41529F" stroke-width="10" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="break-popup__text">Que tal se alongar?</span>
+                        <button class="break-popup__button" id="start-stretch-btn">Vamos lá!</button>
+                </div>
+                <div class="break-popup__main" id="break-stretch">
+                    <div class="custom-slider" id="stretch-slider">
+                        <div class="stretch-pose">
+                            <img src="./imagens/strech-pose-1.svg" class="stretch-pose__img"/>
+                        </div>
+                        <div class="stretch-pose">
+                            <img src="./imagens/strech-pose-2.svg" class="stretch-pose__img"/>
+                        </div>
+                        <div class="stretch-pose">
+                            <img src="./imagens/strech-pose-3.svg" class="stretch-pose__img"/>
+                        </div>
+                        <div class="stretch-pose">
+                            <img src="./imagens/strech-pose-4.svg" class="stretch-pose__img"/>
+                        </div>
+                        <div class="stretch-pose">
+                            <img src="./imagens/strech-pose-1.svg" class="stretch-pose__img"/>
+                        </div>
+                        <div class="stretch-pose">
+                            <img src="./imagens/strech-pose-3.svg" class="stretch-pose__img"/>
+                        </div>
                     </div>
-                    <span class="break-popup__text">Que tal se alongar?</span>
-                    <button class="break-popup__button">Vamos lá!</button>
                 </div>
             </div>
 
@@ -148,6 +172,7 @@
 
 <script src="./scripts/side-bar_mobile.js"> </script>
 <script src="./scripts/back.js"></script>
+<script src="./scripts/slider.js"></script>
 <script src="./scripts/timer.js"></script>
 
 </html>
