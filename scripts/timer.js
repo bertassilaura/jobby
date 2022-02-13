@@ -57,16 +57,20 @@ function Clock(time, breakInterval, breakTime){
     this.break = () => {
         this.breakCountdown.decrement();
         if (this.breakCountdown.over()){
-            this.breakStatus = false;
-            document.getElementById("break-interval-path").style.strokeDashoffset = 0;
-            document.getElementById("break-popup").style.display = "none";
-            this.breakCountdown.hours = this.breakInterval.hours;
-            this.breakCountdown.minutes = this.breakInterval.minutes;
-            this.breakCountdown.seconds = 0;
+            this.endBreak()
         }
         else{
             svg_update((this.breakTime.totalSeconds() - this.breakCountdown.totalSeconds())/this.breakTime.totalSeconds(), "break-path");
         };
+    },
+
+    this.endBreak = () =>{
+        this.breakStatus = false;
+        document.getElementById("break-interval-path").style.strokeDashoffset = 0;
+        document.getElementById("break-popup").style.display = "none";
+        this.breakCountdown.hours = this.breakInterval.hours;
+        this.breakCountdown.minutes = this.breakInterval.minutes;
+        this.breakCountdown.seconds = 0;
     },
 
     this.count = () => {
@@ -297,6 +301,25 @@ function stop(){
     /* Send data to databank */
 }
 
+function startStretch(){
+    goToSliderPosition(document.querySelector("#stretch-slider"), 0)
+    document.querySelector("#break-start").style.display = "none";
+    document.querySelector("#break-stretch").style.display = "flex";
+    document.querySelector("#break-popup-close").style.display = "none";
+    document.querySelector("#break-popup-back").style.display = "inline";
+}
+
+function stopStretch(){
+    document.querySelector("#break-start").style.display = "flex";
+    document.querySelector("#break-stretch").style.display = "none";
+    document.querySelector("#break-popup-close").style.display = "inline";
+    document.querySelector("#break-popup-back").style.display = "none";
+}
+
+function stopBreak(){
+    clock.endBreak()
+}
+
 let configured = false;
 let clock = null;
 
@@ -308,3 +331,6 @@ svg_start("break-path");
 document.querySelector("#play-button").addEventListener("click", play)
 document.querySelector("#pause-button").addEventListener("click", pause)
 document.querySelector("#stop-button").addEventListener("click", stop)
+document.querySelector("#start-stretch-btn").addEventListener("click", startStretch)
+document.querySelector("#break-popup-close").addEventListener("click", stopBreak)
+document.querySelector("#break-popup-back").addEventListener("click", stopStretch)
