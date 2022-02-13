@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" type="image/x-icon" href="./imagens/favicon.ico"/>
-    <link rel="stylesheet" href="./styles/modelo_base.css"/>
+    <link rel="stylesheet" href="./styles/configuracoes_horario.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
-    <title>Base</title>
+    <title>Meus Horários</title>
 </head>
 
 <body>
+
     <nav id="side-bar">
         <a class="side-bar__icon far fa-clock" href="">
         </a>
@@ -22,6 +23,7 @@
         <a class="side-bar__icon fas fa-cog" href="./configuracoes.html">
         </a>
     </nav>
+
 
     <nav id="mobile-side-bar">
         <a id="close-side-bar" class="fas fa-times mobile-side-bar__option"></a>
@@ -54,8 +56,26 @@
 
         <div id="center-container">
             <div class="title-container">
-                <h1>Base</h1>
+                <span class="fas fa-clock title-container__icon"></span>
+                <h1 class="title-container__text">Meus Horários</h1>
             </div>
+
+            <div class="border-container">
+
+                <div class="custom-times">
+                    <div class="custom-times__header">
+                        <span class="custom-times__header__text">Nome</span>
+                        <span class="custom-times__header__text">Duração</span>
+                        <span class="custom-times__header__text custom-times__header__text--pausas">Pausas</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="btn-add-time">
+                <span class="fas fa-plus btn-add-time__icon"></span>
+                <span class="btn-add-time__text"> adicionar horário </span>
+            </button>
 
         </div>
 
@@ -71,5 +91,6 @@
 
 <script src="./scripts/side-bar_mobile.js"> </script>
 <script src="./scripts/back.js"></script>
+<script src="./scripts/configuracoes_horario.js"></script>
 
 </html>

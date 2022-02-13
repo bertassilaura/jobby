@@ -4,45 +4,39 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="configuracoes.css"/>
+    <link rel="icon" type="image/x-icon" href="./imagens/favicon.ico"/>
+    <link rel="stylesheet" href="./styles/configuracoes.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
-    <script src="./side-bar_mobile.js"> </script>
     <title>Configurações</title>
 </head>
 
 <body>
+
     <nav id="side-bar">
-        <a href="">
-            <img src="./imagens/home_icon.png" class="side-bar__icon">
+        <a class="side-bar__icon far fa-clock" href="">
         </a>
-        <a href="">
-            <img src="./imagens/clock_icon.png" class="side-bar__icon">
+        <a class="side-bar__icon far fa-hourglass" href="./timer.html">
         </a>
-        <a href="">
-            <img src="./imagens/tracker_icon.png" class="side-bar__icon">
+        <a class="side-bar__icon far fa-chart-bar" href="./relatorios.html">
         </a>
-        <a href="">
-            <img src="./imagens/report_icon.png" class="side-bar__icon">
-        </a>
-        <a href="">
-            <img src="./imagens/config_icon.png" class="side-bar__icon">
+        <a class="side-bar__icon disabled fas fa-cog" href="./configuracoes.html">
         </a>
     </nav>
 
+
     <nav id="mobile-side-bar">
-        <a id="close-side-bar" class="fas fa-times mobile-side-bar__option" onclick="close_side_bar()"></a>
-        <a class="mobile-side-bar__option" href="">Home</a>
-        <a class="mobile-side-bar__option" href="">Time Tracker</a>
-        <a class="mobile-side-bar__option" href="">Cronometro</a>
-        <a class="mobile-side-bar__option" href="">Relatórios</a>
-        <a class="mobile-side-bar__option" href="">Configurações</a>
+        <a id="close-side-bar" class="fas fa-times mobile-side-bar__option"></a>
+        <a class="mobile-side-bar__option" href="">Cronômetro</a>
+        <a class="mobile-side-bar__option" href="./timer.html">Time Tracker</a>
+        <a class="mobile-side-bar__option" href="./relatorios.html">Relatórios</a>
+        <a class="mobile-side-bar__option disabled" href="./configuracoes.html">Configurações</a>
     </nav>
 
     <div id="content">
 
         <div id="mobile-header">
-            <a id="open-side-bar" class="fas fa-bars" onclick="open_side_bar()"></a>
+            <a id="open-side-bar" class="fas fa-bars"></a>
             <img id="white-logo" src="./imagens/jobby_white_logo.png"/>
         </div>
 
@@ -66,25 +60,25 @@
             </div>
 
             <div id="options">
-                <div class="option">
+                <a class="option">
                     <span class="far fa-user-circle option__icon"></span>
                     <span class="option__text">Minha Conta</span>
-                </div>
+                </a>
 
-                <div class="option">
-                    <span class="far fa-clock option__icon"></span>
-                    <span class="option__text">Meus Horários</span>
-                </div>
+                <a class="option" href="./configuracoes_horario.html">
+                        <span class="far fa-clock option__icon"></span>
+                        <span class="option__text">Meus Horários</span>
+                </a>
 
-                <div class="option">
+                <a class="option">
                     <span class="fas fa-tint option__icon"></span>
                     <span class="option__text">Minha Hidratação</span>
-                </div>
+                </a>
             </div>
 
         </div>
 
-        <div id="bottom_container">
+        <div id="bottom-container">
             <div class="back-button">
                 <span class="fas fa-arrow-left back-button__icon"></span>
                 <span class="back-button__text">Voltar</span>
@@ -93,4 +87,8 @@
 
     </div>
 </body>
+
+<script src="./scripts/side-bar_mobile.js"> </script>
+<script src="./scripts/back.js"></script>
+
 </html>

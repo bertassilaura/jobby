@@ -30,15 +30,27 @@ body{
     padding-top: 80px;
 }
 
-#side-bar a{
+.side-bar__icon{
+    text-decoration: none;
     width: 30px;
     height: 30px;
+    font-size: 30px;
+    color: #fff;
     margin-bottom: 30px;
+    transition: 0.5s;
 }
 
-.side-bar__icon{
-    width: 30px;
-    height: 30px;
+.side-bar__icon.disabled {
+    color: #61BBB6;
+    cursor: none;
+    pointer-events: none;
+}
+
+.side-bar__icon:hover{
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+    color: #61BBB6;
 }
 
 /* ------------------------- Conteúdo ------------------------------ */
@@ -78,13 +90,13 @@ body{
 }
 
 .welcome-text__hello{
-    font-size: 0.83rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: #41529F;
 }
 
 .welcome-text__welcome{
-    font-size: 0.83rem;
+    font-size: 0.75rem;
 }
 
 #avatar{
@@ -139,6 +151,7 @@ body{
 .option{
     display: flex;
     color: black;
+    text-decoration: none;
     flex-flow: row nowrap;
     width: fit-content;
     align-items: center;
@@ -166,11 +179,10 @@ body{
 
 #bottom-container{
     display: flex;
-    flex: 1;
+    flex: 2;
     width: 100%;
-    flex-direction: row;
+    flex-flow: row nowrap;
     justify-content: flex-end;
-    padding-right: 20px;
 }
 
 .back-button{
@@ -180,6 +192,7 @@ body{
     width: fit-content;
     color: #41529F;
     transition: 0.5s;
+    margin-right: 25px;
 }
 
 .back-button:hover{
@@ -189,13 +202,14 @@ body{
 .back-button__icon{
     font-size: 0.83rem;
     color: inherit;
+    margin-right: 10px;
 }
 
 .back-button__text{
     font-size: 0.66rem;
     color: inherit;
     font-weight: bold;
-    margin-left: 10px;
+    margin-right: 10px;
 }
 
 /* ------------------------- Mobile ------------------------------ */
@@ -240,8 +254,13 @@ body{
 
 /*----------  Alteração Content  ----------*/
 
+    #avatar{
+    height: 50px;
+    width: 50px;
+    }
+
     #welcome_container{
-        margin: 0px;
+        margin: 5px 0px 2px 0px;
     }
 
     .logo{
@@ -249,7 +268,7 @@ body{
     }
 
     #content{
-        padding: 0px 0px 10px 0px;
+        padding: 0px 0px 0px 0px;
         align-items: center;
     }
 
@@ -275,6 +294,7 @@ body{
         position: absolute;
         top: 0;
         left: 0;
+        z-index: 99;
         transition: 0.5s;
     }
 
@@ -297,7 +317,14 @@ body{
     }
 
     .mobile-side-bar__option:hover{
-        color: #b4e4e1;
+        color: #61BBB6;
+        font-size: 1.6rem;
+    }
+
+    .mobile-side-bar__option.disabled {
+        color: #61BBB6;
+        cursor: none;
+        pointer-events: none;
     }
     
   }
@@ -307,4 +334,17 @@ body{
     html{
         font-size: 20px;
     }
+
+    #avatar{
+        height: 45px;
+        width: 45px;
+        }
 }
+
+@media only screen and (max-width: 320px) {
+
+    html{
+        font-size: 18px;
+    }
+}
+
