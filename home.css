@@ -98,16 +98,23 @@ button:hover {
   padding: 50px 0px;
 }
 
-#title {
+.title {
   text-align: center;
 }
 
-#title h2 {
+.title h2 {
   margin: 10px 0;
   padding: 0;
   font-weight: bold;
-  color: white;
   font-size: 28px;
+}
+
+#title-1 {
+  color: white;
+}
+
+#title-2 {
+  color: #41529f;
 }
 
 #card {
@@ -120,6 +127,12 @@ button:hover {
 #card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
   background-color: rgba(241, 241, 241, 1);
+  background-color: #41529f;
+  color: white;
+}
+
+#card:hover h2 {
+  color: white;
 }
 
 #row {
@@ -144,9 +157,15 @@ button:hover {
   text-align: center;
 }
 
-#container-title {
+.container-title {
   color: #41529f;
   font-size: 24px;
+}
+
+.container-title h2 {
+  color: #41529f;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 #container-text {
@@ -154,4 +173,92 @@ button:hover {
   padding-bottom: 30px;
   padding-right: 30px;
   padding-left: 30px;
+}
+
+#section-3 {
+  width: 100%;
+  padding: 50px 0px;
+}
+
+#section-3-container {
+  display: flex;
+  padding: 50px;
+  justify-content: space-evenly;
+}
+
+#desenho {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+#cards-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  max-width: 520px;
+}
+
+#card-2 {
+  display: flex;
+  border-style: solid;
+  border-radius: 15px;
+  border-color: #41529f;
+  border-width: 2px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+#title-card-2 {
+  padding-left: 20px;
+}
+
+#avatar {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+#img-2 {
+  width: min-content;
+}
+
+#card-2:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+  background-color: rgba(241, 241, 241, 1);
+}
+
+#name {
+  color: #41529f;
+}
+
+#footer {
+  background-color: #61bbb6;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  padding: 0px 100px;
+  justify-content: space-between;
+}
+
+#linkedin-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#linkedin {
+  display: flex;
+  align-items: center;
+  justify-items: start;
+  text-decoration: none;
+  color: white;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+#linkedin > * {
+  margin-right: 5px;
 }
