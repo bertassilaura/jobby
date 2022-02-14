@@ -44,9 +44,6 @@ function switch_click(){
         this.querySelector("#on_animation").beginElement();
         checkBox.checked = true
     }
-    console.log(document.getElementById("water").checked)
 }
 
-/* If the user clicks anywhere outside the select box,
-then close all select boxes: */
 configurate_custom_switches();
