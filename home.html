@@ -3,13 +3,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="home.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <link rel="stylesheet" href="./styles/home.css"/>
+    <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-icon" href="./imagens/house.ico"/>
     <title>Home</title>
 </head>
 <body>
+    <div id="mobile-nav-bar">
+        <div class="mobile-nav-link close">
+            <span id="close-side-bar" class="fas fa-times"></span>
+        </div>
+        <div class="mobile-nav-link">
+            <a href="#">Home</a>
+        </div>
+        <div class="mobile-nav-link">
+            <a href="#">Login</a>
+        </div>
+        <div class="mobile-nav-link">
+            <a href="#section-3">Nosso Time</a>
+        </div>
+        <div class="mobile-nav-link">
+            <a href="#">Cadastre-se</a>
+        </div>
+    </div>
+
     <div id="section-1">
         <div id="nav-bar">
             <div id="logo">
@@ -18,14 +36,16 @@
 
             <div id="links">
                 <nav>
-                    <a href="#" id="nav-link-1">Home</a>
-                    <a href="#" id="nav-link-1">Login</a>
-                    <a href="#section-3" id="nav-link-1">Nosso Time</a>
+                    <a href="#" class="nav-link-1">Home</a>
+                    <a href="#" class="nav-link-1">Login</a>
+                    <a href="#section-3" class="nav-link-1">Nosso Time</a>
                     <button id="nav-button">
-                        <a href="#" id="nav-link-2">Cadastre-se</a>
+                        <a href="#" class="nav-link-2">Cadastre-se</a>
                     </button>
                 </nav>
             </div>
+
+            <span id="open-side-bar" class="fas fa-bars"></span>
 
         </div>
 
@@ -35,12 +55,12 @@
                     <h1 id="text-1">Trabalhar e estudar em casa<br>nunca foi tão fácil.</h1>
                     <h2 id="subtitle">Do gerenciamento de tempo ao controle da<br>atividade física: tenha tudo em um só lugar.</h2>
                     <div id="buttons">
-                        <a href="#section-2">
-                            <button id="saiba-button">Saiba Mais</button>
-                        </a>
-                        <a href="#">
-                            <button>Cadastre-se</button>
-                        </a>
+                            <button id="saiba-button">
+                                <a href="#section-2">Saiba Mais</a>
+                            </button>
+                        <button>
+                            <a href="#">Cadastre-se</a>
+                        </button>
                     </div>
                 </div>  
             </div>

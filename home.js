@@ -1,9 +1,13 @@
-$('.nav a[href^="#"]').on('click', function(e) {
-	e.preventDefault();
-	var id = $(this).attr('href'),
-			targetOffset = $(id).offset().top;
-			
-	$('html, body').animate({ 
-		scrollTop: targetOffset - 100
-	}, 500);
-});
+function openSideBar(){
+    document.getElementById("mobile-nav-bar").style.left = "10vw";
+    document.getElementById("open-side-bar").style.opacity = "0";
+};
+
+function closeSideBar(){
+    document.getElementById("mobile-nav-bar").style.left = "100vw";
+    document.getElementById("open-side-bar").style.opacity = "1";
+};
+
+document.querySelector("#open-side-bar").addEventListener("click", openSideBar)
+document.querySelector("#close-side-bar").addEventListener("click", closeSideBar)
+document.querySelectorAll(".mobile-nav-link a").forEach((link) => {link.addEventListener("click", closeSideBar)})
