@@ -1,16 +1,26 @@
+/* ----------- Corpo ---------------*/
+html {
+  font-size: 18px;
+}
+
 body {
   font-family: "Nunito";
   margin: 0;
 }
 
+/* ------------ Section-1 ------------*/
+
 #text-1 {
   font-weight: bold;
   color: #41529f;
-  font-size: 32px;
+  font-size: 2rem;
 }
 
-h2 {
+#subtitle {
   font-weight: lighter;
+  font-size: 1.3rem;
+  margin: 10px 0;
+  padding: 15px 0;
 }
 
 button {
@@ -18,7 +28,7 @@ button {
   color: white;
   padding: 15px;
   font-weight: bold;
-  font-size: 17px;
+  font-size: 1rem;
   border: none;
   border-radius: 10px;
   transition-duration: 0.4s;
@@ -92,6 +102,7 @@ button:hover {
   height: fit-content;
 }
 
+/* ------------- Section-2 ------------- */
 #section-2 {
   background-color: #61bbb6;
   width: 100%;
@@ -102,19 +113,9 @@ button:hover {
   text-align: center;
 }
 
-.title h2 {
-  margin: 10px 0;
-  padding: 0;
-  font-weight: bold;
-  font-size: 28px;
-}
-
-#title-1 {
+#title-1 h2 {
   color: white;
-}
-
-#title-2 {
-  color: #41529f;
+  font-size: 1.5rem;
 }
 
 #card {
@@ -141,7 +142,7 @@ button:hover {
   grid-template-rows: 1fr;
   grid-column-gap: 100px;
   grid-row-gap: 0px;
-  margin: 50px 250px;
+  margin: 50px 20%;
 }
 
 #image {
@@ -159,12 +160,12 @@ button:hover {
 
 .container-title {
   color: #41529f;
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 
 .container-title h2 {
   color: #41529f;
-  font-size: 24px;
+  font-size: 1.3rem;
   font-weight: bold;
 }
 
@@ -175,6 +176,8 @@ button:hover {
   padding-left: 30px;
 }
 
+/* ----------------- Section-3 ----------------*/
+
 #section-3 {
   width: 100%;
   padding: 50px 0px;
@@ -184,6 +187,11 @@ button:hover {
   display: flex;
   padding: 50px;
   justify-content: space-evenly;
+}
+
+#title-2 h2 {
+  color: #41529f;
+  font-size: 1.5rem;
 }
 
 #desenho {
@@ -261,4 +269,99 @@ button:hover {
 
 #linkedin > * {
   margin-right: 5px;
+}
+
+/* ------------- Responsividade ------------- */
+@media only screen and (max-width: 890px) {
+  html {
+    font-size: 14px;
+  }
+
+  #section-main {
+    flex-direction: column;
+  }
+
+  #section-text {
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  #section-image {
+    display: flex;
+    justify-content: center;
+  }
+
+  #section-image img {
+    width: 250px;
+  }
+
+  #text-1 {
+    font-size: 24px;
+  }
+
+  #row {
+    display: flex;
+    flex-direction: column;
+    margin: 50px 15%;
+    align-items: center;
+  }
+
+  #image img {
+    width: 50px;
+  }
+
+  #card {
+    margin-bottom: 40px;
+    max-width: 400px;
+  }
+
+  #section-3-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #cards-2 {
+    margin: 0px 3%;
+    margin-bottom: 40px;
+  }
+
+  #desenho img {
+    width: 250px;
+  }
+
+  #footer {
+    padding: 0px 25px;
+  }
+
+  #footer-logo img {
+    width: 100px;
+  }
+
+  #logo img {
+    width: 100px;
+  }
+}
+
+@media only screen and (max-width: 1700px) {
+  #row {
+    margin: 10px 10%;
+    grid-column-gap: 50px;
+    margin-top: 25px;
+  }
+
+  #text-1 {
+    font-size: 28px;
+  }
+
+  #subtitle {
+    font-size: 20px;
+  }
+
+  #section-image img {
+    width: 300px;
+  }
+
+  #desenho img {
+    width: 400px;
+  }
 }
