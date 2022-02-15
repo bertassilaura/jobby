@@ -294,8 +294,8 @@ body{
 .custom-slider{
     display: flex;
     flex-flow: column nowrap;
-    width: 400px;
-    height: 400px;
+    width: 200px;
+    height: 200px;
 }
 
 .custom-slider__view{

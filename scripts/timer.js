@@ -57,7 +57,7 @@ function Clock(time, breakInterval, breakTime){
     this.break = () => {
         this.breakCountdown.decrement();
         if (this.breakCountdown.over()){
-            this.endBreak()
+            this.endBreak();
         }
         else{
             svg_update((this.breakTime.totalSeconds() - this.breakCountdown.totalSeconds())/this.breakTime.totalSeconds(), "break-path");

@@ -226,9 +226,6 @@ function createLineChart(data_entries, semanal){
 
     ${x_scale}
     ${y_scale}
-
-    <path d="M 32 10 L 32 210" stroke="grey" opacity="0.5"></path>
-    <path d="M 800 10 L 800 210" stroke="grey" opacity="0.5"></path>
     <path d="M 32 210 L 800 210" stroke="grey" opacity="0.5" ></path>
     <path d="M 32 160 L 800 160" stroke="grey" opacity="0.5" stroke-dasharray="10,10"></path>
     <path d="M 32 110 L 800 110" stroke="grey" opacity="0.5"></path>
