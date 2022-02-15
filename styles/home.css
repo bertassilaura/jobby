@@ -41,21 +41,22 @@ button:hover {
   color: white;
 }
 
-#saiba-button a {
+a {
   text-decoration: none;
+  color: inherit;
 }
 
-#nav-link-1 {
+.nav-link-1 {
   text-decoration: none;
   color: 41529f;
   font-weight: bold;
 }
 
-#nav-link-1:hover {
+.nav-link-1:hover {
   color: #61bbb6;
 }
 
-#nav-link-2 {
+.nav-link-2 {
   text-decoration: none;
   color: white;
   font-weight: bold;
@@ -70,7 +71,7 @@ button:hover {
   background-color: 0278ae;
 }
 
-#saiba-button {
+#saiba-button{
   margin-right: 15px;
 }
 
@@ -78,15 +79,19 @@ button:hover {
   display: flex;
   justify-content: space-between;
   padding: 40px 70px;
+  align-items: center;
+}
+
+#mobile-nav-bar{
+  display: none;
+}
+
+#open-side-bar{
+  display: none;
 }
 
 #links {
   height: fit-content;
-}
-
-#nav-bar {
-  display: flex;
-  align-items: center;
 }
 
 #links * {
@@ -106,6 +111,10 @@ button:hover {
 
 #text {
   height: fit-content;
+}
+
+#mobile-links{
+  display: none;
 }
 
 /* ------------- Section-2 ------------- */
@@ -349,7 +358,77 @@ button:hover {
 
   #logo img {
     width: 100px;
+    margin-left: 10px;
   }
+
+  #links{
+    display: none;
+  }
+
+  #nav-bar{
+    position: fixed;
+    flex: 0;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    margin: 0px;
+    padding: 5px 0px 5px 0px;
+    background-color: #fff;
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  #mobile-nav-bar{
+    position: fixed;
+    top: 0;
+    background-color: rgba(255,255,255,0.95);
+    width: 90vw;
+    height: 100%;
+    left: 100vw;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10% 0px 0px 0px;
+    padding-top: 10px;
+    transition: 1s;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  #open-side-bar{
+    display: block;
+    font-size: 1.5rem;
+    color: #41529f;
+    transition: 1s;
+    margin-right: 15px;
+  }
+
+  #close-side-bar{
+    display: block;
+    padding-right: 20px;
+    font-size: 1.5rem;
+    color: #41529f;
+  }
+
+  .mobile-nav-link{
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: #41529f;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .mobile-nav-link.close{
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: end;
+    color: #41529f;
+    font-size: 1.5rem;
+  }
+
 }
 
 @media only screen and (max-width: 1700px) {
