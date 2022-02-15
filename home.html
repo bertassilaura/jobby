@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="home.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <link rel="stylesheet" href="./styles/home.css"/>
-    <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-icon" href="./imagens/house.ico"/>
     <title>Home</title>
 </head>
@@ -14,15 +13,14 @@
     <div id="section-1">
         <div id="nav-bar">
             <div id="logo">
-                <a href="#">
-                    <img src="./imagens/jobby_logo_name.png">
-                </a>
+                <img src="./imagens/jobby_logo_name.png">
             </div>
 
             <div id="links">
                 <nav>
                     <a href="#" id="nav-link-1">Home</a>
                     <a href="#" id="nav-link-1">Login</a>
+                    <a href="#section-3" id="nav-link-1">Nosso Time</a>
                     <button id="nav-button">
                         <a href="#" id="nav-link-2">Cadastre-se</a>
                     </button>
@@ -37,8 +35,12 @@
                     <h1 id="text-1">Trabalhar e estudar em casa<br>nunca foi tão fácil.</h1>
                     <h2 id="subtitle">Do gerenciamento de tempo ao controle da<br>atividade física: tenha tudo em um só lugar.</h2>
                     <div id="buttons">
-                        <button>Saiba mais</button>
-                        <button>Cadastre-se</button>
+                        <a href="#section-2">
+                            <button id="saiba-button">Saiba Mais</button>
+                        </a>
+                        <a href="#">
+                            <button>Cadastre-se</button>
+                        </a>
                     </div>
                 </div>  
             </div>
@@ -161,7 +163,9 @@
     </div>
     <div id="footer">
         <div id="footer-logo">
-            <img src="./imagens/jobby-white-logo-2.png">
+            <a href="#section-1">
+                <img src="./imagens/jobby-white-logo-2.png">
+            </a>
         </div>
         <div id="linkedin-links">
             
@@ -179,6 +183,6 @@
             </a>
         </div>
     </div>
-    
+    <script type="text/javascript" src="home.js"></script>  
 </body>
 </html>

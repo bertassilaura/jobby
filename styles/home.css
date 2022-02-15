@@ -1,6 +1,7 @@
 /* ----------- Corpo ---------------*/
 html {
   font-size: 18px;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -32,11 +33,16 @@ button {
   border: none;
   border-radius: 10px;
   transition-duration: 0.4s;
+  cursor: pointer;
 }
 
 button:hover {
   background-color: #87dfd6;
   color: white;
+}
+
+#saiba-button a {
+  text-decoration: none;
 }
 
 #nav-link-1 {
@@ -64,7 +70,7 @@ button:hover {
   background-color: 0278ae;
 }
 
-#buttons * {
+#saiba-button {
   margin-right: 15px;
 }
 
@@ -123,6 +129,7 @@ button:hover {
   transition: 0.3s;
   border-radius: 15px;
   background-color: white;
+  height: 100%;
 }
 
 #card:hover {
@@ -174,6 +181,9 @@ button:hover {
   padding-bottom: 30px;
   padding-right: 30px;
   padding-left: 30px;
+  flex: 1;
+  flex-flow: column nowrap;
+  justify-content: center;
 }
 
 /* ----------------- Section-3 ----------------*/
@@ -363,5 +373,27 @@ button:hover {
 
   #desenho img {
     width: 400px;
+  }
+
+  @media only screen and (max-width: 420px) {
+    #buttons {
+      display: block;
+    }
+
+    #section-image img {
+      width: 200px;
+    }
+
+    #logo img {
+      width: 80px;
+    }
+
+    #avatar img {
+      width: 65px;
+    }
+
+    #desenho img {
+      width: 200px;
+    }
   }
 }
