@@ -5,18 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" type="image/x-icon" href="./imagens/favicon.ico"/>
-    <link rel="stylesheet" href="./styles/timer.css"/>
+    <link rel="stylesheet" href="./styles/time_tracker.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
-    <title>Cronômetro</title>
+    <title>Time Tracker</title>
 </head>
 
 <body>
 
     <nav id="side-bar">
-        <a class="side-bar__icon far fa-clock" href="./time_tracker.html">
+        <a class="side-bar__icon disabled far fa-clock" href="./time_tracker.html">
         </a>
-        <a class="side-bar__icon  disabled far fa-hourglass" href="./timer.html">
+        <a class="side-bar__icon far fa-hourglass" href="./timer.html">
         </a>
         <a class="side-bar__icon far fa-chart-bar" href="./relatorios.html">
         </a>
@@ -26,8 +26,8 @@
 
     <nav id="mobile-side-bar">
         <a id="close-side-bar" class="fas fa-times mobile-side-bar__option"></a>
-        <a class="mobile-side-bar__option disabled" href="./timer.html">Cronômetro</a>
-        <a class="mobile-side-bar__option" href="./time_tracker.html">Time Tracker</a>
+        <a class="mobile-side-bar__option" href="./timer.html">Cronômetro</a>
+        <a class="mobile-side-bar__option disabled" href="./time_tracker.html">Time Tracker</a>
         <a class="mobile-side-bar__option" href="./relatorios.html">Relatórios</a>
         <a class="mobile-side-bar__option" href="./configuracoes.html">Configurações</a>
     </nav>
@@ -56,7 +56,7 @@
         <div id="center-container">
             <div class="title-container">
                 <span class="fas fa-clock title-container__icon"></span>
-                <h1 class="title-container__text">Cronômetro</h1>
+                <h1 class="title-container__text">Time Tracker</h1>
             </div>
 
             <div class="clock">
@@ -82,34 +82,24 @@
                 </div>
             </div>
 
-            <div id="configurations">
+            <div id="atividades">
                 <div class="configuration-title">
-                    <span class="far fa-edit configuration-title__icon"></span>
-                    <span class="configuration-title__text">Configurações</span>
+                    <p>Selecione a atividade a ser iniciada:</p>
                 </div>
+               <div id="atividades-title">
+                   <h4>Seus Horários</h4>
+               </div>
+            </div>
 
-                <div class="border-container">
-                    <span class="border-container__text">Duração de</span>
-                        <input type="number" class="number-input" id="duration-hour" required/>
-                        <span class="border-container__pill">Horas</span>
-                        <input type="number" class="number-input" id="duration-minute" required/>
-                        <span class="border-container__pill">Minutos</span>
-                </div>
+            <div class="border-container" id="configured-times">
 
-                <div class="border-container">
-                    <span class="border-container__text">Pausa de</span>
-                    <input type="number" class="number-input" id="break-hour" required/>
-                    <span class="border-container__pill">Horas</span>
-                    <input type="number" class="number-input" id="break-minute" required/>
-                    <span class="border-container__pill">Minutos</span>
-                </div>
+                <div class="custom-times">
+                    <div class="custom-times__header">
+                        <span class="custom-times__header__text">Nome</span>
+                        <span class="custom-times__header__text">Duração</span>
+                        <span class="custom-times__header__text custom-times__header__text--pausas">Pausas</span>
+                    </div>
 
-                <div class="border-container">
-                    <span class="border-container__text">Repetir a cada</span>
-                        <input type="number" class="number-input" id="repeat-hour" required/>
-                        <span class="border-container__pill">Horas</span>
-                        <input type="number" class="number-input" id="repeat-minute" required/>
-                        <span class="border-container__pill">Minutos</span>
                 </div>
             </div>
 
@@ -135,33 +125,21 @@
                 <div class="break-popup__main" id="break-stretch">
                     <div class="custom-slider" id="stretch-slider">
                         <div class="stretch-pose">
-                            <p>Com as pernas paralelas e semi-flexionadas, pressione o cotovelo esquerdo contra o corpo.</p>
                             <img src="./imagens/strech-pose-1.svg" class="stretch-pose__img"/>
                         </div>
                         <div class="stretch-pose">
-                            <p>Afaste as pernas e desça o tronco até sentir uma leve tensão na parte de trás da coxa.</p>
                             <img src="./imagens/strech-pose-2.svg" class="stretch-pose__img"/>
                         </div>
                         <div class="stretch-pose">
-                                <p>Afaste as pernas e desça o tronco até sentir uma leve tensão na parte de trás da coxa.<br>
-                                    Com a mão direita, segure seu tornozelo direito e levante seu braço esquerdo para cima.<br>
-                                </p>
-                                <img src="./imagens/strech-pose-3.svg" class="stretch-pose__img"/>
+                            <img src="./imagens/strech-pose-3.svg" class="stretch-pose__img"/>
                         </div>
                         <div class="stretch-pose">
-                            <p>Dobre uma perna para frente e mantenha a outra semi-flexionada.
-                                Levante seus braços, juntando as palmas das mãos.
-                            </p>
                             <img src="./imagens/strech-pose-4.svg" class="stretch-pose__img"/>
                         </div>
                         <div class="stretch-pose">
-                            <p>Com as pernas paralelas e semi-flexionadas, pressione o cotovelo direito contra o corpo.</p>
                             <img src="./imagens/strech-pose-1.svg" class="stretch-pose__img"/>
                         </div>
                         <div class="stretch-pose">
-                            <p>Afaste as pernas e desça o tronco até sentir uma leve tensão na parte de trás da coxa.<br>
-                                Com a mão esquerda, segure seu tornozelo esquerdo e levante seu braço direito para cima.<br>
-                            </p>
                             <img src="./imagens/strech-pose-3.svg" class="stretch-pose__img"/>
                         </div>
                     </div>
@@ -183,6 +161,5 @@
 <script src="./scripts/side-bar_mobile.js"> </script>
 <script src="./scripts/back.js"></script>
 <script src="./scripts/slider.js"></script>
-<script src="./scripts/timer.js"></script>
-
+<script src="./scripts/time_tracker.js"></script>
 </html>

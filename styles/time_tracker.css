@@ -1,0 +1,696 @@
+/* ------------------------- Corpo ------------------------------ */
+
+html {
+  font-size: 24px;
+}
+
+body {
+  overflow: hidden;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  flex-flow: row nowrap;
+  margin: 0;
+  font-family: "Nunito";
+}
+
+#mobile-header {
+  display: none;
+}
+
+/* ------------------------- Barra Lateral ------------------------------ */
+
+#side-bar {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 0 0 80px;
+  background-color: #41529f;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 80px;
+}
+
+.side-bar__icon {
+  text-decoration: none;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  color: #fff;
+  margin-bottom: 30px;
+  transition: 0.5s;
+}
+
+.side-bar__icon.disabled {
+  color: #61bbb6;
+  cursor: none;
+  pointer-events: none;
+}
+
+.side-bar__icon:hover {
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+  color: #61bbb6;
+}
+
+/* ------------------------- Conteúdo ------------------------------ */
+
+#content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 20px;
+}
+
+/* ------------------------- Topo do Conteúdo ------------------------------ */
+
+#top-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  flex: 2;
+  width: 100%;
+}
+
+#welcome_container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-left: 20px;
+}
+
+.welcome-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.welcome-text__hello {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #41529f;
+}
+
+.welcome-text__welcome {
+  font-size: 0.75rem;
+}
+
+#avatar {
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  margin-right: 20px;
+}
+
+.logo__image {
+  height: 30%;
+  margin-right: 10px;
+}
+
+.logo__text {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #41529f;
+}
+
+/* ------------------------- Centro do Conteúdo ------------------------------ */
+
+#center-container {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 10;
+  width: 80%;
+}
+
+.title-container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  align-content: center;
+  margin-bottom: 5px;
+  height: 1.08rem;
+}
+
+.title-container__text {
+  font-size: 1.08rem;
+  color: #41529f;
+  margin-left: 10px;
+}
+
+.title-container__icon {
+  font-size: 1.08rem;
+  color: #41529f;
+}
+
+/*----------  Clock  ----------*/
+
+.clock {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+}
+
+.clock-container {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
+}
+
+.clock-text {
+  position: relative;
+  display: inline;
+  left: -100%;
+  font-size: 1.5rem;
+  color: #41529f;
+  font-weight: 500;
+  padding: 0px;
+  flex: 0 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+.clock-circle {
+  height: 200px;
+  width: 200px;
+}
+
+.clock-controls {
+  display: flex;
+  width: 70px;
+  height: fit-content;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0px;
+}
+
+.clock-button {
+  font-size: 0.8rem;
+  color: #41529f;
+  background-color: rgba(255, 255, 255, 0);
+  border-style: none;
+  cursor: pointer;
+}
+
+#stop-button {
+  display: none;
+}
+
+#pause-button {
+  display: none;
+}
+
+/*----------  Clock popup  ----------*/
+
+#break-popup {
+  position: absolute;
+  font-size: 34px;
+  display: none;
+  flex-flow: column nowrap;
+  top: 50%;
+  left: 50%;
+  width: 50vw;
+  height: 60vh;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #fff;
+  color: #41529f;
+  box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.4);
+}
+
+.break-popup__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+}
+
+.break-popup__corner-button {
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#break-popup-back {
+  display: none;
+}
+
+#break-stretch {
+  display: none;
+}
+
+.break-popup__circle {
+  height: 2rem;
+}
+
+.break-popup__main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  flex: 1;
+  align-items: center;
+  overflow: hidden;
+}
+
+.break-popup__icon {
+  font-size: 2rem;
+  margin-bottom: 0px;
+}
+
+.break-popup__title-container {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  height: fit-content;
+}
+
+.break-popup__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+
+.break-rule {
+  width: 2rem;
+}
+
+.break-popup__text {
+  color: #000;
+  font-size: 1rem;
+}
+
+.break-popup__button {
+  font-size: 0.8rem;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #61bbb6;
+  color: #fff;
+  height: 1.5rem;
+  padding: 1rem 30px;
+  border: 1px solid #61bbb6;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.break-popup__button:hover {
+  background-color: #fff;
+  color: #61bbb6;
+}
+
+/*-------------------  Horários Personalizados  -------------------*/
+
+.border-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #41529f;
+  border-radius: 10px;
+  width: 546px;
+  height: 200px;
+  padding: 20px 10px 20px 20px;
+}
+
+.custom-times {
+  display: flex;
+  flex-flow: column nowrap;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.custom-times::-webkit-scrollbar {
+  width: 3px;
+}
+
+.custom-times::-webkit-scrollbar-thumb {
+  background: #41529f;
+  height: 1px;
+  border-radius: 10px;
+}
+
+.custom-times::-webkit-scrollbar-thumb:hover {
+  background: #303f7e;
+}
+
+/*----------  Cabeçalho dos horários personalizados  ----------*/
+
+.custom-times__header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 98%;
+  height: 30px;
+  margin-bottom: 10px;
+  padding: 2px;
+}
+
+.custom-times__header__text--pausas {
+  width: 34%;
+}
+
+.custom-times__header__text {
+  text-align: center;
+  width: 28%;
+  font-size: 0.66rem;
+  color: #41529f;
+  font-weight: 600;
+}
+
+/*----------  Itens dos Horários Personalizados  ----------*/
+
+.custom-times__item {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  width: 98%;
+  padding: 2px;
+  margin-bottom: 10px;
+}
+
+.time {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: 1.5rem;
+  justify-content: space-around;
+  align-items: center;
+  border: 2px solid #41529f;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.time__item {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 28%;
+  height: 80%;
+  background-color: #41529f;
+  border-radius: 5px;
+  font-size: 0.5rem;
+  color: #fff;
+}
+
+.time__item--pausas {
+  width: 34%;
+}
+
+/*----------  Slider  ----------*/
+
+.custom-slider {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 90%;
+  height: 100%;
+}
+
+.custom-slider__view {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  margin: 0px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.custom-slider__slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: 0px;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: 1s;
+}
+
+.custom-slider__slide:last-child {
+  margin-right: 0px;
+}
+
+.custom-slider__controls {
+  display: flex;
+  height: 10%;
+  margin-top: 3px;
+  flex-flow: row nowrap;
+  height: fit-content;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.custom-slider__dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 30px 0px 30px;
+}
+
+.custom-slider__arrow {
+  font-size: 1.2rem;
+  color: #41529f;
+}
+
+.custom-slider__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 5px;
+  border-radius: 50%;
+  background-color: #61bbb6;
+  transition: 1s;
+}
+
+.custom-slider__dot:last-child {
+  margin: 0px;
+}
+
+.custom-slider__dot.active {
+  background-color: #41529f;
+  pointer-events: none;
+}
+
+.stretch-pose {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.stretch-pose__img {
+  max-height: 90%;
+  width: auto;
+  justify-self: center;
+  filter: invert(62%) sepia(43%) saturate(377%) hue-rotate(128deg)
+    brightness(99%) contrast(92%);
+}
+
+/* ------------------------- Fundo do Conteúdo ------------------------------ */
+
+#bottom-container {
+  display: flex;
+  flex: 2;
+  width: 100%;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+
+.back-button {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  width: fit-content;
+  color: #41529f;
+  transition: 0.5s;
+  margin-right: 25px;
+}
+
+.back-button:hover {
+  color: #61bbb6;
+}
+
+.back-button__icon {
+  font-size: 0.83rem;
+  color: inherit;
+  margin-right: 10px;
+}
+
+.back-button__text {
+  font-size: 0.66rem;
+  color: inherit;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* ------------------------- Mobile ------------------------------ */
+
+#mobile-side-bar {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  html {
+    font-size: 22px;
+  }
+
+  .border-container {
+    width: 100%;
+    padding: 10px 2px 10px 2px;
+  }
+
+  /*----------  Header  ----------*/
+
+  #side-bar {
+    display: none;
+  }
+
+  #mobile-header {
+    display: flex;
+    flex: 1;
+    background-color: #41529f;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+
+  #open-side-bar {
+    color: white;
+    font-size: 1.25rem;
+    margin-left: 20px;
+    transition: 0.5s;
+  }
+
+  #white-logo {
+    height: 40px;
+    margin-right: 20px;
+  }
+
+  /*----------  Alteração Content  ----------*/
+
+  #avatar {
+    height: 50px;
+    max-height: 10%;
+    width: 50px;
+  }
+
+  #welcome_container {
+    margin: 5px 0px 2px 0px;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  #content {
+    padding: 0px 0px 0px 0px;
+    align-items: center;
+  }
+
+  #top-container {
+    width: 80%;
+  }
+
+  #bottom-container {
+    justify-content: center;
+  }
+
+  #break-popup {
+    width: 80vw;
+    height: 50vh;
+  }
+
+  .clock {
+    margin-top: 5px;
+  }
+
+  /*----------  Side-bar  ----------*/
+
+  #mobile-side-bar {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 0;
+    overflow-y: hidden;
+    background-color: rgba(65, 82, 159, 0.95);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    transition: 0.5s;
+  }
+
+  #close-side-bar {
+    margin-bottom: 50px;
+    margin-top: 20px;
+  }
+
+  #close-side-bar:hover {
+    color: #b4e4e1;
+  }
+
+  .mobile-side-bar__option {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 30px;
+    transition: 0.5s;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mobile-side-bar__option:hover {
+    color: #61bbb6;
+    font-size: 1.6rem;
+  }
+
+  .mobile-side-bar__option.disabled {
+    color: #61bbb6;
+    cursor: none;
+    pointer-events: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  html {
+    font-size: 20px;
+  }
+
+  #avatar {
+    height: 45px;
+    width: 45px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  html {
+    font-size: 18px;
+  }
+}
