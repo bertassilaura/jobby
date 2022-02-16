@@ -74,9 +74,9 @@
                             </div>
                         </div>
 
-                        <div class="border-container border-container--breakable">
+                        <div class="border-container border-container--breakable border-container--none">
                             <label for="time-interval" class="border-container__text">Receber aviso a cada</label>
-                            <input type="number" class="number-input" id="time-interval" min="0" max="59" required/>
+                            <input type="number" class="number-input" id="time-interval" min="1" max="59" required/>
                             <div class="custom-select">
                                 <select id="choose-interval">
                                     <option value="minutos"selected>minutos</option>
@@ -85,9 +85,9 @@
                             </div>
                         </div>
 
-                        <div class="border-container border-container--breakable">
+                        <div class="border-container border-container--breakable border-container--none">
                             <label for="water-quantity" class="border-container__text">Quantidade de água</label>
-                            <input type="number" class="number-input" id="water-quantity" min="0" max="1000" required/>
+                            <input type="number" class="number-input" id="water-quantity" min="1" max="1000" required/>
                             <div class="custom-select">
                                 <select id="choose-water-unit">
                                     <option value="litros"selected>L</option>
@@ -119,4 +119,5 @@
 <script src="scripts/selector.js"></script>
 <script src="./scripts/back.js"></script>
 <script src="scripts/switch.js"></script>
+<script src="scripts/config_hidratacao.js"></script>
 </html>

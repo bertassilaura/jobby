@@ -302,7 +302,7 @@ input[type=number] {
 #break-popup{
     position: absolute;
     font-size: 34px;
-    display: none;
+    display: flex; /*none*/
     flex-flow: column nowrap;
     top: 50%;
     left: 50%;
@@ -493,6 +493,29 @@ input[type=number] {
     filter: invert(62%) sepia(43%) saturate(377%) hue-rotate(128deg) brightness(99%) contrast(92%);
 }
 
+/* ------------------- Stretch pose texts ------------------------ */
+
+.stretch-pose__text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+p{
+    display: flex;
+    height: 80%;
+    justify-content: flex-start;
+    align-content: center;
+    width: 40%;
+    flex-flow: column;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #41529F;
+    white-space: normal;
+}
 
 /* ------------------------- Fundo do Conteúdo ------------------------------ */
 

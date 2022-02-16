@@ -39,11 +39,15 @@ function switch_click(){
     if (checkBox.checked == true){
         this.querySelector("#off_animation").beginElement();
         checkBox.checked = false
+        
     }
     else{
         this.querySelector("#on_animation").beginElement();
         checkBox.checked = true
     }
+    
+    let event = new Event("change");
+    checkBox.dispatchEvent(event);
 }
 
 configurate_custom_switches();
