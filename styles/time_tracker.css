@@ -154,6 +154,21 @@ body {
   color: #41529f;
 }
 
+#atividades {
+  color: #41529f;
+}
+
+#title-1 {
+  font-size: 1rem;
+  margin-top: 50px;
+}
+
+#title-2 {
+  font-size: 0.9rem;
+  margin-top: 35px;
+  margin-bottom: 10px;
+}
+
 /*----------  Clock  ----------*/
 
 .clock {
