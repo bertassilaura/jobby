@@ -164,6 +164,7 @@ function svg_start(target){
 
 function notification(name){
     const audio = new Audio(`./sounds/${name}`);
+    audio.volume = 0.5;
     audio.play()
 }
 

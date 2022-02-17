@@ -30,6 +30,7 @@ function HydrationMonitor(on, time, water){
 
     this.openPopup = () =>{
         let popup = document.querySelector("#water-popup");
+        notification("pristine.mp3")
         popup.style.display = "flex"
         popup.querySelector("#water-quantity-text").innerHTML = `${this.water.quantity}${this.water.measure}`
         popup.querySelector("#close-water-popup").addEventListener("click", this.closePopup)
@@ -47,6 +48,14 @@ function HydrationMonitor(on, time, water){
         popup.style.display = "none"
         this.setUp()
     }
+}
+
+// ================================== Notification ========================================
+
+function notification(name){
+    const audio = new Audio(`./sounds/${name}`);
+    audio.volume = 0.5;
+    audio.play()
 }
 
 // ================================== Mensagens de Erro ========================================
