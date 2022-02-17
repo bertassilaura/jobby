@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/x-icon" href="./imagens/favicon.ico"/>
+    <link rel="stylesheet" href="./styles/configuracao_hidratacao.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
+    <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
+    
+    <title>Hidratação</title>
+</head>
+
+<body>
+
+    <nav id="side-bar">
+        <a class="side-bar__icon far fa-clock" href="./time_tracker.html">
+        </a>
+        <a class="side-bar__icon far fa-hourglass" href="./timer.html">
+        </a>
+        <a class="side-bar__icon far fa-chart-bar" href="./relatorios.html">
+        </a>
+        <a class="side-bar__icon fas fa-cog" href="./configuracoes.html">
+        </a>
+    </nav>
+
+    <nav id="mobile-side-bar">
+        <a id="close-side-bar" class="fas fa-times mobile-side-bar__option"></a>
+        <a class="mobile-side-bar__option" href="./timer.html">Cronômetro</a>
+        <a class="mobile-side-bar__option" href="./time_tracker.html">Time Tracker</a>
+        <a class="mobile-side-bar__option" href="./relatorios.html">Relatórios</a>
+        <a class="mobile-side-bar__option" href="./configuracoes.html">Configurações</a>
+    </nav>
+
+    <div id="content">
+
+        <div id="mobile-header">
+            <a id="open-side-bar" class="fas fa-bars"></a>
+            <img id="white-logo" src="./imagens/jobby_white_logo.png"/>
+        </div>
+
+        <div id="top-container">
+            <div id="welcome_container">
+                <img id="avatar" src="./imagens/avatar.jpg"/>
+                <div class="welcome-text">
+                    <span class="welcome-text__hello">Olá, Jonah!</span>
+                    <span class="welcome-text__welcome">Bem-vindo(a) de volta!</span>
+                </div>
+            </div>
+            <div class="logo">
+                <img class="logo__image" src="./imagens/jobby_logo.png"/>
+                <h2 class="logo__text">jobby</h2>
+            </div>
+        </div>
+
+        <div id="center-container">
+            
+            <div class="title-container">
+                <span class="fas fa-tint title-container__icon"></span>
+                <h1 class="title-container__text">Minha Hidratação</h1>
+            </div>
+
+            <div class="add-hydration">
+                <form action="" id="add-hydration-form">
+                    
+                    <div class="add-hydration__line">
+
+                        <div class="border-container border-container--breakable">
+                            <label for="hydration-reminder" class="border-container__text">Receber lembretes de hidratação</label>
+                            <div class="switch">
+                                <input type="checkbox" id="hydration-reminder"/>
+                            </div>
+                        </div>
+
+                        <div class="border-container border-container--breakable border-container--none">
+                            <label for="time-interval" class="border-container__text">Receber aviso a cada</label>
+                            <input type="number" class="number-input" id="time-interval" min="1" max="59" required/>
+                            <div class="custom-select">
+                                <select id="choose-interval">
+                                    <option value="minutos"selected>minutos</option>
+                                    <option value="horas">horas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="border-container border-container--breakable border-container--none">
+                            <label for="water-quantity" class="border-container__text">Quantidade de água</label>
+                            <input type="number" class="number-input" id="water-quantity" min="1" max="1000" required/>
+                            <div class="custom-select">
+                                <select id="choose-water-unit">
+                                    <option value="litros"selected>L</option>
+                                    <option value="mililitros">mL</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <button type="button" class="save-button" id="hydration-save-button">
+                        Salvar
+                    </button>
+                    
+                </form>
+            </div>
+        </div>
+
+        <div id="bottom-container">
+            <div class="back-button">
+                <span class="fas fa-arrow-left back-button__icon"></span>
+                <span class="back-button__text">Voltar</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src="./scripts/side-bar_mobile.js"> </script>
+<script src="scripts/selector.js"></script>
+<script src="./scripts/back.js"></script>
+<script src="scripts/switch.js"></script>
+<script src="scripts/config_hidratacao.js"></script>
+</html>

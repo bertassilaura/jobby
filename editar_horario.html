@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/x-icon" href="./imagens/favicon.ico"/>
+    <link rel="stylesheet" href="./styles/editar_horario.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
+    <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
+    <title>Editar Horário</title>
+</head>
+
+<body>
+
+    <nav id="side-bar">
+        <a class="side-bar__icon far fa-clock" href="./time_tracker.html">
+        </a>
+        <a class="side-bar__icon far fa-hourglass" href="./timer.html">
+        </a>
+        <a class="side-bar__icon far fa-chart-bar" href="./relatorios.html">
+        </a>
+        <a class="side-bar__icon fas fa-cog" href="./configuracoes.html">
+        </a>
+    </nav>
+
+    <nav id="mobile-side-bar">
+        <a id="close-side-bar" class="fas fa-times mobile-side-bar__option"></a>
+        <a class="mobile-side-bar__option" href="./timer.html">Cronômetro</a>
+        <a class="mobile-side-bar__option" href="./time_tracker.html">Time Tracker</a>
+        <a class="mobile-side-bar__option" href="./relatorios.html">Relatórios</a>
+        <a class="mobile-side-bar__option" href="./configuracoes.html">Configurações</a>
+    </nav>
+
+    <div id="content">
+
+        <div id="mobile-header">
+            <a id="open-side-bar" class="fas fa-bars"></a>
+            <img id="white-logo" src="./imagens/jobby_white_logo.png"/>
+        </div>
+
+        <div id="top-container">
+            <div id="welcome_container">
+                <img id="avatar" src="./imagens/avatar.jpg"/>
+                <div class="welcome-text">
+                    <span class="welcome-text__hello">Olá, Jonah!</span>
+                    <span class="welcome-text__welcome">Bem-vindo(a) de volta!</span>
+                </div>
+            </div>
+            <div class="logo">
+                <img class="logo__image" src="./imagens/jobby_logo.png"/>
+                <h2 class="logo__text">jobby</h2>
+            </div>
+        </div>
+
+        <div id="center-container">
+            <div class="title-container">
+                <h1>Editando Horário</h1>
+            </div>
+
+            <div class="edit-time">
+                <form action="" id="edit-time-form">
+                    <div class="edit-time__line-1">
+                        <div class="input-name">
+                            <div class="input-label">
+                                <span class="fas fa-pen input-label__icon"></span>
+                                <label class="input-label__text" for="name">Nome da Atividade</label>
+                            </div>
+                            <div class="border-container">
+                                    <input id="name" class="text-input" type="text" required/>
+                            </div>
+                        </div>
+
+                        <div class="input-duration">
+                            <div class="input-label">
+                                <span class="fas fa-clock input-label__icon"></span>
+                                <label class="input-label__text" for="duration-hour">Duração</label>
+                            </div>
+                            <div class="input-duration__inputs">
+                                <input class="number-input" id="duration-hour" type="number" min="0" max="99" required/>
+                                <span class="pill">Horas</span>
+                                <input class="number-input" id="duration-minute" type="number" min="0" max="59" required/>
+                                <span class="pill">Minutos</span>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="edit-time__line-2">
+                        <div class="input-label">
+                            <span class="far fa-stop-circle input-lable__icon"></span>
+                            <span class="input-label__text">Pausa</span>
+                        </div>
+
+                        <div class="border-container border-container--breakable">
+                            <label for="break-hour" class="border-container__text">Pausa de</label>
+                            <div>
+                                <input type="number" class="number-input" id="break-hour" min="0" max="99" required/>
+                                <span class="pill">Horas</span>
+                                <input type="number" class="number-input" id="break-minute" min="0" max="59" required/>
+                                <span class="pill">Minutos</span>
+                            </div>
+                        </div>
+
+                        <div class="border-container border-container--breakable">
+                            <label for="repeat-hour" class="border-container__text">Repetir a cada</label>
+                            <div>
+                                <input type="number" class="number-input" id="repeat-hour" min="0" max="99" required/>
+                                <span class="pill">Horas</span>
+                                <input type="number" class="number-input" id="repeat-minute" min="0" max="59" required/>
+                                <span class="pill">Minutos</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <button type="button" class="edit-time__save-button" id="edit-time-button">
+                        Salvar
+                    </button>
+                    
+                </form>
+            </div>
+        </div>
+
+        <div id="bottom-container">
+            <div class="back-button">
+                <span class="fas fa-arrow-left back-button__icon"></span>
+                <span class="back-button__text">Voltar</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script src="./scripts/side-bar_mobile.js"> </script>
+<script src="./scripts/back.js"></script>
+<script src="./scripts/editar_horario.js"></script>
+
+</html>

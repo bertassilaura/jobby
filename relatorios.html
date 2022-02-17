@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/x-icon" href="./imagens/favicon.ico"/>
+    <link rel="stylesheet" href="./styles/relatorios.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
+    <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
+    <title>Relatórios</title>
+</head>
+
+<body>
+    <nav id="side-bar">
+        <a class="side-bar__icon far fa-clock" href="./time_tracker.html">
+        </a>
+        <a class="side-bar__icon far fa-hourglass" href="./timer.html">
+        </a>
+        <a class="side-bar__icon  disabled far fa-chart-bar" href="./relatorios.html">
+        </a>
+        <a class="side-bar__icon fas fa-cog" href="./configuracoes.html">
+        </a>
+    </nav>
+
+    <nav id="mobile-side-bar">
+        <a id="close-side-bar" class="fas fa-times mobile-side-bar__option"></a>
+        <a class="mobile-side-bar__option" href="./timer.html">Cronômetro</a>
+        <a class="mobile-side-bar__option" href="./time_tracker.html">Time Tracker</a>
+        <a class="mobile-side-bar__option disabled " href="./relatorios.html">Relatórios</a>
+        <a class="mobile-side-bar__option" href="./configuracoes.html">Configurações</a>
+    </nav>
+
+    <div id="content">
+
+        <div id="mobile-header">
+            <a id="open-side-bar" class="fas fa-bars"></a>
+            <img id="white-logo" src="./imagens/jobby_white_logo.png"/>
+        </div>
+
+        <div id="top-container">
+            <div id="welcome_container">
+                <img id="avatar" src="./imagens/avatar.jpg"/>
+                <div class="welcome-text">
+                    <span class="welcome-text__hello">Olá, Jonah!</span>
+                    <span class="welcome-text__welcome">Bem-vindo(a) de volta!</span>
+                </div>
+            </div>
+            <div class="logo">
+                <img class="logo__image" src="./imagens/jobby_logo.png"/>
+                <h2 class="logo__text">jobby</h2>
+            </div>
+        </div>
+
+        <div id="center-container">
+            <div class="title-container">
+                <span class="far fa-chart-bar title-container__icon"></span>
+                <div class="custom-select">
+                    <select id="period">
+                        <option value="semanal" selected>Relatório Semanal</option>
+                        <option value="mensal">Relatório Mensal</option>
+                    </select>
+                </div>
+                <div class="refresh-btn">
+                    <button class="fas fa-sync-alt">
+
+                    </button>
+                </div>
+            </div>
+
+            <div class="line-1">
+                <div class="border-container pizza-graph">
+                    <div class="pizza-graph__legend">
+                        <span class="pizza-graph__title">De <span id="inicio-periodo">00/00</span> a <span id="fim-periodo">00/00</span>:</span>
+        
+                        <div id="pizza-legend">
+        
+                        </div>
+                    </div>
+        
+                    <div id="pizza">
+        
+                    </div>
+        
+                </div>
+        
+                <div class="border-container break-time">
+                    <span class="break-time__text">Você pausou por:</span>
+                    <div class="break-time__time">
+                        <span id="tempo-pausa"></span>
+                        <span>minutos</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line-graph border-container">
+                <div class="line-graph__header">
+                    <span class="line-graph__title">
+                        Seu tempo de atividade:
+                    </span>
+
+                    <div class="line-graph__legend">
+                        <div class="legend-item legend-item--atual">
+                            <div class="legend-dot"></div>
+                            <span class="legend-text">Semana Atual</span>
+                        </div>
+                        <div class="legend-item legend-item--passada">
+                            <div class="legend-dot"></div>
+                            <span class="legend-text">Semana Passada</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="line-graph">
+
+                </div>
+            </div>
+
+        <div id="bottom-container">
+            <div class="back-button">
+                <span class="fas fa-arrow-left back-button__icon"></span>
+                <span class="back-button__text">Voltar</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script src="./scripts/side-bar_mobile.js"> </script>
+<script src="./scripts/back.js"></script>
+<script src="./scripts/relatorios.js"></script>
+<script src="./scripts/selector.js"></script>
+
+</html>
