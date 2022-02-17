@@ -26,7 +26,7 @@ body{
     align-items: center;
     height: 100%;
     width: 400px;
-    background-image: url("C:/Users/leobr/Documents/UFSC/terceira_fase/Programação para web/trabalho/jobby/imagens/arte_pagina-cadastro-400.png");
+    background-image: url("../imagens/arte_pagina-cadastro-400.png");
     background-repeat: no-repeat;
     background-size: auto 100%;
     margin: 0px;
