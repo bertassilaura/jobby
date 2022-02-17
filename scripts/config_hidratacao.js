@@ -166,7 +166,6 @@ function Form(){
 
             let hydration = new HydrationMonitor(this.switch.checked, time, water)
             hydration.setUp()
-            hydration.openPopup()
             alert(`Ligado: ${hydration.on} \nTempo: ${hydration.time.hour}:${hydration.time.minute}\nQuantidade: ${hydration.water.quantity} ${hydration.water.measure}`)
             
             }
