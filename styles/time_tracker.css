@@ -233,7 +233,7 @@ body {
 
 /*----------  Clock popup  ----------*/
 
-#break-popup {
+#break-popup{
   position: absolute;
   font-size: 34px;
   display: none;
@@ -246,11 +246,11 @@ body {
   border-radius: 10px;
   padding: 10px;
   background-color: #fff;
-  color: #41529f;
+  color: #41529F;
   box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.4);
 }
 
-.break-popup__top {
+.break-popup__top{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -258,25 +258,25 @@ body {
   width: 100%;
 }
 
-.break-popup__corner-button {
+.break-popup__corner-button{
   font-size: 1.2rem;
   cursor: pointer;
   margin-left: 10px;
 }
 
-#break-popup-back {
+#break-popup-back{
   display: none;
 }
 
-#break-stretch {
+#break-stretch{
   display: none;
 }
 
-.break-popup__circle {
+.break-popup__circle{
   height: 2rem;
 }
 
-.break-popup__main {
+.break-popup__main{
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -285,53 +285,170 @@ body {
   overflow: hidden;
 }
 
-.break-popup__icon {
+.break-popup__icon{
   font-size: 2rem;
   margin-bottom: 0px;
 }
 
-.break-popup__title-container {
+.break-popup__title-container{
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   height: fit-content;
 }
 
-.break-popup__title {
+.break-popup__title{
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 10px;
   margin-top: 0px;
 }
 
-.break-rule {
+.break-rule{
   width: 2rem;
 }
 
-.break-popup__text {
+.break-popup__text{
   color: #000;
   font-size: 1rem;
+
 }
 
-.break-popup__button {
+.break-popup__button{
   font-size: 0.8rem;
   margin-bottom: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #61bbb6;
+  background-color: #61BBB6;
   color: #fff;
   height: 1.5rem;
   padding: 1rem 30px;
-  border: 1px solid #61bbb6;
+  border: 1px solid #61BBB6;
   border-radius: 5px;
   cursor: pointer;
   transition: 0.5s;
 }
 
-.break-popup__button:hover {
+.break-popup__button:hover{
   background-color: #fff;
-  color: #61bbb6;
+  color: #61BBB6;
+}
+
+/*----------  Slider  ----------*/
+
+.custom-slider{
+  display: flex;
+  flex-flow: column nowrap;
+  width: 90%;
+  height: 100%;
+}
+
+.custom-slider__view{
+  position: relative;
+  width: 100%;
+  flex: 1;
+  margin: 0px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.custom-slider__slide{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: 0px;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: 1s;
+}
+
+.custom-slider__slide:last-child{
+  margin-right: 0px;
+}
+
+.custom-slider__controls{
+  display: flex;
+  height: 10%;
+  margin-top: 3px;
+  flex-flow: row nowrap;
+  height: fit-content;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.custom-slider__dots{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 30px 0px 30px;
+}
+
+.custom-slider__arrow{
+  font-size: 1.2rem;
+  color: #41529F;
+}
+
+.custom-slider__dot{
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 5px;
+  border-radius: 50%;
+  background-color: #61BBB6;
+  transition: 1s;
+}
+
+.custom-slider__dot:last-child{
+  margin: 0px;
+}
+
+.custom-slider__dot.active{
+  background-color: #41529F;
+  pointer-events: none;
+}
+
+.stretch-pose{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.stretch-pose__img{
+  max-height: 90%;
+  width: auto;
+  justify-self: center;
+  filter: invert(62%) sepia(43%) saturate(377%) hue-rotate(128deg) brightness(99%) contrast(92%);
+}
+
+/* ------------------- Stretch pose texts ------------------------ */
+
+.stretch-pose__text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.stretch-pose p{
+  display: flex;
+  height: 80%;
+  justify-content: flex-start;
+  align-content: center;
+  width: 40%;
+  flex-flow: column;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #41529F;
+  white-space: normal;
 }
 
 /*-------------------  Horários Personalizados  -------------------*/
@@ -434,99 +551,6 @@ body {
 
 .time__item--pausas {
   width: 34%;
-}
-
-/*----------  Slider  ----------*/
-
-.custom-slider {
-  display: flex;
-  flex-flow: column nowrap;
-  width: 90%;
-  height: 100%;
-}
-
-.custom-slider__view {
-  position: relative;
-  width: 100%;
-  flex: 1;
-  margin: 0px;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.custom-slider__slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  left: 0px;
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  transition: 1s;
-}
-
-.custom-slider__slide:last-child {
-  margin-right: 0px;
-}
-
-.custom-slider__controls {
-  display: flex;
-  height: 10%;
-  margin-top: 3px;
-  flex-flow: row nowrap;
-  height: fit-content;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.custom-slider__dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0px 30px 0px 30px;
-}
-
-.custom-slider__arrow {
-  font-size: 1.2rem;
-  color: #41529f;
-}
-
-.custom-slider__dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  margin-right: 5px;
-  border-radius: 50%;
-  background-color: #61bbb6;
-  transition: 1s;
-}
-
-.custom-slider__dot:last-child {
-  margin: 0px;
-}
-
-.custom-slider__dot.active {
-  background-color: #41529f;
-  pointer-events: none;
-}
-
-.stretch-pose {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.stretch-pose__img {
-  max-height: 90%;
-  width: auto;
-  justify-self: center;
-  filter: invert(62%) sepia(43%) saturate(377%) hue-rotate(128deg)
-    brightness(99%) contrast(92%);
 }
 
 /* ------------------------- Fundo do Conteúdo ------------------------------ */
