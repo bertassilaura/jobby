@@ -1,0 +1,510 @@
+/* ------------------------- Corpo ------------------------------ */
+
+html{
+    font-size: 24px;
+}
+
+body{
+    overflow: hidden;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    flex-flow: row nowrap;
+    margin: 0;
+    font-family: "Nunito";
+}
+
+#mobile-header{
+    display: none;
+}
+
+/* ------------------------- Barra Lateral ------------------------------ */
+
+#side-bar{
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 0 0 80px;
+    background-color: #41529F;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 80px;
+}
+
+.side-bar__icon{
+    text-decoration: none;
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 30px;
+    transition: 0.5s;
+}
+
+.side-bar__icon.disabled {
+    color: #61BBB6;
+    cursor: none;
+    pointer-events: none;
+}
+
+.side-bar__icon:hover{
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+    color: #61BBB6;
+}
+
+/* ------------------------- Conteúdo ------------------------------ */
+
+#content{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 20px;
+}
+
+/* ------------------------- Topo do Conteúdo ------------------------------ */
+
+#top-container{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    flex: 2;
+    width: 100%;
+}
+
+/* --------- Mensagem e Avatar ------- */
+
+#welcome_container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-left: 20px;
+}
+
+.welcome-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.welcome-text__hello{
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #41529F;
+}
+
+.welcome-text__welcome{
+    font-size: 0.75rem;
+}
+
+#avatar{
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+}
+
+/* --------- Logo ------- */
+
+.logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    margin-right: 20px;
+}
+
+.logo__image{
+    height: 30%;
+    margin-right: 10px;
+}
+
+.logo__text{
+    font-size: 1rem;
+    font-weight: 400;
+    color: #41529F;
+}
+
+/* ------------------------- Centro do Conteúdo ------------------------------ */
+
+#center-container{
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 10;
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+/* --------- Título ------- */
+
+.title-container{
+    display: flex;
+    margin-bottom: 20px;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.title-container__text{
+    font-size: 1.08rem;
+    color: #41529F;
+    margin-left: 10px;
+}
+
+.title-container__icon{
+    font-size: 1.08rem;
+    color: #41529F;
+}
+
+/*-------------------  Horários Personalizados  -------------------*/
+
+.border-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #41529F;
+    border-radius: 10px;
+    width: 546px;
+    height: 200px;
+    padding: 20px 10px 20px 20px;
+}
+
+.custom-times{
+    display: flex;
+    flex-flow: column nowrap;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.custom-times::-webkit-scrollbar {
+    width: 3px;
+}
+
+.custom-times::-webkit-scrollbar-thumb {
+    background: #41529F;
+    height: 1px;
+    border-radius: 10px;
+}
+  
+.custom-times::-webkit-scrollbar-thumb:hover {
+    background: #303f7e;
+}
+
+
+/*----------  Cabeçalho dos horários personalizados  ----------*/
+
+.custom-times__header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 87%;
+    height: 30px;
+    margin-bottom: 10px;
+    margin-left: 2px;
+}
+
+.custom-times__header__text--pausas{
+    width: 34%;
+}
+
+.custom-times__header__text{
+    text-align: center;
+    width: 28%;
+    font-size: 0.66rem;
+    color: #41529F;
+    font-weight: 600;
+}
+
+
+/*----------  Itens dos Horários Personalizados  ----------*/
+
+.custom-times__item{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    width: 100%;
+    height: 2rem;
+    padding: 2px;
+    margin-bottom: 10px;
+}
+
+.time{
+    display: flex;
+    flex-flow: row nowrap;
+    width: 87%;
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
+    border: 2px solid #41529F;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.time__item{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 28%;
+    height: 80%;
+    background-color: #41529F;
+    border-radius: 5px;
+    font-size: 0.5rem;
+    color: #fff;
+}
+
+.time__item--pausas{
+    width: 34%;
+}
+
+.custom-times__edit{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 10%;
+}
+
+.btn_edit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #61BBB6;
+    color: #fff;
+    height: 1.5rem;
+    width: 1.5rem;
+    border: 1px solid #61BBB6;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btn_edit:hover{
+    background-color: #fff;
+    color: #61BBB6;
+}
+
+.btn_edit__icon{
+    color: inherit;
+    font-size: 0.66rem;
+}
+
+
+/*----------  Botão de Adicionar Tempo  ----------*/
+
+.btn-add-time{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    background-color: #61BBB6;
+    color: #fff;
+    border-style: none;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.5s;
+    border: 1px solid #61BBB6;
+}
+
+.btn-add-time:hover{
+    background-color: #fff;
+    color: #61BBB6;
+}
+
+.btn-add-time__icon{
+    font-size: 0.66rem;
+}
+
+.btn-add-time__text{
+    margin-left: 5px;
+    font-size: 0.66rem;
+}
+
+/* ------------------------- Fundo do Conteúdo ------------------------------ */
+
+#bottom-container{
+    display: flex;
+    flex: 1;
+    width: 100%;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+}
+
+.back-button{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    width: fit-content;
+    color: #41529F;
+    transition: 0.5s;
+    margin-right: 25px;
+}
+
+.back-button:hover{
+    color: #61BBB6;
+}
+
+.back-button__icon{
+    font-size: 0.83rem;
+    color: inherit;
+    margin-right: 10px;
+}
+
+.back-button__text{
+    font-size: 0.66rem;
+    color: inherit;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* ------------------------- Mobile Geral ------------------------------ */
+
+#mobile-side-bar{
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+
+    html{
+        font-size: 22px;
+    }
+
+/*----------  Header  ----------*/
+
+    #side-bar {
+      display: none;
+    }
+
+    #mobile-header{
+        display: flex;
+        flex: 1;
+        background-color: #41529F;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+    }
+
+    #open-side-bar{
+        color: white;
+        font-size: 1.25rem;
+        margin-left: 20px;
+        transition: 0.5s;
+    }
+
+    #white-logo{
+        height: 40px;
+        margin-right: 20px;
+    }
+
+/*----------  Alteração Content  ----------*/
+
+    #avatar{
+    height: 50px;
+    width: 50px;
+    }
+
+    #welcome_container{
+        margin: 5px 0px 2px 0px;
+    }
+
+    .logo{
+        display: none;
+    }
+
+    #content{
+        padding: 0px 0px 0px 0px;
+        align-items: center;
+    }
+
+    #top-container{
+        width: 80%;
+    }
+
+    #bottom-container{
+        justify-content: center;
+    }
+
+    .border-container{
+        width: 100%;
+        padding: 10px 2px 10px 2px;
+    }
+
+/*----------  Side-bar  ----------*/
+
+    #mobile-side-bar{
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        height: 0;
+        overflow-y: hidden;
+        background-color: rgba(65, 82, 159, 0.95);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 99;
+        transition: 0.5s;
+    }
+
+    #close-side-bar{
+        margin-bottom: 50px;
+        margin-top: 20px;
+    }
+
+    #close-side-bar:hover{
+        color: #b4e4e1;
+    }
+
+    .mobile-side-bar__option{
+        font-size: 1.5rem;
+        color: white;
+        margin-bottom: 30px;
+        transition: 0.5s;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .mobile-side-bar__option:hover{
+        color: #61BBB6;
+        font-size: 1.6rem;
+    }
+
+    .mobile-side-bar__option.disabled {
+        color: #61BBB6;
+        cursor: none;
+        pointer-events: none;
+    }
+    
+  }
+
+/* ------------------------- Redução de Fonte em telas menores ------------------------------ */
+
+
+@media only screen and (max-width: 600px) {
+
+    html{
+        font-size: 20px;
+    }
+
+    #avatar{
+        height: 45px;
+        width: 45px;
+        }
+}
+
+@media only screen and (max-width: 320px) {
+
+    html{
+        font-size: 18px;
+    }
+}

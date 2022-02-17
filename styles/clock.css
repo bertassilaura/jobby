@@ -1,0 +1,154 @@
+html{
+    font-size: 24px;
+}
+
+body{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    flex-flow: row nowrap;
+    margin: 0;
+    font-family: "Nunito";
+}
+
+.clock{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 5px;
+    width: 110px;
+    height: fit-content;
+}
+
+.clock-container{
+    display: flex;
+    align-items: center;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 5px;
+}
+
+.clock-text{
+    position: relative;
+    display: inline;
+    left: -110px;
+    font-size: 0.8rem;
+    color: #41529F;
+    font-weight: 500;
+    padding: 0px;
+    flex: 0 0 auto;
+    text-align: center;
+    width: 110px;
+}
+
+.clock-circle{
+    height: 110px;
+    width: 110px;
+}
+
+.clock-controls{
+    display: flex;
+    width: 70px;
+    height: fit-content;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0px;
+}
+
+.clock-button{
+    font-size: 0.5rem;
+    color: #41529F;
+    background-color: rgba(255, 255, 255, 0);
+    border-style: none;
+    cursor: pointer;
+}
+
+#stop-button{
+    display: none;
+}
+
+#pause-button{
+    display: none;
+}
+
+#break-popup{
+    position: absolute;
+    display: none;
+    flex-flow: column nowrap;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 150px;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #fff;
+    color: #41529F;
+    box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.4);
+}
+
+.break-popup__top{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.break-popup__main{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    flex: 1;
+    align-items: center;
+}
+
+.break-popup__icon{
+    font-size: 1rem;
+    margin-bottom: 0px;
+}
+
+.break-popup__title-container{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    height: fit-content;
+}
+
+.break-popup__title{
+    font-size: 0.6rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    margin-top: 0px;
+}
+
+.break-rule{
+    width: 1rem;
+}
+
+.break-popup__text{
+    color: #000;
+    font-size: 0.4rem;
+
+}
+
+.break-popup__button{
+    font-size: 0.3rem;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #61BBB6;
+    color: #fff;
+    height: 0.6rem;
+    padding: 10px 12px;
+    border: 1px solid #61BBB6;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.break-popup__button:hover{
+    background-color: #fff;
+    color: #61BBB6;
+}
