@@ -442,6 +442,80 @@ input[type=number] {
 	border-bottom: 20px solid #41529F;
 }
 
+/* ----------- Popup -----------------------*/
+
+.popup{
+    overflow: hidden;
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0;
+    padding: 10px;
+    background-color: #fff;
+    color: #41529F;
+
+
+    position: absolute;
+    border: 1px solid rgb(0, 0, 0, 0.4);
+    font-size: 34px;
+    display: none;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    height: 60vh;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    box-shadow: 2px 2px 1px 1px rgb(0, 0, 0, 0.4);
+}
+
+.popup__top{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+
+
+.popup__main{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    flex: 1;
+    align-items: center;
+    overflow: hidden;
+}
+
+.popup__icon{
+    font-size: 2rem;
+    margin-bottom: 0px;
+}
+
+.popup__title-container{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    height: fit-content;
+}
+
+.popup__title{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    text-align: center;
+}
+
+.break-rule{
+    width: 2rem;
+}
+
+.popup__text{
+    color: #000;
+    font-size: 1rem;
+    text-align: center;
+}
+
 /* ------------------------- Mobile ------------------------------ */
 
 #mobile-side-bar{
@@ -561,6 +635,11 @@ input[type=number] {
 
     .select-selected{
         width: 80px;
+    }
+
+    .popup{
+        width: 80vw;
+        height: 50vh;
     }
     
   }

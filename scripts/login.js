@@ -1,7 +1,7 @@
 
-function Login(email,senha){
+function Login(email, password){
     this.email = email,
-    this.senha = senha
+    this.password = password
 }
 
 // ================================== Mensagens de Erro ========================================
@@ -14,6 +14,7 @@ function errorMessage(elemento, message){
     error_message.style.left = (rect.left + (rect.right - rect.left)/16) + "px";
 
     document.body.appendChild(error_message);
+    elemento.focus()
     setTimeout(()=>{document.body.addEventListener("click", closeMessages)}, 1)
 }
 
@@ -41,31 +42,57 @@ function closeMessages(){
     document.body.removeEventListener("click", closeMessages)
 }
 
-// ================================== Verificar inputs ========================================
-
-function empty(elemento){
-    if (elemento.value == null || elemento.value == ""){
-        errorMessage(elemento, "Preencha este campo");
-        throw "inputException";
-    }
-}
-
 // ================================== Validação Formulário ========================================
 
-function Login_in(){
-    let email = document.getElementById("email").value;
-    let senha = document.getElementById("pswrd").value;
-    return new Login(email, senha);
+function Form(){
+    this.email = document.querySelector("#email"),
+    this.password = document.querySelector("#pswrd"),
+
+    this.start = () => {
+        document.querySelector("#login-save-button").addEventListener("click", this.submit)
+        this.email.addEventListener("keypress", this.keyPress)
+        this.password.addEventListener("keypress", this.keyPress)
+    },
+
+    this.check_email = (element) => {
+        if (element.value == null || element.value == ""){
+            errorMessage(element, "Preencha este campo");
+            throw "inputException";
+        }
+        let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        if (!element.value.match(validRegex)){
+            errorMessage(element, "Email inválido");
+            throw "inputException";
+        }
+    },
+
+    this.check_password = (element) => {
+        if (element.value == null || element.value == ""){
+            errorMessage(element, "Preencha este campo");
+            throw "inputException";
+        }
+    },
+
+    this.submit = () =>{
+        try{
+        this.check_email(this.email)
+        this.check_password(this.password)
+        let login = new Login(this.email.value, this.password.value)
+        alert(`Email: ${login.email} \nPassword: ${login.password}`)
+        document.location.href = "./time_tracker.html"
+        }
+        catch (e){
+            console.log(e)
+        }
+    }
+
+    this.keyPress = (event) =>{
+        if (event.key == "Enter"){
+            this.submit()
+        }
+    }
 }
 
-function submit_form(){
-    try{
-        let login = Login_in()
-        console.log(login)
-    }
-    catch(e){
-        console.log(e)
-    }
-}
+let form = new Form()
+form.start()
 
-document.getElementById("login-save-button").addEventListener("click", submit_form);

@@ -162,6 +162,18 @@ body{
 
 }
 
+.form{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    width: 60%;
+    min-width: 320px;
+}
+
 
 /*-----  Cabeçalho dos blocos de cadastro -----*/
 
@@ -268,9 +280,6 @@ input:focus{
 /*----------  Botão "Pronto!"  ----------*/
 
 .btn-ready{
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: #61BBB6;
     color: #fff;
     border-radius: 10px;
@@ -296,6 +305,44 @@ input:focus{
 }
 
 /* ----------- Error message ------------*/
+
+.error-message{
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    z-index: 99;
+  }
+
+.error-message__border{
+    position: relative;
+    top: 16px;
+    left: -40px;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #41529F;
+    z-index: 99;
+
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 2px solid #41529F;
+}
+
+.error-message__arrow{
+    width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 20px solid #41529F;
+}
+
+/* ----------- Input Error -----------------------*/
 
 .error-message{
     position: absolute;

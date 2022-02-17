@@ -159,6 +159,7 @@ body{
     padding: 20px 10px 20px 20px;
     height: 70%;
     width: 546px;
+    align-items: center;
 
 }
 
@@ -167,21 +168,22 @@ body{
 
 .header{
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    width: 87%;
+    width: 100%;
     height: 30px;
     margin-bottom: 1px;
     margin-left: 2px;
     margin-top: 10px;
+    min-width: 320px;
 }
 
 .header__text{
-    text-align: center;
-    width: 45%;
+    width: 70%;
     font-size: 0.75rem;
     color: #41529F;
     font-weight: 600;
+    text-align: left;
 }
 
 /*-----------  Blocos de Cadastro  -----------*/
@@ -194,6 +196,7 @@ body{
     height: 2rem;
     padding: 2px;
     margin-bottom: 20px;
+    min-width: 320px;
 }
 
 .text-input{
@@ -294,6 +297,45 @@ input:focus{
     font-size: 0.66rem;
 }
 
+/* ----------- Input Error -----------------------*/
+
+.error-message{
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    z-index: 99;
+  }
+
+.error-message__border{
+    position: relative;
+    top: 16px;
+    left: -40px;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #41529F;
+    z-index: 99;
+
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 2px solid #41529F;
+}
+
+.error-message__arrow{
+    width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 20px solid #41529F;
+}
+
+
 /* ------------------------- Mobile ------------------------------ */
 
 @media only screen and (max-width: 768px) {
@@ -353,13 +395,23 @@ input:focus{
     #center-container{
         width: 100%;
         justify-content: flex-start;
-        flex: content;
-
     }
 
     .login-container{
-        height: 60%;
+        height: 100%;
         width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .form{
+        padding: 0px;
+        margin: 0px;
+        height: 60%;
+        width: 60%;
+        min-width: 320px;
     }
 
 /* ------------------------- Fundo do Conteúdo ------------------------------ */

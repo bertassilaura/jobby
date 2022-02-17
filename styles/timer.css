@@ -302,7 +302,7 @@ input[type=number] {
 #break-popup{
     position: absolute;
     font-size: 34px;
-    display: flex; /*none*/
+    display: none;
     flex-flow: column nowrap;
     top: 50%;
     left: 50%;

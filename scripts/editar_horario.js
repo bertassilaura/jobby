@@ -85,97 +85,122 @@ function closeMessages(){
     document.body.removeEventListener("click", closeMessages)
 }
 
-// ================================== Verificar inputs ========================================
-
-function empty(elemento){
-    if (elemento.value == null || elemento.value == ""){
-        errorMessage(elemento, "Preencha este campo");
-        throw "inputException";
-    }
-}
-
-function is_number(elemento){
-    if (Math.floor(elemento.value) != Number(elemento.value)){
-        errorMessage(elemento, `O valor deve ser um número inteiro`);
-        throw "inputException";
-    }
-}
-
-function min(elemento, limit){
-    if (Number(elemento.value) < limit){
-        errorMessage(elemento, `O valor deve ser maior ou igual a ${limit}`);
-        throw "inputException";
-    }
-}
-
-function max(elemento, limit){
-    if (Number(elemento.value) > limit){
-        errorMessage(elemento, `O valor deve ser menor ou igual a ${limit}`);
-        throw "inputException";
-    }
-}
-
-function valid_combo(elemento_hour, elemento_minute){
-    if (elemento_hour.value == 0 && elemento_minute.value == 0){
-        errorMessage(elemento_hour, `Hora e minutos não podem estar ambos zerados`);
-        throw "inputException";
-    }
-}
-
 // ================================== Validação Formulário ========================================
 
-function validate_solo(id){
-    let elemento = document.getElementById(id);
+function Form(){
+    this.name = document.querySelector("#name"),
+    this.durHour = document.querySelector("#duration-hour"),
+    this.durMin = document.querySelector("#duration-minute"),
+    this.breakHour = document.querySelector("#break-hour"),
+    this.breakMin = document.querySelector("#break-minute"),
+    this.repeatHour = document.querySelector("#repeat-hour"),
+    this.repeatMin = document.querySelector("#repeat-minute"),
 
-    empty(elemento);
+    this.formatTime = (time) => {
+        let text = "";
+        text += time.hours==0? "": time.hours + "h";
+        text += time.minutes==0? "": time.minutes + "min";
+    
+        return text;
+    },
 
-    if (elemento.min !== ""){
-        min(elemento, elemento.min)
-    }
-    if (elemento.max !== ""){
-        max(elemento, elemento.max)
-    }
-    if (elemento.type == "number"){
-        is_number(elemento)
+    this.getData = () => {
+            let queryString = window.location.search
+            let params = new URLSearchParams(queryString);
+            let id = parseInt(params.get("id"))
+        
+            if (queryString == "" || queryString == null || !(id in customTimes)){
+                alert("Página inválida")
+                window.location.href = "./configuracoes_horario.html"
+            }
+        
+            let data = customTimes[id]
+        
+            this.name.value = data.name
+            this.durHour.value = data.time.hours
+            this.durMin.value = data.time.minutes
+            this.breakHour.value = data.breakTime.hours
+            this.breakMin.value = data.breakTime.minutes
+            this.repeatHour.value = data.breakInterval.hours
+            this.repeatMin.value = data.breakInterval.minutes
+        },
+
+    this.start = () => {
+        this.getData()
+        document.querySelector("#edit-time-button").addEventListener("click", this.submit)
+        this.name.addEventListener("keypress", this.keyPress)
+        this.durHour.addEventListener("keypress", this.keyPress)
+        this.durMin.addEventListener("keypress", this.keyPress)
+        this.breakHour.addEventListener("keypress", this.keyPress)
+        this.breakMin.addEventListener("keypress", this.keyPress)
+        this.repeatHour.addEventListener("keypress", this.keyPress)
+        this.repeatMin.addEventListener("keypress", this.keyPress)
+    },
+
+    this.check_duo = (hour, minute) => {
+        this.check_number(hour)
+        this.check_number(minute)
+        if (hour.value == 0 && minute.value == 0){
+            errorMessage(hour, "Hora e minutos não podem estar ambos zerados");
+            throw "inputException";
+        }
+    },
+
+    this.check_empty = (element) => {
+        if (element.value == null || element.value == ""){
+            errorMessage(element, "Preencha este campo");
+            throw "inputException";
+        }
+    },
+
+    this.check_number = (element) => {
+        if (element.value == null || element.value == ""){
+            errorMessage(element, "Preencha este campo");
+            throw "inputException";
+        }
+        if (Math.floor(element.value) != Number(element.value)){
+            errorMessage(element, `O valor deve ser um número inteiro`);
+            throw "inputException";
+        }
+        if (element.min !== "" && Number(element.value) < element.min){
+            errorMessage(element, `O valor deve ser maior ou igual a ${element.min}`);
+        throw "inputException";
+        }
+        if (element.max !== "" && Number(element.value) > element.max){
+            errorMessage(element, `O valor deve ser menor ou igual a ${element.max}`);
+            throw "inputException";
+        }
+    },
+
+    this.submit = () =>{
+        try{
+        closeMessages()
+        this.check_empty(this.name)
+        this.check_duo(this.durHour, this.durMin)
+        this.check_duo(this.breakHour, this.breakMin)
+        this.check_duo(this.repeatHour, this.repeatMin)
+        
+        let timeInterval = new TimeInterval(this.durHour.value, this.durMin.value)
+        let breakTime = new TimeInterval(this.breakHour.value, this.breakMin.value)
+        let breakInterval = new TimeInterval(this.repeatHour.value, this.repeatMin.value)
+
+        let time = new CustomTime(this.name, timeInterval, breakTime, breakInterval)
+        alert(`Nome: ${time.name.value} \nDuração: ${this.formatTime(time.time)}\n Pausas de ${this.formatTime(time.breakTime)} a cada ${this.formatTime(time.breakInterval)} `)
+        document.location.href = "./configuracoes_horario.html"
+        }
+        catch (e){
+            console.log(e)
+        }
+    },
+
+    this.keyPress = (event) =>{
+        if (event.key == "Enter"){
+            this.submit()
+        }
     }
 }
 
-function validate_combo(id){
-    validate_solo(id + "-hour");
-    validate_solo(id + "-minute");
-
-    let elemento_hour = document.getElementById(id + "-hour");
-    let elemento_minute = document.getElementById(id + "-minute");
-
-    valid_combo(elemento_hour, elemento_minute);
-}
-
-function CreateTime(){
-    let name = document.getElementById("name").value;
-    let time = new TimeInterval(document.getElementById("duration-hour").value, document.getElementById("duration-minute").value)
-    let breakTime = new TimeInterval(document.getElementById("break-hour").value, document.getElementById("break-minute").value)
-    let breakInterval = new TimeInterval(document.getElementById("repeat-hour").value, document.getElementById("repeat-minute").value)
-    return new CustomTime(name, time, breakTime, breakInterval);
-}
-
-function submit_form(){
-    try{
-        validate_solo("name")
-        validate_combo("duration")
-        validate_combo("break")
-        validate_combo("repeat")
-        let time = CreateTime()
-        console.log(time)
-    }
-    catch(e){
-        console.log(e)
-    }
-}
-
-// ================================== Comandos ========================================
-
-
-getData()
-document.getElementById("edit-time-button").addEventListener("click", submit_form);
+let form = new Form()
+form.start()
 
 

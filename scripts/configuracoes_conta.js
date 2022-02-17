@@ -42,7 +42,6 @@ function closeMessages(){
     document.body.removeEventListener("click", closeMessages)
 }
 
-
 // ================================== Validação Formulário ========================================
 
 function Form(){
@@ -51,7 +50,7 @@ function Form(){
     this.password = document.querySelector("#password"),
 
     this.start = () => {
-        document.querySelector("#register-save-button").addEventListener("click", this.submit)
+        document.querySelector("#config-save-button").addEventListener("click", this.submit)
         this.email.addEventListener("keypress", this.keyPress)
         this.password.addEventListener("keypress", this.keyPress)
         this.name.addEventListener("keypress", this.keyPress)
@@ -83,7 +82,7 @@ function Form(){
         this.check_empty(this.password)
         let register = new Register(this.name.value, this.email.value, this.password.value)
         alert(`Name: ${register.name} \nEmail: ${register.email}\nPassword: ${register.password}`)
-        document.location.href = "./time_tracker.html"
+        document.location.href = "./configuracoes.html"
         }
         catch (e){
             console.log(e)

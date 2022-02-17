@@ -75,7 +75,7 @@
 
                         <div class="border-container border-container--breakable border-container--none">
                             <label for="time-interval" class="border-container__text">Receber aviso a cada</label>
-                            <input type="number" class="number-input" id="time-interval" min="1" max="59" required/>
+                            <input type="number" class="number-input" id="time-interval"required/>
                             <div class="custom-select">
                                 <select id="choose-interval">
                                     <option value="minutos"selected>minutos</option>
@@ -89,8 +89,8 @@
                             <input type="number" class="number-input" id="water-quantity" min="1" max="1000" required/>
                             <div class="custom-select">
                                 <select id="choose-water-unit">
-                                    <option value="litros"selected>L</option>
-                                    <option value="mililitros">mL</option>
+                                    <option value="L"selected>L</option>
+                                    <option value="mL">mL</option>
                                 </select>
                             </div>
                         </div>
@@ -112,6 +112,22 @@
             </div>
         </div>
 
+    </div>
+
+    <div src="./water_popup.html" class="popup" id="water-popup">
+        <div class="popup__top">
+            <span class="popup__corner-button fas fa-times" id="close-water-popup"></span>
+        </div>
+        <div class="popup__main" id="break-start">
+                <span class="fas fa-tint popup__icon"></span>
+                <div class="popup__title-container">
+                    <h2 class="popup__title">Hora de se Hidratar!</h2>
+                    <svg class="break-rule" viewBox="0 0 100 10">
+                        <path d="M 0 1 L 100 1" fill="none" stroke="#41529F" stroke-width="10" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <span class="popup__text">Lembre-se de tomar <span id="water-quantity-text"></span> de água!</span>
+        </div>
     </div>
 </body>
 <script src="./scripts/side-bar_mobile.js"> </script>

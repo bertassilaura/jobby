@@ -1,11 +1,52 @@
 // ================================== Classes de Tempo ========================================
 
-function TimeInterval(time){
-    this.time = time
+function TimeInterval(hour, minute){
+    this.hour = hour,
+    this.minute = minute
 }
 
-function WaterQuantity(measure){
+function WaterQuantity(quantity, measure){
+    this.quantity = quantity,
     this.measure = measure
+}
+
+function HydrationMonitor(on, time, water){
+    this.on = on,
+    this.time = time,
+    this.water = water,
+    this.nextwarning = null,
+    this.interval = null,
+
+    this.setUp = () => {
+        if (this.on){
+            this.nextwarning = new Date(Date.now() + this.time.hour * 3600000 + this.time.minute * 60000)
+            this.interval = setInterval(this.check, 30000)
+        }
+        else{
+            this.nextwarning = null
+            clearInterval(this.interval)
+        }
+    },
+
+    this.openPopup = () =>{
+        let popup = document.querySelector("#water-popup");
+        popup.style.display = "flex"
+        popup.querySelector("#water-quantity-text").innerHTML = `${this.water.quantity}${this.water.measure}`
+        popup.querySelector("#close-water-popup").addEventListener("click", this.closePopup)
+    },
+
+    this.check = () => {
+        if (Date.now() >= this.nextwarning){
+            this.openPopup()
+            clearInterval(this.interval)
+        }
+    }
+
+    this.closePopup = () =>{
+        let popup = document.querySelector("#water-popup");
+        popup.style.display = "none"
+        this.setUp()
+    }
 }
 
 // ================================== Mensagens de Erro ========================================
@@ -18,6 +59,7 @@ function errorMessage(elemento, message){
     error_message.style.left = (rect.left + (rect.right - rect.left)/16) + "px";
 
     document.body.appendChild(error_message);
+    elemento.focus()
     setTimeout(()=>{document.body.addEventListener("click", closeMessages)}, 1)
 }
 
@@ -45,106 +87,101 @@ function closeMessages(){
     document.body.removeEventListener("click", closeMessages)
 }
 
-// ================================== Verificar inputs ========================================
-
-function switch_result(){
-    let checkBox = this.checked
-    let inputs = document.querySelectorAll(".add-hydration__line .border-container")
-    if (checkBox == true){
-        inputs[1].style.display = "flex"
-        inputs[2].style.display = "flex"
-    }
-    else{
-        inputs[1].style.display = "none"
-        inputs[2].style.display = "none"
-    }
-}
-
-function empty(elemento){
-    if (elemento.value == null || elemento.value == ""){
-        errorMessage(elemento, "Preencha este campo");
-        throw "inputException";
-    }
-}
-
-function is_number(elemento){
-    if (Math.floor(elemento.value) != Number(elemento.value)){
-        errorMessage(elemento, `O valor deve ser um número inteiro`);
-        throw "inputException";
-    }
-}
-
-function min(elemento, limit){
-    if (Number(elemento.value) < limit){
-        errorMessage(elemento, `O valor deve ser maior ou igual a ${limit}`);
-        throw "inputException";
-    }
-}
-
-function max(elemento, limit){
-    if (Number(elemento.value) > limit){
-        errorMessage(elemento, `O valor deve ser menor ou igual a ${limit}`);
-        throw "inputException";
-    }
-}
 
 // ================================== Validação Formulário ========================================
 
-function validate_solo(id){
-    let elemento = document.getElementById(id);
+function Form(){
+    this.switch = document.querySelector("#hydration-reminder"),
+    this.time = document.querySelector("#time-interval"),
+    this.timeMeasure = document.querySelector("#choose-interval"),
+    this.quantity = document.querySelector("#water-quantity"),
+    this.quantityMeasure = document.querySelector("#choose-water-unit"),
 
-    empty(elemento);
+    this.start = () => {
+        document.querySelector("#hydration-save-button").addEventListener("click", this.submit)
+        this.switch.addEventListener("change", this.switchChange)
+        this.time.addEventListener("keypress", this.keyPress)
+        this.quantity.addEventListener("keypress", this.keyPress)
+    },
 
-    if (elemento.min !== ""){
-        min(elemento, elemento.min)
+    this.switchChange = () =>{
+        let inputs = document.querySelectorAll(".add-hydration__line .border-container")
+        if (this.switch.checked == true){
+            inputs[1].style.display = "flex"
+            inputs[2].style.display = "flex"
+        }
+        else{
+            inputs[1].style.display = "none"
+            inputs[2].style.display = "none"
+        }
+    },
+
+    this.check_time = (element) => {
+        if (element.value == null || element.value == ""){
+            errorMessage(element, "Preencha este campo");
+            throw "inputException";
+        }
+        if (Math.floor(element.value) != Number(element.value)){
+            errorMessage(element, `O valor deve ser um número inteiro`);
+            throw "inputException";
+        }
+        if (Number(element.value) < 1){
+            errorMessage(element, `O valor deve ser maior ou igual a 1`);
+        throw "inputException";
+        }
+        let max = this.timeMeasure.value == "minutos"?59:99;
+        if (Number(element.value) > max){
+            errorMessage(element, `O valor deve ser menor ou igual a ${max}`);
+            throw "inputException";
+        }
+    },
+
+    this.check_number = (element) => {
+        if (element.value == null || element.value == ""){
+            errorMessage(element, "Preencha este campo");
+            throw "inputException";
+        }
+        if (Math.floor(element.value) != Number(element.value)){
+            errorMessage(element, `O valor deve ser um número inteiro`);
+            throw "inputException";
+        }
+        if (element.min !== "" && Number(element.value) < element.min){
+            errorMessage(element, `O valor deve ser maior ou igual a ${element.min}`);
+        throw "inputException";
+        }
+        if (element.max !== "" && Number(element.value) > element.max){
+            errorMessage(element, `O valor deve ser menor ou igual a ${element.max}`);
+            throw "inputException";
+        }
+    },
+
+    this.submit = () =>{
+        try{
+            if (this.switch.checked){
+            this.check_time(this.time)
+            this.check_number(this.quantity)
+            }
+            let time = this.timeMeasure.value == "minutos"? new TimeInterval(0, this.time.value): new TimeInterval(this.time.value, 0)
+            let water = new WaterQuantity(this.quantity.value, this.quantityMeasure.value)
+
+            let hydration = new HydrationMonitor(this.switch.checked, time, water)
+            hydration.setUp()
+            hydration.openPopup()
+            alert(`Ligado: ${hydration.on} \nTempo: ${hydration.time.hour}:${hydration.time.minute}\nQuantidade: ${hydration.water.quantity} ${hydration.water.measure}`)
+            
+            }
+            catch (e){
+                console.log(e)
+            }
     }
-    if (elemento.max !== ""){
-        max(elemento, elemento.max)
-    }
-    if (elemento.type == "number"){
-        is_number(elemento)
+
+    this.keyPress = (event) =>{
+        if (event.key == "Enter"){
+            this.submit()
+        }
     }
 }
 
-function Time_measure(){
-    let time_measure = document.getElementById("choose-interval").value
-    if (time_measure == "minutos"){
-        let minutes = document.getElementById("time-interval").value
-        return new TimeInterval(minutes);
-    }
-    else{
-        let hour = document.getElementById("time-interval").value
-        return new TimeInterval(hour);
-    }
-    
-}
+let form = new Form()
+form.start()
 
-function Water_measure(){
-    let water_measure = document.getElementById("choose-water-unit").value
-    if (water_measure == "litros"){
-        let liter = document.getElementById("water-quantity").value
-        return new WaterQuantity(liter);
-    }
-    else{
-        let mililiter = document.getElementById("water-quantity").value
-        return new WaterQuantity(mililiter);
-    }
-}
-
-function submit_form(){
-    try{
-        validate_solo("time-interval")
-        validate_solo("water-quantity")
-        let time = Time_measure()
-        let water = Water_measure()
-        console.log(time)
-        console.log(water)
-    }
-    catch(e){
-        console.log(e)
-    }
-}
-
-
-document.getElementById("hydration-reminder").addEventListener("change", switch_result)
-document.getElementById("hydration-save-button").addEventListener("click", submit_form);
