@@ -156,6 +156,7 @@ body {
 
 #atividades {
   color: #41529f;
+  flex: 1;
 }
 
 #title-1 {
@@ -172,7 +173,7 @@ body {
 /*----------  Clock  ----------*/
 
 .clock {
-  display: flex;
+  display: none;
   flex-flow: column nowrap;
   align-items: center;
   width: 100%;
@@ -343,6 +344,8 @@ body {
   border-radius: 10px;
   width: 546px;
   height: 200px;
+  overflow: hidden;
+  max-height: 320px;
   padding: 20px 10px 20px 20px;
 }
 

@@ -103,7 +103,7 @@ function Clock(time, breakInterval, breakTime){
  
     this.start = () => {
         this.pauseStatus = false;
-        document.getElementById("configured-times").style.display = "none";
+        document.getElementById("atividades").style.display = "none";
         this.interval = setInterval(this.count, 1000);
     },
 
@@ -114,7 +114,7 @@ function Clock(time, breakInterval, breakTime){
 
     this.stop = () =>{
         document.getElementById("break-popup").style.display = "none";
-        document.getElementById("configured-times").style.display = "flex";
+        document.getElementById("atividades").style.display = "inline";
         clearInterval(this.interval);
         notification("eventually.mp3")
         let passed_time = this.time.totalSeconds() - this.timeCountdown.totalSeconds();
@@ -167,112 +167,13 @@ function notification(name){
     audio.play()
 }
 
-// ================================== Check Inputs ========================================
-
-// ========= Mensagens de Erro ===========
-
-function errorMessage(elemento, message){
-    let rect = elemento.getBoundingClientRect();
-
-    let error_message = createErrorMessage(message);
-    error_message.style.top = (rect.bottom) + "px";
-    error_message.style.left = (rect.left + (rect.right - rect.left)/16) + "px";
-
-    document.body.appendChild(error_message);
-    setTimeout(()=>{document.body.addEventListener("click", closeMessages)}, 1)
-}
-
-function createErrorMessage(message){
-    let error_message = document.createElement("div");
-    error_message.classList.add("error-message");
-
-    let arrow = document.createElement("div");
-    arrow.classList.add("error-message__arrow");
-
-    let border = document.createElement("div");
-    border.classList.add("error-message__border");
-    border.innerHTML = `<span><span class="fas fa-exclamation-circle"> </span>  ${message}</span>`;
-
-    error_message.appendChild(arrow);
-    error_message.appendChild(border);
-    return(error_message);
-}
-
-function closeMessages(){
-    let messages = document.querySelectorAll(".error-message");
-    for (message of messages){
-        message.remove();
-    }
-    document.body.removeEventListener("click", closeMessages)
-}
-
-function empty(elemento){
-    if (elemento.value == null || elemento.value == ""){
-        errorMessage(elemento, "Preencha este campo");
-        throw "inputException";
-    }
-}
-
-function is_number(elemento){
-    if (Math.floor(elemento.value) != Number(elemento.value)){
-        errorMessage(elemento, `O valor deve ser um número inteiro`);
-        throw "inputException";
-    }
-}
-
-function min(elemento, limit){
-    if (Number(elemento.value) < limit){
-        errorMessage(elemento, `O valor deve ser maior ou igual a ${limit}`);
-        throw "inputException";
-    }
-}
-
-function max(elemento, limit){
-    if (Number(elemento.value) > limit){
-        errorMessage(elemento, `O valor deve ser menor ou igual a ${limit}`);
-        throw "inputException";
-    }
-}
-
-function validate_solo(id){
-    let elemento = document.getElementById(id);
-
-    empty(elemento);
-
-    if (elemento.min !== ""){
-        min(elemento, elemento.min)
-    }
-    if (elemento.max !== ""){
-        max(elemento, elemento.max)
-    }
-    if (elemento.type == "number"){
-        is_number(elemento)
-    }
-}
-
-function valid_combo(elemento_hour, elemento_minute){
-    if (elemento_hour.value == 0 && elemento_minute.value == 0){
-        errorMessage(elemento_hour, `Hora e minutos não podem estar ambos zerados`);
-        throw "inputException";
-    }
-}
-
-function validate(id){
-    validate_solo(id + "-hour");
-    validate_solo(id + "-minute");
-
-    let elemento_hour = document.getElementById(id + "-hour");
-    let elemento_minute = document.getElementById(id + "-minute");
-
-    valid_combo(elemento_hour, elemento_minute);
-}
-
 // ================================== Buttons ========================================
 
 function play(){
     
     if (configured) {
         clock.start();
+        document.querySelector(".clock").style.display = "flex";
         document.getElementById("stop-button").style.display = "inline";
         document.getElementById("pause-button").style.display = "inline";
         document.getElementById("play-button").style.display = "none";
@@ -289,6 +190,7 @@ function pause(){
 function stop(){
     configured = false;
     let data = clock.stop();
+    document.querySelector(".clock").style.display = "none";
     document.getElementById("stop-button").style.display = "none";
     document.getElementById("pause-button").style.display = "none";
     document.getElementById("play-button").style.display = "inline";
@@ -387,6 +289,7 @@ function startClock(){
     let breakTime = new Countdown(hour, minute);
 
     clock = new Clock(time, breakInterval, breakTime);
+    document.querySelector(".clock").style.display = "flex";
     document.getElementById("stop-button").style.display = "inline";
     document.getElementById("pause-button").style.display = "inline";
     document.getElementById("play-button").style.display = "none";
