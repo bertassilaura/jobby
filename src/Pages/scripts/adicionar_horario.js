@@ -1,3 +1,15 @@
+// =================== Start Data ========================
+
+let user = null
+
+async function getUser(){
+    let id = "6229fe9542edd3a2ba368484"
+    await fetch(`./user?id=${id}`).then(response => response.json().then(user_data => user = user_data))
+    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+}
+
+getUser()
+
 // ================================== Classes de Tempo ========================================
 
 function TimeInterval(hours, minutes){
@@ -7,7 +19,7 @@ function TimeInterval(hours, minutes){
 
 function CustomTime(name, time, breakTime, breakInterval){
     this.name = name,
-    this.time = time,
+    this.timeInterval = time,
     this.breakTime = breakTime,
     this.breakInterval = breakInterval
 }
@@ -127,9 +139,9 @@ function Form(){
         let breakTime = new TimeInterval(this.breakHour.value, this.breakMin.value)
         let breakInterval = new TimeInterval(this.repeatHour.value, this.repeatMin.value)
 
-        let time = new CustomTime(this.name, timeInterval, breakTime, breakInterval)
-        alert(`Nome: ${time.name.value} \nDuração: ${this.formatTime(time.time)}\n Pausas de ${this.formatTime(time.breakTime)} a cada ${this.formatTime(time.breakInterval)} `)
-        document.location.href = "./configuracoes_horario.html"
+        let time = new CustomTime(this.name.value, timeInterval, breakTime, breakInterval)
+ 
+        this.send(time)
         }
         catch (e){
             console.log(e)
@@ -140,6 +152,23 @@ function Form(){
         if (event.key == "Enter"){
             this.submit()
         }
+    }
+
+    this.send = (customTime) =>{
+        customTime.user_id = user._id
+        let headers = new Headers({
+            "Content-Type": "application/json",
+          });
+        let init = { method: 'POST',
+               headers: headers,
+               mode: 'cors',
+               cache: 'default',
+               body: JSON.stringify(customTime)};
+        fetch("./user/customtimes", init).then(response =>
+            response.json().then(data => {
+                if(data.status){
+                location.href = "./configuracoes_horario.html"
+                }}))
     }
 }
 

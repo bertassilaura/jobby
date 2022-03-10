@@ -1,20 +1,15 @@
-// =================== Mock up data ========================
+// =================== Start Data ========================
 
-function TimeInterval(hours, minutes){
-    this.hours = hours,
-    this.minutes = minutes
+let user = null
+
+async function getUser(){
+    let id = "6229fe9542edd3a2ba368484"
+    await fetch(`./user?id=${id}`).then(response => response.json().then(user_data => user = user_data))
+    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+    createItems()
 }
 
-let customTimes = {
-    1: {name: "Trabalho", time: new TimeInterval(3, 0), breakTime: new TimeInterval(0,30), breakInterval: new TimeInterval(1, 30)},
-    2: {name: "Estudo", time: new TimeInterval(2, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(1, 0)},
-    3: {name: "Pixel", time: new TimeInterval(2, 0), breakTime: new TimeInterval(1,0), breakInterval: new TimeInterval(1, 0)},
-    4: {name: "Prática", time: new TimeInterval(4, 0), breakTime: new TimeInterval(1,0), breakInterval: new TimeInterval(2, 0)},
-    5: {name: "Filme", time: new TimeInterval(2, 30), breakTime: new TimeInterval(0,10), breakInterval: new TimeInterval(2, 30)},
-    6: {name: "Livros", time: new TimeInterval(8, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(2, 0)},
-    7: {name: "Manga", time: new TimeInterval(1, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(0, 30)},
-    8: {name: "Academia", time: new TimeInterval(2, 0), breakTime: new TimeInterval(0,30), breakInterval: new TimeInterval(0, 45)}
-}
+getUser()
 
 // =================== Create Items ========================
 
@@ -26,8 +21,8 @@ function formatTime(time){
     return text;
 }
 
-function createItem(id){
-    data = customTimes[id]
+function createItem(index){
+    data = user.custom_times[index]
 
     let item = document.createElement("DIV");
     item.classList.add("custom-times__item");
@@ -41,7 +36,7 @@ function createItem(id){
 
     let timeInterval = document.createElement("DIV");
     timeInterval.classList.add("time__item");
-    timeInterval.innerHTML = formatTime(data.time);
+    timeInterval.innerHTML = formatTime(data.timeInterval);
 
     let breakInfo = document.createElement("DIV");
     breakInfo.classList.add("time__item", "time__item--pausas");
@@ -62,12 +57,12 @@ function createItem(id){
 
     editButton.appendChild(editIcon);
     edit.appendChild(editButton)
-    edit.id = id;
+    edit.id = data.id;
     edit.addEventListener("click", edit_click)
 
     item.appendChild(time)
     item.appendChild(edit)
-    item.setAttribute("index", id)
+    item.setAttribute("index", data.id)
 
     return item;
 }
@@ -79,9 +74,12 @@ function edit_click(){
  
 let container = document.querySelector(".custom-times");
 
-for (id in customTimes){
-    let item = createItem(id)
-    container.appendChild(item)
+function createItems(){
+    for (let i = 0; i < user.custom_times.length; i++)
+    {
+        let item = createItem(i)
+        container.appendChild(item)
+    }
 }
 
 document.querySelector(".btn-add-time").addEventListener("click", ()=>{window.location.assign('./adicionar_horario.html')})

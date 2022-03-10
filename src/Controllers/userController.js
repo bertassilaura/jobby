@@ -1,6 +1,5 @@
 const User = require('../Models/user');
 const historyController = require("./historyController")
-require('dotenv/config');
 
 //======================== Validation ==========================
 
@@ -110,7 +109,6 @@ exports.login = async (req, res) => {
      validator.validateEmail(req.body.email);
      validator.isEmpty(req.body.password, "Senha")}
     catch(e){
-        console.log(e)
         res.json({status: false, error: e});
         return
     }
@@ -153,7 +151,6 @@ exports.patchUser = async (req, res) => {
     })
     .catch(err =>{
         res.json({message: err});
-        console.log(err)
     });
 };
 
@@ -177,7 +174,6 @@ exports.postCustomTime = async (req, res) => {
         validator.validateCombo(req.body.breakInterval.hours, req.body.breakInterval.minutes, "Tempo entre Pausas"); 
     }
         catch(err){
-            console.log(err)
            res.json({status: false, error: err});
            return
     }
@@ -213,7 +209,6 @@ exports.postCustomTime = async (req, res) => {
     })
     .catch(err =>{
         res.json({status: false, error: err});
-        console.log(err)
     });
 };
 
@@ -230,7 +225,6 @@ exports.patchCustomTime = async (req, res) => {
         validator.validateCombo(req.body.breakInterval.hours, req.body.breakInterval.minutes, "Tempo entre Pausas"); 
     }
         catch(err){
-            console.log(err)
            res.json({status: false, error: err});
            return
     }
@@ -286,7 +280,6 @@ exports.deleteCustomTime = async (req, res) => {
         validator.isEmpty(req.body.id)
     }
         catch(err){
-           console.log(err)
            res.json({status: false, error: err});
            return
     }
@@ -341,6 +334,5 @@ exports.patchHydration = async (req, res) => {
     })
     .catch(err =>{
         res.json({message: err});
-        console.log(err)
     });
 };

@@ -7,45 +7,9 @@ function TimeInterval(hours, minutes){
 
 function CustomTime(name, time, breakTime, breakInterval){
     this.name = name,
-    this.time = time,
+    this.timeInterval = time,
     this.breakTime = breakTime,
     this.breakInterval = breakInterval
-}
-
-// =================== Mock up data ========================
-
-let customTimes = {
-    1: {name: "Trabalho", time: new TimeInterval(3, 0), breakTime: new TimeInterval(0,30), breakInterval: new TimeInterval(1, 30)},
-    2: {name: "Estudo", time: new TimeInterval(2, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(1, 0)},
-    3: {name: "Pixel", time: new TimeInterval(2, 0), breakTime: new TimeInterval(1,0), breakInterval: new TimeInterval(1, 0)},
-    4: {name: "Prática", time: new TimeInterval(4, 0), breakTime: new TimeInterval(1,0), breakInterval: new TimeInterval(2, 0)},
-    5: {name: "Filme", time: new TimeInterval(2, 30), breakTime: new TimeInterval(0,10), breakInterval: new TimeInterval(2, 30)},
-    6: {name: "Livros", time: new TimeInterval(8, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(2, 0)},
-    7: {name: "Manga", time: new TimeInterval(1, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(0, 30)},
-    8: {name: "Academia", time: new TimeInterval(2, 0), breakTime: new TimeInterval(0,30), breakInterval: new TimeInterval(0, 45)}
-}
-
-// ================================== Pegar Dados ========================================
-
-function getData(){
-    let queryString = window.location.search
-    let params = new URLSearchParams(queryString);
-    let id = parseInt(params.get("id"))
-
-    if (queryString == "" || queryString == null || !(id in customTimes)){
-        alert("Página inválida")
-        window.location.href = "./configuracoes_horario.html"
-    }
-
-    let data = customTimes[id]
-
-    document.querySelector("#name").value = data.name
-    document.querySelector("#duration-hour").value = data.time.hours
-    document.querySelector("#duration-minute").value = data.time.minutes
-    document.querySelector("#break-hour").value = data.breakTime.hours
-    document.querySelector("#break-minute").value = data.breakTime.minutes
-    document.querySelector("#repeat-hour").value = data.breakInterval.hours
-    document.querySelector("#repeat-minute").value = data.breakInterval.minutes
 }
 
 // ================================== Mensagens de Erro ========================================
@@ -107,18 +71,29 @@ function Form(){
     this.getData = () => {
             let queryString = window.location.search
             let params = new URLSearchParams(queryString);
-            let id = parseInt(params.get("id"))
+            let idParam = parseInt(params.get("id"))
         
-            if (queryString == "" || queryString == null || !(id in customTimes)){
-                alert("Página inválida")
+            if (queryString == "" || queryString == null){
+                alert("Tempo Customizado não encontrado!")
                 window.location.href = "./configuracoes_horario.html"
             }
-        
-            let data = customTimes[id]
-        
+
+            let encontrado = false
+            let data = null
+            for(index in user.custom_times){
+                if (user.custom_times[index].id == idParam){
+                    encontrado = true
+                    data = user.custom_times[index]
+                }
+            }
+            if(!encontrado){
+                alert("Tempo Customizado não encontrado!")
+                window.location.href = "./configuracoes_horario.html"
+            }
+
             this.name.value = data.name
-            this.durHour.value = data.time.hours
-            this.durMin.value = data.time.minutes
+            this.durHour.value = data.timeInterval.hours
+            this.durMin.value = data.timeInterval.minutes
             this.breakHour.value = data.breakTime.hours
             this.breakMin.value = data.breakTime.minutes
             this.repeatHour.value = data.breakInterval.hours
@@ -184,9 +159,9 @@ function Form(){
         let breakTime = new TimeInterval(this.breakHour.value, this.breakMin.value)
         let breakInterval = new TimeInterval(this.repeatHour.value, this.repeatMin.value)
 
-        let time = new CustomTime(this.name, timeInterval, breakTime, breakInterval)
-        alert(`Nome: ${time.name.value} \nDuração: ${this.formatTime(time.time)}\n Pausas de ${this.formatTime(time.breakTime)} a cada ${this.formatTime(time.breakInterval)} `)
-        document.location.href = "./configuracoes_horario.html"
+        let time = new CustomTime(this.name.value, timeInterval, breakTime, breakInterval)
+        
+        this.send(time)
         }
         catch (e){
             console.log(e)
@@ -197,10 +172,67 @@ function Form(){
         if (event.key == "Enter"){
             this.submit()
         }
+    },
+
+    this.send = (customTime) =>{
+        customTime.user_id = user._id
+        let params = new URLSearchParams(window.location.search);
+        customTime.id = parseInt(params.get("id"))
+        let headers = new Headers({
+            "Content-Type": "application/json",
+          });
+        let init = { method: 'PATCH',
+               headers: headers,
+               mode: 'cors',
+               cache: 'default',
+               body: JSON.stringify(customTime)};
+        fetch("./user/customtimes", init).then(response =>
+            response.json().then(data => {
+                if(data.status){
+                location.href = "./configuracoes_horario.html"
+                }
+                else{
+                    console.log(data)
+                }}))
     }
 }
 
+// ================================== Delete CustomTime ========================================
+
+function deleteCustomTime(){
+    let queryString = window.location.search
+    let params = new URLSearchParams(queryString);
+    let idParam = parseInt(params.get("id"))
+        
+    let headers = new Headers({
+            "Content-Type": "application/json",
+    });
+    let init = { method: 'DELETE',
+           headers: headers,
+           mode: 'cors',
+           cache: 'default',
+           body: JSON.stringify({user_id: user._id, id: idParam})};
+    fetch("./user/customtimes", init).then(response =>
+        response.json().then(data => {
+            if(data.status){
+            location.href = "./configuracoes_horario.html"
+            }
+            else{
+                console.log(data)
+            }}))
+}
+
+// =================== Start Data ========================
+
+let user = null
 let form = new Form()
-form.start()
 
+async function getUser(){
+    let id = "6229fe9542edd3a2ba368484"
+    await fetch(`./user?id=${id}`).then(response => response.json().then(user_data => user = user_data))
+    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+    form.start()
+}
 
+getUser()
+document.querySelector("#delete-time-button").addEventListener("click", deleteCustomTime)

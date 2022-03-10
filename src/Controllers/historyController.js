@@ -1,5 +1,4 @@
 const History = require('../Models/history');
-require('dotenv/config');
 
 //======================== Validation ==========================
 
@@ -31,7 +30,6 @@ exports.get = async (req, res) => {
         validator.isEmpty(req.query.user_id, "Id do Usuário");
     }
         catch(err){
-            console.log(err)
            res.json({status: false, error: err});
            return
     }
@@ -56,7 +54,6 @@ exports.patch = async (req, res) => {
         validator.isInt(req.body.entry.break_time, "Tempo de Pausa");
     }
         catch(err){
-            console.log(err)
            res.json({status: false, error: err});
            return
     }
@@ -75,7 +72,6 @@ exports.patch = async (req, res) => {
     })
     .catch(err =>{
         res.json({message: err});
-        console.log(err)
     });
 };
 

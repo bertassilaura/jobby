@@ -243,34 +243,6 @@ body{
     background-color: rgba(97, 188, 182, 0.2);
   }
 
-/*----------  Refresh Button  ----------*/
-
-.refresh-btn{
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.refresh-btn button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    font-size: 0.8rem;
-    border-radius: 50%;
-    color: #ffffff;
-    background-color: #61BBB6;
-    border: 1px solid #61BBB6;
-    cursor: pointer;
-}
-
-.refresh-btn button:hover{
-    background-color: #fff;
-    color: #61BBB6;
-}
-
 
 .title-container__icon{
     font-size: 1.08rem;
