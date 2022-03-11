@@ -3,10 +3,24 @@
 let user = null
 
 async function getUser(){
-    let id = "6229fe9542edd3a2ba368484"
-    await fetch(`./user?id=${id}`).then(response => response.json().then(user_data => user = user_data))
+    if (localStorage.getItem('token')){
+
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    });
+        
+    let init = { method: 'GET',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default'};
+
+    await fetch(`./user`, init).then(response => response.json().then(user_data => user = user_data))
     document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
-    createItems()
+    createItems()}
+    else{
+        location.href = "./"
+    }
 }
 
 getUser()

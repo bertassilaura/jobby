@@ -155,10 +155,12 @@ function Form(){
     }
 
     this.send = (customTime) =>{
-        customTime.user_id = user._id
+
         let headers = new Headers({
             "Content-Type": "application/json",
-          });
+            "x-access-token": localStorage.getItem("token")
+        });
+
         let init = { method: 'POST',
                headers: headers,
                mode: 'cors',

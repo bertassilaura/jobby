@@ -358,14 +358,36 @@ let user = null;
 let data_entries = [];
 
 async function getUser(){
-    let id = "6229fe9542edd3a2ba368484"
-    await fetch(`./user?id=${id}`).then(response => response.json().then(user_data => user = user_data))
-    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+    if (localStorage.getItem('token')){
+
+        let headers = new Headers({
+            "Content-Type": "application/json",
+            "x-access-token": localStorage.getItem("token")
+        });
+            
+        let init = { method: 'GET',
+                headers: headers,
+                mode: 'cors',
+                cache: 'default'};
+    
+        await fetch(`./user`, init).then(response => response.json().then(user_data => user = user_data))
+        document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`}
+        else{
+            location.href = "./"
+        }
 }
 
 async function getDataEntries(){
-    let id = "6229fe9542edd3a2ba368484"
-    await fetch(`./history?user_id=${id}`).then(response => response.json().then(history => data_entries = history.message.entries))
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    });
+        
+    let init = { method: 'GET',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default'};
+    await fetch(`./history`, init).then(response => response.json().then(history => data_entries = history.message.entries))
     data_entries.forEach((element, index, array) => {array[index].date = new Date(element.date)})
     semanal(data_entries);
 }

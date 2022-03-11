@@ -1,12 +1,14 @@
 const User = require('../Models/user');
 const historyController = require("./historyController")
+const jwt = require('jsonwebtoken');
+require('dotenv/config');
 
 //======================== Validation ==========================
 
 function InputException(message) {
     this.message = message;
     this.name = "InputException";
- }
+}
 
 function Validator() {
     this.isEmpty = (value, fieldName) => { // throw error {message: ""}
@@ -93,7 +95,7 @@ exports.getAll = async (req, res) => {
 
 // takes the id on the query, returns the user or null if the user is not found
 exports.get = async (req, res) => {
-    await User.findOne({_id: req.query.id}).then(user=>{
+    await User.findOne({_id: req.body.user_id}).then(user=>{
         res.json(user);
     })
     .catch(err =>{
@@ -115,8 +117,11 @@ exports.login = async (req, res) => {
 
     // Cosnsulta
 
-    const user = await User.findOne({email: req.body.email, password: req.body.password}).then(user=>{
-        res.json({status: true, message: user});
+    await User.findOne({email: req.body.email, password: req.body.password}).then(user=>{
+        const token = jwt.sign({ user_id: user._id }, process.env.SECRET, {
+            expiresIn: 86400 // expires in 24h
+          });
+        return res.json({ auth: true, token: token });
     })
     .catch(err =>{
         res.json({status: false, error: err});
@@ -141,7 +146,7 @@ exports.register = async (req, res) => {
 };
 
 exports.patchUser = async (req, res) => {
-    const user = await User.findOne({_id: req.body.id})
+    const user = await User.findOne({_id: req.body.user_id})
     user.name = req.body.name
     user.email = req.body.email
     user.password = req.body.password
@@ -155,8 +160,8 @@ exports.patchUser = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-    const removedUser = await User.deleteOne({_id: req.query.id});
-    historyController.delete(req.query.id)
+    const removedUser = await User.deleteOne({_id: req.body.user_id});
+    historyController.delete(req.body.user_id)
     res.json(removedUser);
 };
 

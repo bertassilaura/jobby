@@ -27,14 +27,14 @@ let validator = new Validator();
 // takes the id on the query, returns the user or null if the user is not found
 exports.get = async (req, res) => {
     try{
-        validator.isEmpty(req.query.user_id, "Id do Usuário");
+        validator.isEmpty(req.body.user_id, "Id do Usuário");
     }
         catch(err){
            res.json({status: false, error: err});
            return
     }
 
-    await History.findOne({user_id: req.query.user_id}).then(history=>{
+    await History.findOne({user_id: req.body.user_id}).then(history=>{
         if (history === null){
             throw {message: "Histórico não encontrado", name:"NotFoundError"}
         }

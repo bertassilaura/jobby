@@ -78,8 +78,7 @@ function Form(){
         this.check_email(this.email)
         this.check_password(this.password)
         let login = new Login(this.email.value, this.password.value)
-        alert(`Email: ${login.email} \nPassword: ${login.password}`)
-        document.location.href = "./time_tracker.html"
+        this.send(login)
         }
         catch (e){
             console.log(e)
@@ -90,6 +89,24 @@ function Form(){
         if (event.key == "Enter"){
             this.submit()
         }
+    }
+
+    this.send = (user_data) =>{
+
+        let headers = new Headers({
+            "Content-Type": "application/json",
+        });
+        
+        let init = { method: 'POST',
+               headers: headers,
+               mode: 'cors',
+               cache: 'default',
+               body: JSON.stringify(user_data)};
+        fetch("./user/login", init).then(response =>
+            response.json().then(data => {
+                localStorage.setItem('token', data.token);
+                location.href = "./time_tracker.html"
+            }))
     }
 }
 

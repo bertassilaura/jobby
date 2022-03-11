@@ -175,11 +175,12 @@ function Form(){
     },
 
     this.send = (customTime) =>{
-        customTime.user_id = user._id
+        
         let params = new URLSearchParams(window.location.search);
         customTime.id = parseInt(params.get("id"))
         let headers = new Headers({
             "Content-Type": "application/json",
+            "x-access-token": localStorage.getItem("token")
           });
         let init = { method: 'PATCH',
                headers: headers,
@@ -228,10 +229,24 @@ let user = null
 let form = new Form()
 
 async function getUser(){
-    let id = "6229fe9542edd3a2ba368484"
-    await fetch(`./user?id=${id}`).then(response => response.json().then(user_data => user = user_data))
-    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
-    form.start()
+    if (localStorage.getItem('token')){
+
+        let headers = new Headers({
+            "Content-Type": "application/json",
+            "x-access-token": localStorage.getItem("token")
+        });
+            
+        let init = { method: 'GET',
+                headers: headers,
+                mode: 'cors',
+                cache: 'default'};
+    
+        await fetch(`./user`, init).then(response => response.json().then(user_data => user = user_data))
+        document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+        form.start()}
+        else{
+            location.href = "./"
+        }
 }
 
 getUser()
