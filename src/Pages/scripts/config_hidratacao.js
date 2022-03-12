@@ -224,7 +224,7 @@ function Form(){
             
             }
             catch (e){
-                requestNotification(e.message, false)
+                
             }
     }
 

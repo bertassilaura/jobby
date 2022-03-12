@@ -119,7 +119,7 @@ exports.login = async (req, res) => {
 
     await User.findOne({email: req.body.email, password: req.body.password}).then(user=>{
         const token = jwt.sign({ user_id: user._id }, process.env.SECRET, {
-            expiresIn: 86400 // expires in 24h
+            expiresIn: 86400 // expires in 24h (86400s)
           });
         return res.json({ auth: true, token: token });
     })
