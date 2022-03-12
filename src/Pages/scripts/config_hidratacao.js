@@ -1,8 +1,40 @@
+async function getUser(){
+    if (localStorage.getItem('token')){
+
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    });
+        
+    let init = { method: 'GET',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default'};
+
+    await fetch(`./user`, init).then(response => {
+        if(!response.ok){
+            response.json().then(data => {requestNotification(data.message)})
+        }
+        else{
+           response.json().then(user_data => {user = user_data; setData()})
+        }})
+    }
+    else{
+        location.href = "./"
+    }
+}
+
+function setData(){
+    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+}
+
+getUser()
+
 // ================================== Classes de Tempo ========================================
 
-function TimeInterval(hour, minute){
-    this.hour = hour,
-    this.minute = minute
+function TimeInterval(hours, minutes){
+    this.hours = hours,
+    this.minutes = minutes
 }
 
 function WaterQuantity(quantity, measure){
@@ -10,6 +42,14 @@ function WaterQuantity(quantity, measure){
     this.measure = measure
 }
 
+function Hydration(on, time, water){
+    this.on = on,
+    this.time = time,
+    this.water = water,
+    this.nextWarning = on?new Date(Date.now() + time.hours * 3600000 + time.minutes * 60000):null
+    }
+
+/*
 function HydrationMonitor(on, time, water){
     this.on = on,
     this.time = time,
@@ -49,6 +89,7 @@ function HydrationMonitor(on, time, water){
         this.setUp()
     }
 }
+*/
 
 // ================================== Notification ========================================
 
@@ -173,13 +214,17 @@ function Form(){
             let time = this.timeMeasure.value == "minutos"? new TimeInterval(0, this.time.value): new TimeInterval(this.time.value, 0)
             let water = new WaterQuantity(this.quantity.value, this.quantityMeasure.value)
 
-            let hydration = new HydrationMonitor(this.switch.checked, time, water)
-            hydration.setUp()
-            alert(`Ligado: ${hydration.on} \nTempo: ${hydration.time.hour}:${hydration.time.minute}\nQuantidade: ${hydration.water.quantity} ${hydration.water.measure}`)
+            let hydration = new Hydration(this.switch.checked, time, water)
+            hydrationMonitor.setUp(hydration)
+            hydrationMonitor.setNextWarning()
+
+            //Chamada para o servidor
+
+            requestNotification(`Notificação de hidratação configurada com sucesso!`, true)
             
             }
             catch (e){
-                console.log(e)
+                requestNotification(e.message, false)
             }
     }
 
@@ -190,6 +235,10 @@ function Form(){
     }
 }
 
+
+let hydrationMonitor = new HydrationMonitor() 
 let form = new Form()
 form.start()
+
+
 

@@ -360,21 +360,31 @@ let data_entries = [];
 async function getUser(){
     if (localStorage.getItem('token')){
 
-        let headers = new Headers({
-            "Content-Type": "application/json",
-            "x-access-token": localStorage.getItem("token")
-        });
-            
-        let init = { method: 'GET',
-                headers: headers,
-                mode: 'cors',
-                cache: 'default'};
-    
-        await fetch(`./user`, init).then(response => response.json().then(user_data => user = user_data))
-        document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`}
-        else{
-            location.href = "./"
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    });
+        
+    let init = { method: 'GET',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default'};
+
+    await fetch(`./user`, init).then(response => {
+        if(!response.ok){
+            response.json().then(data => {requestNotification(data.message)})
         }
+        else{
+           response.json().then(user_data => {user = user_data; setUserData()})
+        }})
+    }
+    else{
+        location.href = "./"
+    }
+}
+
+function setUserData(){
+    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
 }
 
 async function getDataEntries(){
@@ -387,9 +397,19 @@ async function getDataEntries(){
             headers: headers,
             mode: 'cors',
             cache: 'default'};
-    await fetch(`./history`, init).then(response => response.json().then(history => data_entries = history.message.entries))
-    data_entries.forEach((element, index, array) => {array[index].date = new Date(element.date)})
-    semanal(data_entries);
+
+    await fetch(`./history`, init).then(response => {
+        if(!response.ok){
+            response.json().then(data => {requestNotification(data.message)})
+        }
+        else{
+            response.json().then(history => {
+                                              data_entries = history.message.entries;
+                                              data_entries.forEach((element, index, array) => {array[index].date = new Date(element.date)});
+                                              semanal(data_entries);})
+        }})
+
+
 }
 
 async function Start(){

@@ -141,7 +141,7 @@ exports.register = async (req, res) => {
         res.json(user);
     })
     .catch(err =>{
-        res.json({message: err});
+        res.status(503).send({message: err});
     });
 };
 
@@ -155,7 +155,7 @@ exports.patchUser = async (req, res) => {
         res.json(data);
     })
     .catch(err =>{
-        res.json({message: err});
+        res.status(503).send({message: err});
     });
 };
 
@@ -179,7 +179,7 @@ exports.postCustomTime = async (req, res) => {
         validator.validateCombo(req.body.breakInterval.hours, req.body.breakInterval.minutes, "Tempo entre Pausas"); 
     }
         catch(err){
-           res.json({status: false, error: err});
+            res.status(400).send({error: err});
            return
     }
 
@@ -193,7 +193,7 @@ exports.postCustomTime = async (req, res) => {
         }
     }
     catch(err){
-        res.json({status: false, error: {message: "Usuário não encontrado", name: "NotFoundException"}});
+        res.status(404).send({error: {message: "Usuário não encontrado", name: "NotFoundException"}});
         return
     };
 
@@ -210,10 +210,10 @@ exports.postCustomTime = async (req, res) => {
     
     await user.save()
     .then(data=>{
-        res.json({status: true, message: data});
+        res.json({data: data});
     })
     .catch(err =>{
-        res.json({status: false, error: err});
+        res.status(503).send({error: err});
     });
 };
 
@@ -230,7 +230,7 @@ exports.patchCustomTime = async (req, res) => {
         validator.validateCombo(req.body.breakInterval.hours, req.body.breakInterval.minutes, "Tempo entre Pausas"); 
     }
         catch(err){
-           res.json({status: false, error: err});
+            res.status(400).send({error: err});
            return
     }
 
@@ -244,7 +244,7 @@ exports.patchCustomTime = async (req, res) => {
         }
     }
     catch(err){
-        res.json({status: false, error: {message: "Usuário não encontrado", name: "NotFoundException"}});
+        res.status(404).send({error: {message: "Usuário não encontrado", name: "NotFoundException"}});
         return
     };
 
@@ -266,14 +266,14 @@ exports.patchCustomTime = async (req, res) => {
     if(changed){
         await user.save()
         .then(data=>{
-            res.json({status: true, message: data});
+            res.json({data: data});
         })
         .catch(err =>{
-            res.json({status: false, error: err});
+            res.status(503).send({error: err});
         });
     }
     else{
-        res.json({status: false, error: {message: "Entrada de tempo não encontrada", name:"NotFoundException"}});
+        res.status(404).send({status: false, error: {message: "Entrada de tempo não encontrada", name:"NotFoundException"}});
     }
 };
 
@@ -285,7 +285,7 @@ exports.deleteCustomTime = async (req, res) => {
         validator.isEmpty(req.body.id)
     }
         catch(err){
-           res.json({status: false, error: err});
+           res.status(400).send({error: err});
            return
     }
     
@@ -299,7 +299,7 @@ exports.deleteCustomTime = async (req, res) => {
         }
     }
     catch(err){
-        res.json({status: false, error: {message: "Usuário não encontrado", name: "NotFoundException"}});
+        res.status(404).send({error: {message: "Usuário não encontrado", name: "NotFoundException"}});
         return
     };
 
@@ -312,10 +312,10 @@ exports.deleteCustomTime = async (req, res) => {
 
     await user.save()
     .then(data=>{
-        res.json({status: true, message: data});
+        res.json({data: data});
     })
     .catch(err =>{
-        res.json({status: false, error: err});
+        res.status(503).send({error: err});
     });
 };
 
@@ -324,20 +324,20 @@ exports.deleteCustomTime = async (req, res) => {
 exports.patchHydration = async (req, res) => {
     const user = await User.findOne({_id: req.body.user_id});
     user.hydration = {on: req.body.on,
-    time:{
+        time:{
         hours: req.body.time.hours,
         minutes: req.body.time.minutes
         },
-    water:{
+        water:{
         quantity: req.body.water.quantity,
         measure: req.body.water.measure
         },
-    nextWarnig: req.body.nextWarnig}
+        nextWarning: req.body.nextWarning}
     
     await user.save().then(data=>{
         res.json(data);
     })
     .catch(err =>{
-        res.json({message: err});
+        res.status(503).send({message: err});
     });
 };

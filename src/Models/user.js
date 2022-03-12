@@ -15,8 +15,8 @@ const UserSchema = mongoose.Schema({
         required: true
     },
     customTimesId: {type: Number,
-                           default: 0,
-                        unique: false},
+                    default: 0,
+                    unique: false},
     custom_times:{type: Array
     },
     hydration:{
@@ -40,13 +40,11 @@ const UserSchema = mongoose.Schema({
                 type: String,
                 enum: ["ml", "L"],
                 default: "ml"
-            },
-            next_warning:{
-                type: Date,
-                default: null
-            }
+            }},
+        nextWarning:{
+            type: Date,
+            default: null
         }
-        
     }
 });
 
