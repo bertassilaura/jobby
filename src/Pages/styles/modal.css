@@ -1,0 +1,157 @@
+/* ----------- Input Error -----------------------*/
+
+.input-error-message{
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    z-index: 99;
+  }
+
+.input-error-message__border{
+    position: relative;
+    top: 16px;
+    left: -40px;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #41529F;
+    z-index: 99;
+
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 2px solid #41529F;
+}
+
+.input-error-message__arrow{
+    width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 20px solid #41529F;
+}
+
+/* ----------- Hydration Popup -----------------------*/
+
+.hydration-popup{
+    overflow: hidden;
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0;
+    padding: 10px;
+    background-color: #fff;
+    color: #41529F;
+
+
+    position: absolute;
+    border: 1px solid rgb(0, 0, 0, 0.4);
+    font-size: 34px;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    height: 60vh;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    box-shadow: 2px 2px 1px 1px rgb(0, 0, 0, 0.4);
+}
+
+.hydration-popup__top{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+
+
+.hydration-popup__main{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    flex: 1;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hydration-popup__icon{
+    font-size: 2rem;
+    margin-bottom: 0px;
+}
+
+.hydration-popup__title-container{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    height: fit-content;
+}
+
+.hydration-popup__title{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    text-align: center;
+}
+
+.break-rule{
+    width: 2rem;
+}
+
+.hydration-popup__text{
+    color: #000;
+    font-size: 1rem;
+    text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .hydration-popup{
+        width: 80vw;
+        height: 50vh;
+    }
+}
+
+/* ----------- Notification -----------------------*/
+
+.request-notification{
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    vertical-align:middle;
+    z-index: 99;
+    color: #41529F;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 0.3rem;
+
+    top: 40px;
+    right: 10px;
+
+    max-width: 300px;
+    border: solid 2px #41529F;
+    border-radius: 10px;
+    transform: translateX(calc(100% + 10px));
+    transition: 1s;
+}
+
+.request-notification--failure{
+    color: #ff6961;
+    border-color: #ff6961;
+}
+
+.request-notification__icon{
+    font-size: 0.8rem;
+    margin-right: 5px;
+}
+
+.request-notification__text{
+    font-size: 0.6rem;
+    flex: 1;
+}

@@ -489,27 +489,20 @@ input[type=number] {
 .stretch-pose__img{
     max-height: 90%;
     width: auto;
+    max-width: 50%;
     justify-self: center;
     filter: invert(62%) sepia(43%) saturate(377%) hue-rotate(128deg) brightness(99%) contrast(92%);
 }
 
 /* ------------------- Stretch pose texts ------------------------ */
 
-.stretch-pose__text{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-}
-
 .stretch-pose p{
     display: flex;
     height: 80%;
-    justify-content: flex-start;
+    justify-content: center;
     align-content: center;
-    width: 40%;
+    width: 50%;
+    padding: 3px;
     flex-flow: column;
     font-size: 0.8rem;
     font-weight: 300;
@@ -685,6 +678,10 @@ input[type=number] {
     #break-popup{
         width: 80vw;
         height: 50vh;
+    }
+
+    .stretch-pose p{
+        font-size: 0.7rem;
     }
 
     .clock{

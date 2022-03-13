@@ -145,6 +145,7 @@ function svg_start(target){
 
 function notification(name){
     const audio = new Audio(`./sounds/${name}`);
+    audio.volume = 0.5;
     audio.play()
 }
 
@@ -160,6 +161,7 @@ function errorMessage(elemento, message){
     error_message.style.left = (rect.left + (rect.right - rect.left)/16) + "px";
 
     document.body.appendChild(error_message);
+    elemento.focus()
     setTimeout(()=>{document.body.addEventListener("click", closeMessages)}, 1)
 }
 
@@ -187,94 +189,90 @@ function closeMessages(){
     document.body.removeEventListener("click", closeMessages)
 }
 
-function empty(elemento){
-    if (elemento.value == null || elemento.value == ""){
-        errorMessage(elemento, "Preencha este campo");
+// ================================== Validação Formulário ========================================
+
+function Form(){
+    this.durHour = document.querySelector("#duration-hour"),
+    this.durMin = document.querySelector("#duration-minute"),
+    this.breakHour = document.querySelector("#break-hour"),
+    this.breakMin = document.querySelector("#break-minute"),
+    this.repeatHour = document.querySelector("#repeat-hour"),
+    this.repeatMin = document.querySelector("#repeat-minute"),
+
+    this.start = () => {
+        this.durHour.addEventListener("keypress", this.keyPress)
+        this.durMin.addEventListener("keypress", this.keyPress)
+        this.breakHour.addEventListener("keypress", this.keyPress)
+        this.breakMin.addEventListener("keypress", this.keyPress)
+        this.repeatHour.addEventListener("keypress", this.keyPress)
+        this.repeatMin.addEventListener("keypress", this.keyPress)
+    },
+
+    this.check_duo = (hour, minute) => {
+        this.check_number(hour)
+        this.check_number(minute)
+        if (hour.value == 0 && minute.value == 0){
+            errorMessage(hour, "Hora e minutos não podem estar ambos zerados");
+            throw "inputException";
+        }
+    },
+
+    this.check_number = (element) => {
+        if (element.value == null || element.value == ""){
+            errorMessage(element, "Preencha este campo");
+            throw "inputException";
+        }
+        if (Math.floor(element.value) != Number(element.value)){
+            errorMessage(element, `O valor deve ser um número inteiro`);
+            throw "inputException";
+        }
+        if (element.min !== "" && Number(element.value) < element.min){
+            errorMessage(element, `O valor deve ser maior ou igual a ${element.min}`);
         throw "inputException";
+        }
+        if (element.max !== "" && Number(element.value) > element.max){
+            errorMessage(element, `O valor deve ser menor ou igual a ${element.max}`);
+            throw "inputException";
+        }
+    },
+
+    this.submit = () =>{
+        try{
+        closeMessages()
+        this.check_duo(this.durHour, this.durMin)
+        this.check_duo(this.breakHour, this.breakMin)
+        this.check_duo(this.repeatHour, this.repeatMin)
+        
+        let timeInterval = new Countdown(this.durHour.value, this.durMin.value)
+        let breakTime = new Countdown(this.breakHour.value, this.breakMin.value)
+        let breakInterval = new Countdown(this.repeatHour.value, this.repeatMin.value)
+
+        let clock = new Clock(timeInterval, breakTime, breakInterval)
+        return clock
+        }
+        catch (e){
+            console.log(e)
+            return null
+        }
+    }
+
+    this.keyPress = (event) =>{
+        if (event.key == "Enter"){
+            play()
+        }
     }
 }
 
-function is_number(elemento){
-    if (Math.floor(elemento.value) != Number(elemento.value)){
-        errorMessage(elemento, `O valor deve ser um número inteiro`);
-        throw "inputException";
-    }
-}
-
-function min(elemento, limit){
-    if (Number(elemento.value) < limit){
-        errorMessage(elemento, `O valor deve ser maior ou igual a ${limit}`);
-        throw "inputException";
-    }
-}
-
-function max(elemento, limit){
-    if (Number(elemento.value) > limit){
-        errorMessage(elemento, `O valor deve ser menor ou igual a ${limit}`);
-        throw "inputException";
-    }
-}
-
-function validate_solo(id){
-    let elemento = document.getElementById(id);
-
-    empty(elemento);
-
-    if (elemento.min !== ""){
-        min(elemento, elemento.min)
-    }
-    if (elemento.max !== ""){
-        max(elemento, elemento.max)
-    }
-    if (elemento.type == "number"){
-        is_number(elemento)
-    }
-}
-
-function valid_combo(elemento_hour, elemento_minute){
-    if (elemento_hour.value == 0 && elemento_minute.value == 0){
-        errorMessage(elemento_hour, `Hora e minutos não podem estar ambos zerados`);
-        throw "inputException";
-    }
-}
-
-function validate(id){
-    validate_solo(id + "-hour");
-    validate_solo(id + "-minute");
-
-    let elemento_hour = document.getElementById(id + "-hour");
-    let elemento_minute = document.getElementById(id + "-minute");
-
-    valid_combo(elemento_hour, elemento_minute);
-}
+let form = new Form()
+form.start()
 
 // ================================== Buttons ========================================
 
 function play(){
     if (!configured){
-
-        try{
-            validate("duration")
-            validate("break")
-            validate("repeat")
-
-            let hour = document.getElementById("duration-hour").value;
-            let minute = document.getElementById("duration-minute").value;
-            let time = new Countdown(hour, minute);
-    
-            hour = document.getElementById("repeat-hour").value;
-            minute = document.getElementById("repeat-minute").value;
-            let breakInterval = new Countdown(hour, minute);
-            
-            hour = document.getElementById("break-hour").value;
-            minute = document.getElementById("break-minute").value;
-            let breakTime = new Countdown(hour, minute);
-    
-            clock = new Clock(time, breakInterval, breakTime);
+        clock = form.submit()
+        if(clock != null){
             configured = true;
-        }
-        catch(e){
-            console.log(e)
         }
     }
     if (configured){

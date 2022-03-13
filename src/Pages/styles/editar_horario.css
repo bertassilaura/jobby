@@ -222,7 +222,13 @@ body{
     margin-bottom: 10px;
 }
 
-.edit-time__save-button{
+.action-buttons{
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
+.edit-time__button{
     background-color: #61BBB6;
     border: 1px solid #61BBB6;
     color: #fff;
@@ -233,9 +239,20 @@ body{
     transition: 0.5s;
 }
 
-.edit-time__save-button:hover{
+#edit-time-button:hover{
     background-color: #fff;
     color: #61BBB6;
+}
+
+#delete-time-button{
+    background-color: #41529F;
+    border: 1px solid #41529F;
+    margin-left: 20px;
+}
+
+#delete-time-button:hover{
+    background-color: #fff;
+    color: #41529F;
 }
 
 input{

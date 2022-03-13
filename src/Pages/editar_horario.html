@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" type="image/x-icon" href="./imagens/favicon.ico"/>
-    <link rel="stylesheet" href="./styles/adicionar_horario.css"/>
+    <link rel="stylesheet" href="./styles/modal.css"/>
+    <link rel="stylesheet" href="./styles/editar_horario.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
-    <title>Adicionando Horário</title>
+    <title>Editar Horário</title>
 </head>
 
 <body>
@@ -55,12 +56,12 @@
 
         <div id="center-container">
             <div class="title-container">
-                <h1>Adicionando Horário</h1>
+                <h1>Editando Horário</h1>
             </div>
 
-            <div class="add-time">
-                <form action="" id="add-time-form">
-                    <div class="add-time__line-1">
+            <div class="edit-time">
+                <form action="" id="edit-time-form">
+                    <div class="edit-time__line-1">
                         <div class="input-name">
                             <div class="input-label">
                                 <span class="fas fa-pen input-label__icon"></span>
@@ -87,7 +88,7 @@
 
                     </div>
 
-                    <div class="add-time__line-2">
+                    <div class="edit-time__line-2">
                         <div class="input-label">
                             <span class="far fa-stop-circle input-lable__icon"></span>
                             <span class="input-label__text">Pausa</span>
@@ -96,7 +97,7 @@
                         <div class="border-container border-container--breakable">
                             <label for="break-hour" class="border-container__text">Pausa de</label>
                             <div>
-                                <input type="number" class="number-input" id="break-hour"  min="0" max="99" required/>
+                                <input type="number" class="number-input" id="break-hour" min="0" max="99" required/>
                                 <span class="pill">Horas</span>
                                 <input type="number" class="number-input" id="break-minute" min="0" max="59" required/>
                                 <span class="pill">Minutos</span>
@@ -115,9 +116,14 @@
                         
                     </div>
 
-                    <button type="button" class="add-time__save-button" id="add-time-button">
-                        Salvar
-                    </button>
+                    <div class="action-buttons">
+                        <button type="button" class="edit-time__button" id="edit-time-button">
+                            Salvar
+                        </button>
+                        <button type="button" class="edit-time__button" id="delete-time-button">
+                            Excluir
+                        </button>
+                    </div>
                     
                 </form>
             </div>
@@ -134,7 +140,8 @@
 </body>
 
 <script src="./scripts/side-bar_mobile.js"> </script>
-<script src="./scripts/adicionar_horario.js"></script>
 <script src="./scripts/back.js"></script>
+<script src="./scripts/modals.js"></script>
+<script src="./scripts/editar_horario.js"></script>
 
 </html>

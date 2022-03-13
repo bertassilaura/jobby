@@ -42,7 +42,6 @@ function configurate_custom_sliders(){
         custom_slider.append(content)
         custom_slider.append(controls)
         custom_slider.setAttribute("current-slide", 0)
-        console.log(controls)
 
     });
 

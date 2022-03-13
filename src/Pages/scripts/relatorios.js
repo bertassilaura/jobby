@@ -1,8 +1,8 @@
 function Entry(atividade, data, tempo_atividade, tempo_pausa){
-    this.atividade = atividade;
-    this.data = data;
-    this.tempo_atividade = tempo_atividade;
-    this.tempo_pausa = tempo_pausa;
+    this.activity = atividade;
+    this.date = data;
+    this.active_time = tempo_atividade;
+    this.break_time = tempo_pausa;
 }
 
 // =================== Classificar Dados ========================
@@ -58,10 +58,10 @@ function filterWeek(data){
     let semana_atual = [];
     let semana_passada = [];
     for(i in data){
-        if(belongToWeek(data[i].data, week_interval.inicio, week_interval.fim)){
+        if(belongToWeek(data[i].date, week_interval.inicio, week_interval.fim)){
             semana_atual.push(data[i]);
         }
-        else if(belongToWeek(data[i].data, week_interval.passada ,week_interval.inicio)){
+        else if(belongToWeek(data[i].date, week_interval.passada ,week_interval.inicio)){
             semana_passada.push(data[i]);
         }
     }
@@ -73,10 +73,10 @@ function filterMonth(data){
     let mes_atual = [];
     let mes_passado = [];
     for(i in data){
-        if(belongToMonth(data[i].data, month_interval.atual)){
+        if(belongToMonth(data[i].date, month_interval.atual)){
             mes_atual.push(data[i]);
         }
-        else if(belongToMonth(data[i].data, month_interval.passado)){
+        else if(belongToMonth(data[i].date, month_interval.passado)){
             mes_passado.push(data[i]);
         }
     }
@@ -90,8 +90,8 @@ function createPieChart(data_entries){
     let total = 0;
 
     for(let entry of data_entries){
-        values[entry.atividade] = values.hasOwnProperty(entry.atividade)? values[entry.atividade] + entry.tempo_atividade: entry.tempo_atividade;
-        total += entry.tempo_atividade;
+        values[entry.activity] = values.hasOwnProperty(entry.activity)? values[entry.activity] + entry.active_time: entry.active_time;
+        total += entry.active_time;
     }
 
     if (Object.keys(values).length == 1){
@@ -167,7 +167,7 @@ function arc_coordinates(percent){
 function minutesOfBreak(data_entries){
     let minutos_totais = 0;
     for(entrada in data_entries){
-        minutos_totais += data_entries[entrada].tempo_pausa/60;
+        minutos_totais += data_entries[entrada].break_time/60;
     }
     return Math.floor(minutos_totais);
 }
@@ -184,10 +184,10 @@ function createLineChart(data_entries, semanal){
     let d_passada = "";
     if (semanal){
         for(let entry of data_entries.atual){
-            values_atual[entry.data.getDay()] = values_atual.hasOwnProperty(entry.data.getDay())? values_atual[entry.data.getDay()] + entry.tempo_atividade: entry.tempo_atividade;
+            values_atual[entry.date.getDay()] = values_atual.hasOwnProperty(entry.date.getDay())? values_atual[entry.date.getDay()] + entry.active_time: entry.active_time;
         }
         for(let entry of data_entries.passada){
-            values_passada[entry.data.getDay()] = values_passada.hasOwnProperty(entry.data.getDay())? values_passada[entry.data.getDay()] + entry.tempo_atividade: entry.tempo_atividade;
+            values_passada[entry.date.getDay()] = values_passada.hasOwnProperty(entry.date.getDay())? values_passada[entry.date.getDay()] + entry.active_time: entry.active_time;
         }
         n = 7;
         document.querySelector(".legend-item--atual .legend-text").innerHTML = "Semana Atual";
@@ -195,10 +195,10 @@ function createLineChart(data_entries, semanal){
     }
     else{
         for(let entry of data_entries.atual){
-            values_atual[entry.data.getDate() - 1] = values_atual.hasOwnProperty(entry.data.getDate() - 1)? values_atual[entry.data.getDate() - 1] + entry.tempo_atividade: entry.tempo_atividade;
+            values_atual[entry.date.getDate() - 1] = values_atual.hasOwnProperty(entry.date.getDate() - 1)? values_atual[entry.date.getDate() - 1] + entry.active_time: entry.active_time;
         }
         for(let entry of data_entries.passada){
-            values_passada[entry.data.getDate() - 1] = values_passada.hasOwnProperty(entry.data.getDate() - 1)? values_passada[entry.data.getDate() - 1] + entry.tempo_atividade: entry.tempo_atividade;
+            values_passada[entry.date.getDate() - 1] = values_passada.hasOwnProperty(entry.date.getDate() - 1)? values_passada[entry.date.getDate() - 1] + entry.active_time: entry.active_time;
         }
         n = 31;
         document.querySelector(".legend-item--atual .legend-text").innerHTML = "Mês Atual";
@@ -341,43 +341,6 @@ function mensal(data_entries){
     createLineChart(dados_filtrados, false);
 }
 
-// =================== Geração de Dados =========================
-
-function getRandomArbitrary(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
-function generateData(n_entradas){
-    let dados = [];
-    let atividades = ["Cronômetro", "Estudo", "Trabalho", "Pixel", "Prática", "Televisão", "Livros", "Manga"]
-    for(let i = 0; i < n_entradas; i++){
-        let atividade = atividades[getRandomArbitrary(0,7)];
-        let data = new Date();
-        if (getRandomArbitrary(0,1) == 1){
-            data.setDate(data.getDate() - getRandomArbitrary(0, 30));
-        }
-        else
-        {
-            data.setDate(data.getDate() + getRandomArbitrary(0, 30));
-        }
-        let tempo_atividade = (60 * getRandomArbitrary(0, 59)) + (3600 * getRandomArbitrary(0, 4));
-        let tempo_pausa = (60 * getRandomArbitrary(0, 59)) + (3600 * getRandomArbitrary(0, 2))
-        let entrada = new Entry(atividade, data, tempo_atividade, tempo_pausa);
-        dados.push(entrada)
-    }
-    return dados;
-}
-
-function refresh(){
-    data_entries = generateData(60);
-    let period = document.getElementById("period").value;
-    if(period == "semanal"){
-        semanal(data_entries);
-    }
-    else{
-        mensal(data_entries);
-    }
-}
 
 function periodChange(){
     let period = document.getElementById("period").value;
@@ -389,10 +352,70 @@ function periodChange(){
     }
 }
 
-document.getElementById("period").addEventListener("change", periodChange);
-document.querySelector(".refresh-btn").addEventListener("click", refresh)
+// =================== Start Data ========================
+
+let user = null;
+let data_entries = [];
+
+async function getUser(){
+    if (localStorage.getItem('token')){
+
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    });
+        
+    let init = { method: 'GET',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default'};
+
+    await fetch(`./user`, init).then(response => {
+        if(!response.ok){
+            response.json().then(data => {requestNotification(data.message)})
+        }
+        else{
+           response.json().then(user_data => {user = user_data; setUserData()})
+        }})
+    }
+    else{
+        location.href = "./"
+    }
+}
+
+function setUserData(){
+    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+}
+
+async function getDataEntries(){
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    });
+        
+    let init = { method: 'GET',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default'};
+
+    await fetch(`./history`, init).then(response => {
+        if(!response.ok){
+            response.json().then(data => {requestNotification(data.message)})
+        }
+        else{
+            response.json().then(history => {
+                                              data_entries = history.message.entries;
+                                              data_entries.forEach((element, index, array) => {array[index].date = new Date(element.date)});
+                                              semanal(data_entries);})
+        }})
 
 
-let data_entries = generateData(60);
+}
 
-semanal(data_entries);
+async function Start(){
+    getUser()
+    getDataEntries()
+    document.getElementById("period").addEventListener("change", periodChange);
+}
+
+Start()
