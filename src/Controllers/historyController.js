@@ -48,7 +48,9 @@ exports.get = async (req, res) => {
 exports.patch = async (req, res) => {
     try{
         validator.isEmpty(req.body.user_id, "Id do Usuário");
-        validator.isEmpty(req.body.entry.activity, "Atividade");
+        if (req.body.entry.activity === ""){
+            throw new InputException(`Atividade não deve estar vazio!`);
+        }
         validator.isInt(req.body.entry.date, "Data");
         validator.isInt(req.body.entry.active_time, "Tempo da Atividade");
         validator.isInt(req.body.entry.break_time, "Tempo de Pausa");
@@ -66,6 +68,7 @@ exports.patch = async (req, res) => {
         active_time: req.body.entry.active_time,
         break_time: req.body.entry.break_time
     });
+   
     
     history.save().then(data=>{
         res.json(data);
