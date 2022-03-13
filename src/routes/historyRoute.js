@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/historyController');
+const controller = require('../Controllers/historyController');
 const middle = require("../Middleware/verifyJWT");
 
 router.use(express.json());

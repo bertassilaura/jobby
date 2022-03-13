@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" type="image/x-icon" href="./imagens/favicon.ico"/>
+    <link rel="stylesheet" href="./styles/modal.css"/>
     <link rel="stylesheet" href="./styles/configuracoes_conta.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
     <script src="https://kit.fontawesome.com/0c4d063946.js" crossorigin="anonymous"></script>
@@ -81,10 +82,22 @@
                 <div class="item">
                     <input type="password" class="text-input" placeholder="Sua senha" id="password" required>
                 </div>
-    
+                
                 <button type="button" class="btn-save" id="config-save-button">Salvar</button>
                
             </form>
+
+            <div id="bottom-container2">
+                <div class="exit-button">
+                    <span class="fas fa-door-open exit-button__icon"></span>
+                    <span class="exit-button__text">Sair da conta</span>
+                </div>
+
+                <div class="delete-button">
+                    <span class="fas fa-trash delete-button__icon"></span>
+                    <span class="delete-button__text">Deletar conta</span>
+                </div>
+            </div>
 
         </div>
 
@@ -101,5 +114,6 @@
 <script src="./scripts/selector.js"></script>
 <script src="./scripts/back.js"></script>
 <script src="./scripts/switch.js"></script>
+<script src="./scripts/modals.js"></script>
 <script src="./scripts/configuracoes_conta.js"></script>
 </html>

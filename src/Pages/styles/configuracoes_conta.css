@@ -164,7 +164,7 @@ body {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  height: 70%;
+  flex: 1;
   width: 60%;
 }
 
@@ -212,6 +212,33 @@ body {
   font-size: 0.66rem;
 }
 
+/*---------- Botão Deletar --------*/
+
+.btn-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #41529f;
+  color: #fff;
+  border-radius: 10px;
+  width: fit-content;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.5s;
+  border: 1px solid #41529f;
+  margin-top: 25px;
+}
+
+.btn-delete:hover {
+  background-color: #fff;
+  color: #41529f;
+}
+
+.btn-delete__text {
+  margin-left: 5px;
+  font-size: 0.66rem;
+}
+
 /* ------------------------- Fundo do Conteúdo ------------------------------ */
 /*----------  Botão "Voltar"  ----------*/
 
@@ -250,9 +277,68 @@ body {
   margin-right: 10px;
 }
 
+.exit-button {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  width: fit-content;
+  color: #41529f;
+  transition: 0.5s;
+  margin-right: 25px;
+}
+
+.exit-button:hover {
+  color: #61bbb6;
+}
+
+.exit-button__icon {
+  font-size: 0.83rem;
+  color: inherit;
+  margin-right: 10px;
+}
+
+.exit-button__text {
+  font-size: 0.66rem;
+  color: inherit;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.delete-button {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  width: fit-content;
+  color: #41529f;
+  transition: 0.5s;
+  margin-right: 25px;
+}
+
+.delete-button:hover {
+  color: #61bbb6;
+}
+
+.delete-button__icon {
+  font-size: 0.83rem;
+  color: inherit;
+  margin-right: 10px;
+}
+
+.delete-button__text {
+  font-size: 0.66rem;
+  color: inherit;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+#bottom-container2 {
+  display: flex;
+  justify-self: flex-end;
+}
+
 /* ----------- Input Error -----------------------*/
 
-.error-message{
+.error-message {
   position: absolute;
   display: flex;
   flex-flow: row nowrap;
@@ -260,7 +346,7 @@ body {
   z-index: 99;
 }
 
-.error-message__border{
+.error-message__border {
   position: relative;
   top: 16px;
   left: -40px;
@@ -271,21 +357,21 @@ body {
   align-items: center;
   font-size: 0.6rem;
   font-weight: 600;
-  color: #41529F;
+  color: #41529f;
   z-index: 99;
 
   padding: 0.5rem;
   border-radius: 10px;
   background-color: #fff;
-  border: 2px solid #41529F;
+  border: 2px solid #41529f;
 }
 
-.error-message__arrow{
+.error-message__arrow {
   width: 0;
-height: 0;
-border-left: 10px solid transparent;
-border-right: 10px solid transparent;
-border-bottom: 20px solid #41529F;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid #41529f;
 }
 
 /* ------------------------- Mobile ------------------------------ */

@@ -1,45 +1,79 @@
+// =================== Start Data ========================
+
+let user = null
+
+async function getUser(){
+    if (localStorage.getItem('token')){
+
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    });
+        
+    let init = { method: 'GET',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default'};
+
+    await fetch(`./user`, init).then(response => {
+        if(!response.ok){
+            response.json().then(data => {requestNotification(data.message)})
+        }
+        else{
+           response.json().then(user_data => {user = user_data; setData()})
+        }})
+    }
+    else{
+        location.href = "./"
+    }
+}
+
+let hydrationMonitor = new HydrationMonitor()
+
+function setData(){
+    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+    hydrationMonitor.setUp(user.hydration)
+    form.start()
+    form.setUp(user)
+    document.querySelector(".delete-button").addEventListener("click", deleteUser)
+    document.querySelector(".exit-button").addEventListener("click", ExitAccount)
+}
+
+getUser()
+
+
 function Register(name,email,password){
     this.name = name,
     this.email = email,
     this.password = password
 }
 
-// ================================== Mensagens de Erro ========================================
+function deleteUser() {
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    });
 
-function errorMessage(elemento, message){
-    let rect = elemento.getBoundingClientRect();
+    let init = { method: 'DELETE',
+           headers: headers,
+           mode: 'cors',
+           cache: 'default'}
 
-    let error_message = createErrorMessage(message);
-    error_message.style.top = (rect.bottom) + "px";
-    error_message.style.left = (rect.left + (rect.right - rect.left)/16) + "px";
-
-    document.body.appendChild(error_message);
-    elemento.focus()
-    setTimeout(()=>{document.body.addEventListener("click", closeMessages)}, 1)
+    fetch("./user", init).then(response =>
+        {
+            if(!response.ok){
+                response.json().then(data => {requestNotification(data.message)})
+            }
+            else{
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            }).catch(error => requestNotification(error))
 }
 
-function createErrorMessage(message){
-    let error_message = document.createElement("div");
-    error_message.classList.add("error-message");
-
-    let arrow = document.createElement("div");
-    arrow.classList.add("error-message__arrow");
-
-    let border = document.createElement("div");
-    border.classList.add("error-message__border");
-    border.innerHTML = `<span><span class="fas fa-exclamation-circle"> </span>  ${message}</span>`;
-
-    error_message.appendChild(arrow);
-    error_message.appendChild(border);
-    return(error_message);
-}
-
-function closeMessages(){
-    let messages = document.querySelectorAll(".error-message");
-    for (message of messages){
-        message.remove();
-    }
-    document.body.removeEventListener("click", closeMessages)
+function ExitAccount() {
+    localStorage.removeItem("token")
+    location.href = "./login.html"
 }
 
 // ================================== Validação Formulário ========================================
@@ -56,21 +90,28 @@ function Form(){
         this.name.addEventListener("keypress", this.keyPress)
     },
 
+    this.setUp = (user) => {
+        this.name.value = user.name
+        this.password.value = user.password
+        this.email.value = user.email
+
+    },    
+
     this.check_email = (element) => {
         if (element.value == null || element.value == ""){
-            errorMessage(element, "Preencha este campo");
+            inputErrorMessage(element, "Preencha este campo");
             throw "inputException";
         }
         let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         if (!element.value.match(validRegex)){
-            errorMessage(element, "Email inválido");
+            inputErrorMessage(element, "Email inválido");
             throw "inputException";
         }
     },
 
     this.check_empty = (element) => {
         if (element.value == null || element.value == ""){
-            errorMessage(element, "Preencha este campo");
+            inputErrorMessage(element, "Preencha este campo");
             throw "inputException";
         }
     },
@@ -81,13 +122,35 @@ function Form(){
         this.check_email(this.email)
         this.check_empty(this.password)
         let register = new Register(this.name.value, this.email.value, this.password.value)
-        alert(`Name: ${register.name} \nEmail: ${register.email}\nPassword: ${register.password}`)
-        document.location.href = "./configuracoes.html"
+        this.send(register)
         }
         catch (e){
             console.log(e)
         }
-    }
+    },
+
+    this.send = (register) => {
+
+        let headers = new Headers({
+            "Content-Type": "application/json",
+            "x-access-token": localStorage.getItem("token")
+        });
+
+        let init = { method: 'PATCH',
+               headers: headers,
+               mode: 'cors',
+               cache: 'default',
+               body: JSON.stringify(register)};
+        fetch("./user", init).then(response =>
+            {
+                if(!response.ok){
+                    response.json().then(data => {requestNotification(data.message)})
+                }
+                else{
+                    requestNotification("Informações alteradas com sucesso!", true)
+                }
+                }).catch(error => requestNotification(error))
+    },
 
     this.keyPress = (event) =>{
         if (event.key == "Enter"){
@@ -97,4 +160,3 @@ function Form(){
 }
 
 let form = new Form()
-form.start()
