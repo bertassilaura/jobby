@@ -57,7 +57,8 @@ function Validator() {
     },
     this.isDuplicateEmail = async (value, fieldName = "email") => {
         let user = await User.findOne({email: value})
-        if (user == null){
+        console.log(user)
+        if (user != null){
             throw new InputException(`${fieldName} já está em uso!`);
         }
     },
@@ -129,6 +130,17 @@ exports.login = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
+    
+    try{
+        validator.isEmpty(req.body.name,"Nome");
+        validator.validateEmail(req.body.email);
+        await validator.isDuplicateEmail(req.body.email,"Email");
+        validator.isEmpty(req.body.password, "Senha")}
+       catch(e){
+        res.status(400).send(e);
+           return
+       }
+
     const user = new User({
         name: req.body.name,
         email: req.body.email,
@@ -137,11 +149,14 @@ exports.register = async (req, res) => {
 
     await user.save()
     .then(user=>{
+        const token = jwt.sign({ user_id: user._id }, process.env.SECRET, {
+            expiresIn: 86400 // expires in 24h (86400s)
+          });
         historyController.create(user._id)
-        res.json(user);
+        return res.json({ auth: true, token: token });
     })
     .catch(err =>{
-        res.status(503).send({message: err});
+        res.status(503).send(err);
     });
 };
 

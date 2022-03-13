@@ -1,20 +1,55 @@
+// =================== Start Data ========================
+
+let user = null
+
+async function getUser(){
+    if (localStorage.getItem('token')){
+
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    });
+        
+    let init = { method: 'GET',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default'};
+
+    await fetch(`./user`, init).then(response => {
+        if(!response.ok){
+            response.json().then(data => {requestNotification(data.message)})
+        }
+        else{
+           response.json().then(user_data => {user = user_data; setData()})
+        }})
+    }
+    else{
+        location.href = "./"
+    }
+}
+
+let hydrationMonitor = new HydrationMonitor()
+
+function setData(){
+    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+    createItems()
+    hydrationMonitor.setUp(user.hydration)
+}
+
+function createItems(){
+    for (let i = 0; i < user.custom_times.length; i++)
+    {
+        let item = createItem(i)
+        container.appendChild(item)
+    }
+}
+getUser()
+
 // =================== Mock up data ========================
 
 function TimeInterval(hours, minutes){
     this.hours = hours,
     this.minutes = minutes
-}
-
-let customTimes = {
-    0: {name: "Teste", time: new TimeInterval(0,2), breakTime: new TimeInterval(0,1), breakInterval: new TimeInterval(0,1)},
-    1: {name: "Trabalho", time: new TimeInterval(3, 0), breakTime: new TimeInterval(0,30), breakInterval: new TimeInterval(1, 30)},
-    2: {name: "Estudo", time: new TimeInterval(2, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(1, 0)},
-    3: {name: "Pixel", time: new TimeInterval(2, 0), breakTime: new TimeInterval(1,0), breakInterval: new TimeInterval(1, 0)},
-    4: {name: "Prática", time: new TimeInterval(4, 0), breakTime: new TimeInterval(1,0), breakInterval: new TimeInterval(2, 0)},
-    5: {name: "Filme", time: new TimeInterval(2, 30), breakTime: new TimeInterval(0,10), breakInterval: new TimeInterval(2, 30)},
-    6: {name: "Livros", time: new TimeInterval(8, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(2, 0)},
-    7: {name: "Manga", time: new TimeInterval(1, 0), breakTime: new TimeInterval(0,15), breakInterval: new TimeInterval(0, 30)},
-    8: {name: "Academia", time: new TimeInterval(2, 0), breakTime: new TimeInterval(0,30), breakInterval: new TimeInterval(0, 45)}
 }
 
 // ================================== Clock ========================================
@@ -45,13 +80,14 @@ class Countdown{
 };
 
 
-function Clock(time, breakInterval, breakTime){
+function Clock(name, time, breakInterval, breakTime){
     this.interval = null,
     this.time = time,
     this.breakTime = breakTime,
     this.breakInterval = breakInterval,
     this.timeCountdown = new Countdown(this.time.hours, this.time.minutes),
     this.breakCountdown = new Countdown(this.breakInterval.hours, this.breakInterval.minutes),
+    this.name = name,
     this.pauseStatus = true,
     this.breakStatus = false,
     
@@ -135,7 +171,7 @@ function Clock(time, breakInterval, breakTime){
         this.update(this.timeCountdown);
         document.getElementById("clock-path").style.strokeDashoffset = 0;
         document.getElementById("break-interval-path").style.strokeDashoffset = 0;
-        return {passed_time: passed_time, break_time: total_break_time};
+        return {activity: this.name, date: Date.now(), active_time: passed_time, break_time: total_break_time};
     },
 
     this.update = (time) => {
@@ -195,7 +231,29 @@ function stop(){
     document.getElementById("stop-button").style.display = "none";
     document.getElementById("pause-button").style.display = "none";
     document.getElementById("play-button").style.display = "inline";
-    console.log(data)
+
+    entry = {entry:data}
+
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+        });
+    let init = { method: 'PATCH',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default',
+            body: JSON.stringify(entry)};
+            fetch("./history", init).then(response =>
+                {
+                    if(!response.ok){
+                        response.json().then(data => {requestNotification(data.message)})
+                    }
+                    else{
+                        requestNotification("Atividade salva com sucesso!", true)
+                    }
+                    }).catch(error => requestNotification(error))
+
+
     /* Send data to databank */
 }
 
@@ -244,7 +302,8 @@ function formatTime(time){
 }
 
 function createItem(id){
-    data = customTimes[id]
+    data = user.custom_times[id]
+    console.log(data)
 
     let item = document.createElement("DIV");
     item.classList.add("custom-times__item");
@@ -258,7 +317,7 @@ function createItem(id){
 
     let timeInterval = document.createElement("DIV");
     timeInterval.classList.add("time__item");
-    timeInterval.innerHTML = formatTime(data.time);
+    timeInterval.innerHTML = formatTime(data.timeInterval);
 
     let breakInfo = document.createElement("DIV");
     breakInfo.classList.add("time__item", "time__item--pausas");
@@ -276,9 +335,9 @@ function createItem(id){
 
 function startClock(){
     let index = this.getAttribute("index")
-    let data = customTimes[index]
-    let hour = data.time.hours
-    let minute = data.time.minutes
+    let data = user.custom_times[index]
+    let hour = data.timeInterval.hours
+    let minute = data.timeInterval.minutes
     let time = new Countdown(hour, minute);
 
     hour = data.breakInterval.hours
@@ -289,7 +348,7 @@ function startClock(){
     minute = data.breakTime.minutes
     let breakTime = new Countdown(hour, minute);
 
-    clock = new Clock(time, breakInterval, breakTime);
+    clock = new Clock(data.name, time, breakInterval, breakTime);
     document.querySelector(".clock").style.display = "flex";
     document.getElementById("stop-button").style.display = "inline";
     document.getElementById("pause-button").style.display = "inline";
@@ -300,10 +359,6 @@ function startClock(){
  
 let container = document.querySelector(".custom-times");
 
-for (id in customTimes){
-    let item = createItem(id)
-    container.appendChild(item)
-}
 
 
 

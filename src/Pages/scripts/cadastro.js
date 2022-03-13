@@ -82,8 +82,28 @@ function Form(){
         this.check_email(this.email)
         this.check_empty(this.password)
         let register = new Register(this.name.value, this.email.value, this.password.value)
-        alert(`Name: ${register.name} \nEmail: ${register.email}\nPassword: ${register.password}`)
-        document.location.href = "./time_tracker.html"
+        let headers = new Headers({
+            "Content-Type": "application/json",
+            "x-access-token": localStorage.getItem("token")
+            });
+        let init = { method: 'POST',
+                headers: headers,
+                mode: 'cors',
+                cache: 'default',
+                body: JSON.stringify(register)};
+                fetch("./user", init).then(response =>
+                    {
+                        if(!response.ok){
+                            response.json().then(data => {requestNotification(data.message)})
+                        }
+                        else{
+                            response.json().then(data => {
+                                localStorage.setItem("token", data.token)
+                                location.href = "./time_tracker.html"
+                            })
+                        }
+                        }).catch(error => requestNotification(error))
+
         }
         catch (e){
             console.log(e)

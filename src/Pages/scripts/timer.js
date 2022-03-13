@@ -1,3 +1,42 @@
+// =================== Start Data ========================
+
+let user = null
+
+async function getUser(){
+    if (localStorage.getItem('token')){
+
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    });
+        
+    let init = { method: 'GET',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default'};
+
+    await fetch(`./user`, init).then(response => {
+        if(!response.ok){
+            response.json().then(data => {requestNotification(data.message)})
+        }
+        else{
+           response.json().then(user_data => {user = user_data; setData()})
+        }})
+    }
+    else{
+        location.href = "./"
+    }
+}
+
+let hydrationMonitor = new HydrationMonitor()
+
+function setData(){
+    document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+    hydrationMonitor.setUp(user.hydration)
+}
+
+getUser()
+
 // ================================== Clock ========================================
 
 class Countdown{
@@ -116,7 +155,7 @@ function Clock(time, breakInterval, breakTime){
         this.update(this.timeCountdown);
         document.getElementById("clock-path").style.strokeDashoffset = 0;
         document.getElementById("break-interval-path").style.strokeDashoffset = 0;
-        return {passed_time: passed_time, break_time: total_break_time};
+        return {activity: null, date: Date.now(), active_time: passed_time, break_time: total_break_time};
     },
 
     this.update = (time) => {
@@ -295,8 +334,27 @@ function stop(){
     document.getElementById("stop-button").style.display = "none";
     document.getElementById("pause-button").style.display = "none";
     document.getElementById("play-button").style.display = "inline";
-    console.log(data)
-    /* Send data to databank */
+    
+    entry = {entry:data}
+
+    let headers = new Headers({
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+        });
+    let init = { method: 'PATCH',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default',
+            body: JSON.stringify(entry)};
+            fetch("./history", init).then(response =>
+                {
+                    if(!response.ok){
+                        response.json().then(data => {requestNotification(data.message)})
+                    }
+                    else{
+                        requestNotification("Atividade salva com sucesso!", true)
+                    }
+                    }).catch(error => requestNotification(error))
 }
 
 function startStretch(){

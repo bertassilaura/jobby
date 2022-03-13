@@ -95,7 +95,7 @@ function createPieChart(data_entries){
     }
 
     if (Object.keys(values).length == 1){
-        return(`<svg viewBox="0 0 500 500" style="height: 100%;"> <circle cx="250" cy="250" r="250" fill="${colors[0]}" </svg>`)
+        return(`<svg viewBox="0 0 500 500" style="height: 100%;"> <circle cx="250" cy="250" r="250" fill="rgb(65, 82, 159)" </svg>`)
     }
 
     let valores_ordenados = [];
@@ -312,7 +312,7 @@ function createYScale(maximo){
 
 function semanal(data_entries){
     let dados_filtrados = filterWeek(data_entries);
-
+    console.log(dados_filtrados)
     let intervalos = getWeekIntervals();
     intervalos.fim.setDate(intervalos.fim.getDate() - 1);
 
