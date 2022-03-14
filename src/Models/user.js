@@ -38,8 +38,8 @@ const UserSchema = mongoose.Schema({
             },
             measure:{
                 type: String,
-                enum: ["ml", "L"],
-                default: "ml"
+                enum: ["mL", "L"],
+                default: "mL"
             }},
         nextWarning:{
             type: Date,

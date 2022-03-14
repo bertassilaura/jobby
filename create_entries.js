@@ -39,7 +39,7 @@ function generateData(n_entradas){
 async function generate(){
 let data_to_push = generateData(60)
 for(index in data_to_push){
-    let data = {user_id: "6229fe9542edd3a2ba368484", entry: data_to_push[index]}
+    let data = {user_id: "622fca18141d555906c5c6c3", entry: data_to_push[index]}
     await History.findOne({user_id: data.user_id}).then(history => {
     
         history.entries.push({

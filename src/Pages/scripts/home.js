@@ -1,3 +1,13 @@
+// =================== Redirect ========================
+
+if(localStorage.getItem("token") !== null){
+    location.href = "./time_tracker.html"
+}
+
+
+// =================== Side-bar ========================
+
+
 function openSideBar(){
     document.getElementById("mobile-nav-bar").style.left = "10vw";
     document.getElementById("open-side-bar").style.opacity = "0";

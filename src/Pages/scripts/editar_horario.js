@@ -12,42 +12,6 @@ function CustomTime(name, time, breakTime, breakInterval){
     this.breakInterval = breakInterval
 }
 
-// ================================== Mensagens de Erro ========================================
-
-function errorMessage(elemento, message){
-    let rect = elemento.getBoundingClientRect();
-
-    let error_message = createErrorMessage(message);
-    error_message.style.top = (rect.bottom) + "px";
-    error_message.style.left = (rect.left + (rect.right - rect.left)/16) + "px";
-
-    document.body.appendChild(error_message);
-    setTimeout(()=>{document.body.addEventListener("click", closeMessages)}, 1)
-}
-
-function createErrorMessage(message){
-    let error_message = document.createElement("div");
-    error_message.classList.add("error-message");
-
-    let arrow = document.createElement("div");
-    arrow.classList.add("error-message__arrow");
-
-    let border = document.createElement("div");
-    border.classList.add("error-message__border");
-    border.innerHTML = `<span><span class="fas fa-exclamation-circle"> </span>  ${message}</span>`;
-
-    error_message.appendChild(arrow);
-    error_message.appendChild(border);
-    return(error_message);
-}
-
-function closeMessages(){
-    let messages = document.querySelectorAll(".error-message");
-    for (message of messages){
-        message.remove();
-    }
-    document.body.removeEventListener("click", closeMessages)
-}
 
 // ================================== Validação Formulário ========================================
 
@@ -116,33 +80,33 @@ function Form(){
         this.check_number(hour)
         this.check_number(minute)
         if (hour.value == 0 && minute.value == 0){
-            errorMessage(hour, "Hora e minutos não podem estar ambos zerados");
+            inputErrorMessage(hour, "Hora e minutos não podem estar ambos zerados");
             throw "inputException";
         }
     },
 
     this.check_empty = (element) => {
         if (element.value == null || element.value == ""){
-            errorMessage(element, "Preencha este campo");
+            inputErrorMessage(element, "Preencha este campo");
             throw "inputException";
         }
     },
 
     this.check_number = (element) => {
         if (element.value == null || element.value == ""){
-            errorMessage(element, "Preencha este campo");
+            inputErrorMessage(element, "Preencha este campo");
             throw "inputException";
         }
         if (Math.floor(element.value) != Number(element.value)){
-            errorMessage(element, `O valor deve ser um número inteiro`);
+            inputErrorMessage(element, `O valor deve ser um número inteiro`);
             throw "inputException";
         }
         if (element.min !== "" && Number(element.value) < element.min){
-            errorMessage(element, `O valor deve ser maior ou igual a ${element.min}`);
+            inputErrorMessage(element, `O valor deve ser maior ou igual a ${element.min}`);
         throw "inputException";
         }
         if (element.max !== "" && Number(element.value) > element.max){
-            errorMessage(element, `O valor deve ser menor ou igual a ${element.max}`);
+            inputErrorMessage(element, `O valor deve ser menor ou igual a ${element.max}`);
             throw "inputException";
         }
     },
@@ -187,14 +151,22 @@ function Form(){
                mode: 'cors',
                cache: 'default',
                body: JSON.stringify(customTime)};
-        fetch("./user/customtimes", init).then(response =>
-            response.json().then(data => {
-                if(data.status){
-                location.href = "./configuracoes_horario.html"
+
+        fetch(`./user/customtimes`, init).then(response => {
+        response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(response.status){
+                    location.href = "./configuracoes_horario.html"
                 }
                 else{
-                    console.log(data)
-                }}))
+                    requestNotification(response.data.message)
+                }
+            }})
+        }).catch(error => requestNotification(error))
     }
 }
 
@@ -206,30 +178,44 @@ function deleteCustomTime(){
     let idParam = parseInt(params.get("id"))
         
     let headers = new Headers({
-            "Content-Type": "application/json",
-    });
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+      });
     let init = { method: 'DELETE',
            headers: headers,
            mode: 'cors',
            cache: 'default',
-           body: JSON.stringify({user_id: user._id, id: idParam})};
-    fetch("./user/customtimes", init).then(response =>
-        response.json().then(data => {
-            if(data.status){
-            location.href = "./configuracoes_horario.html"
+           body: JSON.stringify({id: idParam})};
+
+
+
+    fetch(`./user/customtimes`, init).then(response => {
+    response.json().then(response => {
+        if(!response.auth){
+            localStorage.removeItem("token")
+            location.href = "./login.html"
+        }
+        else{
+            if(response.status){
+                location.href = "./configuracoes_horario.html"
             }
             else{
-                console.log(data)
-            }}))
+                requestNotification(response.data.message)
+            }
+        }})
+    }).catch(error => requestNotification(error))
 }
 
 // =================== Start Data ========================
 
 let user = null
+let hydrationMonitor = new HydrationMonitor()
 let form = new Form()
 
-async function getUser(){
-    if (localStorage.getItem('token')){
+async function getUser(){    
+    if (localStorage.getItem('token') === null){
+        location.href = "./login.html"
+    }
 
     let headers = new Headers({
         "Content-Type": "application/json",
@@ -242,20 +228,27 @@ async function getUser(){
             cache: 'default'};
 
     await fetch(`./user`, init).then(response => {
-        if(!response.ok){
-            response.json().then(data => {requestNotification(data.message)})
-        }
-        else{
-           response.json().then(user_data => {user = user_data; setData()})
-        }})
-    }
-    else{
-        location.href = "./"
-    }
+        response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(response.status){
+                    user = response.data
+                    setData()
+                }
+                else{
+                    requestNotification(response.data.message)
+                }
+            }})
+        }).catch(error => requestNotification(error))
 }
+
 
 function setData(){
     document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+    hydrationMonitor.setUp(user.hydration)
     form.start()
 }
 

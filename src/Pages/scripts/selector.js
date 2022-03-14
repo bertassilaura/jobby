@@ -73,6 +73,28 @@ function configurate_custom_selects(){
 }
 
 
+function setSelect(select, value){
+  let custom_select = select.parentNode
+
+  let y, i, k, s, h, sl, yl;
+  s = custom_select.querySelector("select");
+  sl = s.length;
+  h = custom_select.querySelector(".select-selected__text");
+  for (i = 0; i < sl; i++) {
+  if (s.options[i].innerHTML == value) {
+      s.selectedIndex = i;
+      h.innerHTML = value;
+      y = custom_select.getElementsByClassName("same-as-selected");
+      yl = y.length;
+      for (k = 0; k < yl; k++) {
+      y[k].removeAttribute("class");
+      }
+      custom_select.querySelectorAll(".select-items div")[i].setAttribute("class", "same-as-selected");
+      break;
+  }
+  }
+}
+
 function closeAllSelect(elmnt) {
   /* A function that will close all select boxes in the document,
   except the current select box: */

@@ -30,18 +30,19 @@ exports.get = async (req, res) => {
         validator.isEmpty(req.body.user_id, "Id do Usuário");
     }
         catch(err){
-           res.json({status: false, error: err});
+            res.status(400).json({auth: true,status: false, data: {type:400, message:err.message}});
            return
     }
 
     await History.findOne({user_id: req.body.user_id}).then(history=>{
         if (history === null){
-            throw {message: "Histórico não encontrado", name:"NotFoundError"}
+            res.status(404).json({auth: true, status: false, data: {type:404, message:"Histórico não encontrado!"}});
+            return
         }
-        res.json({status: true, message: history});
+        res.json({auth: true, status: true, data: history});
     })
     .catch(err =>{
-        res.json({status: false, error: err});
+        res.status(503).json({auth: true, status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}});
     });
 };
 
@@ -56,11 +57,16 @@ exports.patch = async (req, res) => {
         validator.isInt(req.body.entry.break_time, "Tempo de Pausa");
     }
         catch(err){
-           res.json({status: false, error: err});
+            res.status(400).json({auth: true,status: false, data: {type:400, message:err.message}});
            return
     }
 
     const history = await History.findOne({user_id: req.body.user_id})
+
+    if (history === null){
+        res.status(404).json({auth: true, status: false, data: {type:404, message:"Histórico não encontrado!"}});
+        return
+    }
     
     history.entries.push({
         activity: req.body.entry.activity,
@@ -71,10 +77,10 @@ exports.patch = async (req, res) => {
    
     
     history.save().then(data=>{
-        res.json(data);
+        res.json({auth: true, status: true, data: {message: "Histórico atualizado com sucesso!"}});
     })
     .catch(err =>{
-        res.json({message: err});
+        res.status(503).json({auth: true, status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}});
     });
 };
 

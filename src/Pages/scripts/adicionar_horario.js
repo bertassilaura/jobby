@@ -1,10 +1,12 @@
 // =================== Start Data ========================
 
 let user = null
+let hydrationMonitor = new HydrationMonitor()
 
-
-async function getUser(){
-    if (localStorage.getItem('token')){
+async function getUser(){    
+    if (localStorage.getItem('token') === null){
+        location.href = "./login.html"
+    }
 
     let headers = new Headers({
         "Content-Type": "application/json",
@@ -17,20 +19,26 @@ async function getUser(){
             cache: 'default'};
 
     await fetch(`./user`, init).then(response => {
-        if(!response.ok){
-            response.json().then(data => {requestNotification(data.message)})
-        }
-        else{
-           response.json().then(user_data => {user = user_data; setData()})
-        }})
-    }
-    else{
-        location.href = "./"
-    }
+        response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(response.status){
+                    user = response.data
+                    setData()
+                }
+                else{
+                    requestNotification(response.data.message)
+                }
+            }})
+        }).catch(error => requestNotification(error))
 }
 
 function setData(){
     document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+    hydrationMonitor.setUp(user.hydration)
 }
 
 getUser()
@@ -153,15 +161,23 @@ function Form(){
                mode: 'cors',
                cache: 'default',
                body: JSON.stringify(customTime)};
-        fetch("./user/customtimes", init).then(response =>
-            {
-                if(!response.ok){
-                    response.json().then(data => {requestNotification(data.message)})
-                }
-                else{
+
+
+    fetch(`./user/customtimes`, init).then(response => {
+        response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(response.status){
                     location.href = "./configuracoes_horario.html"
                 }
-                }).catch(error => requestNotification(error))
+                else{
+                    requestNotification(response.data.message)
+                }
+            }})
+        }).catch(error => requestNotification(error))
     }
 }
 

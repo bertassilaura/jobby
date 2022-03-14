@@ -1,9 +1,13 @@
 // =================== Start Data ========================
 
 let user = null
+let hydrationMonitor = new HydrationMonitor() 
+let form = new Form()
 
-async function getUser(){
-    if (localStorage.getItem('token')){
+async function getUser(){    
+    if (localStorage.getItem('token') === null){
+        location.href = "./login.html"
+    }
 
     let headers = new Headers({
         "Content-Type": "application/json",
@@ -16,46 +20,30 @@ async function getUser(){
             cache: 'default'};
 
     await fetch(`./user`, init).then(response => {
-        if(!response.ok){
-            response.json().then(data => {requestNotification(data.message)})
-        }
-        else{
-           response.json().then(user_data => {user = user_data; setData()})
-        }})
-    }
-    else{
-        location.href = "./"
-    }
+        response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(response.status){
+                    user = response.data
+                    setData()
+                }
+                else{
+                    requestNotification(response.data.message)
+                }
+            }})
+        })
 }
 
-async function getUser(){
-    if (localStorage.getItem('token')){
 
-    let headers = new Headers({
-        "Content-Type": "application/json",
-        "x-access-token": localStorage.getItem("token")
-    });
-        
-    let init = { method: 'GET',
-            headers: headers,
-            mode: 'cors',
-            cache: 'default'};
-
-    await fetch(`./user`, init).then(response => {
-        if(!response.ok){
-            response.json().then(data => {requestNotification(data.message)})
-        }
-        else{
-           response.json().then(user_data => {user = user_data; setData()})
-        }})
-    }
-    else{
-        location.href = "./"
-    }
-}
 
 function setData(){
     document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+    hydrationMonitor.setUp(user.hydration)
+    form.start()
+    form.setUp(user.hydration)
 }
 
 getUser()
@@ -79,94 +67,6 @@ function Hydration(on, time, water){
     this.nextWarning = on?new Date(Date.now() + time.hours * 3600000 + time.minutes * 60000):null
     }
 
-/*
-function HydrationMonitor(on, time, water){
-    this.on = on,
-    this.time = time,
-    this.water = water,
-    this.nextwarning = null,
-    this.interval = null,
-
-    this.setUp = () => {
-        if (this.on){
-            this.nextwarning = new Date(Date.now() + this.time.hour * 3600000 + this.time.minute * 60000)
-            this.interval = setInterval(this.check, 30000)
-        }
-        else{
-            this.nextwarning = null
-            clearInterval(this.interval)
-        }
-    },
-
-    this.openPopup = () =>{
-        let popup = document.querySelector("#water-popup");
-        notification("pristine.mp3")
-        popup.style.display = "flex"
-        popup.querySelector("#water-quantity-text").innerHTML = `${this.water.quantity}${this.water.measure}`
-        popup.querySelector("#close-water-popup").addEventListener("click", this.closePopup)
-    },
-
-    this.check = () => {
-        if (Date.now() >= this.nextwarning){
-            this.openPopup()
-            clearInterval(this.interval)
-        }
-    }
-
-    this.closePopup = () =>{
-        let popup = document.querySelector("#water-popup");
-        popup.style.display = "none"
-        this.setUp()
-    }
-}
-*/
-
-// ================================== Notification ========================================
-
-function notification(name){
-    const audio = new Audio(`./sounds/${name}`);
-    audio.volume = 0.5;
-    audio.play()
-}
-
-// ================================== Mensagens de Erro ========================================
-
-function errorMessage(elemento, message){
-    let rect = elemento.getBoundingClientRect();
-
-    let error_message = createErrorMessage(message);
-    error_message.style.top = (rect.bottom) + "px";
-    error_message.style.left = (rect.left + (rect.right - rect.left)/16) + "px";
-
-    document.body.appendChild(error_message);
-    elemento.focus()
-    setTimeout(()=>{document.body.addEventListener("click", closeMessages)}, 1)
-}
-
-function createErrorMessage(message){
-    let error_message = document.createElement("div");
-    error_message.classList.add("error-message");
-
-    let arrow = document.createElement("div");
-    arrow.classList.add("error-message__arrow");
-
-    let border = document.createElement("div");
-    border.classList.add("error-message__border");
-    border.innerHTML = `<span><span class="fas fa-exclamation-circle"> </span>  ${message}</span>`;
-
-    error_message.appendChild(arrow);
-    error_message.appendChild(border);
-    return(error_message);
-}
-
-function closeMessages(){
-    let messages = document.querySelectorAll(".error-message");
-    for (message of messages){
-        message.remove();
-    }
-    document.body.removeEventListener("click", closeMessages)
-}
-
 
 // ================================== Validação Formulário ========================================
 
@@ -184,6 +84,18 @@ function Form(){
         this.quantity.addEventListener("keypress", this.keyPress)
     },
 
+    this.setUp = (hydration) => {
+        // Falta o Switch e Seletor
+        if(hydration.on != this.switch.checked){
+            let event = new Event("switch_change")
+            this.switch.parentElement.dispatchEvent(event)
+        }
+        this.time.value = hydration.time.hours != 0?hydration.time.hours : hydration.time.minutes
+        setSelect(this.timeMeasure, hydration.time.hours != 0?"horas":"minutos")
+        this.quantity.value = hydration.water.quantity
+        setSelect(this.quantityMeasure, hydration.water.measure)
+    },
+
     this.switchChange = () =>{
         let inputs = document.querySelectorAll(".add-hydration__line .border-container")
         if (this.switch.checked == true){
@@ -198,39 +110,39 @@ function Form(){
 
     this.check_time = (element) => {
         if (element.value == null || element.value == ""){
-            errorMessage(element, "Preencha este campo");
+            inputErrorMessage(element, "Preencha este campo");
             throw "inputException";
         }
         if (Math.floor(element.value) != Number(element.value)){
-            errorMessage(element, `O valor deve ser um número inteiro`);
+            inputErrorMessage(element, `O valor deve ser um número inteiro`);
             throw "inputException";
         }
         if (Number(element.value) < 1){
-            errorMessage(element, `O valor deve ser maior ou igual a 1`);
+            inputErrorMessage(element, `O valor deve ser maior ou igual a 1`);
         throw "inputException";
         }
         let max = this.timeMeasure.value == "minutos"?59:99;
         if (Number(element.value) > max){
-            errorMessage(element, `O valor deve ser menor ou igual a ${max}`);
+            inputErrorMessage(element, `O valor deve ser menor ou igual a ${max}`);
             throw "inputException";
         }
     },
 
     this.check_number = (element) => {
         if (element.value == null || element.value == ""){
-            errorMessage(element, "Preencha este campo");
+            inputErrorMessage(element, "Preencha este campo");
             throw "inputException";
         }
         if (Math.floor(element.value) != Number(element.value)){
-            errorMessage(element, `O valor deve ser um número inteiro`);
+            inputErrorMessage(element, `O valor deve ser um número inteiro`);
             throw "inputException";
         }
         if (element.min !== "" && Number(element.value) < element.min){
-            errorMessage(element, `O valor deve ser maior ou igual a ${element.min}`);
+            inputErrorMessage(element, `O valor deve ser maior ou igual a ${element.min}`);
         throw "inputException";
         }
         if (element.max !== "" && Number(element.value) > element.max){
-            errorMessage(element, `O valor deve ser menor ou igual a ${element.max}`);
+            inputErrorMessage(element, `O valor deve ser menor ou igual a ${element.max}`);
             throw "inputException";
         }
     },
@@ -265,10 +177,6 @@ function Form(){
     }
 }
 
-
-let hydrationMonitor = new HydrationMonitor() 
-let form = new Form()
-form.start()
 
 
 

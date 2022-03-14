@@ -2,8 +2,10 @@
 
 let user = null
 
-async function getUser(){
-    if (localStorage.getItem('token')){
+async function getUser(){    
+    if (localStorage.getItem('token') === null){
+        location.href = "./login.html"
+    }
 
     let headers = new Headers({
         "Content-Type": "application/json",
@@ -16,16 +18,21 @@ async function getUser(){
             cache: 'default'};
 
     await fetch(`./user`, init).then(response => {
-        if(!response.ok){
-            response.json().then(data => {requestNotification(data.message)})
-        }
-        else{
-           response.json().then(user_data => {user = user_data; setData()})
-        }})
-    }
-    else{
-        location.href = "./"
-    }
+        response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(response.status){
+                    user = response.data
+                    setData()
+                }
+                else{
+                    requestNotification(response.data.message)
+                }
+            }})
+        }).catch(error => requestNotification(error))
 }
 
 let hydrationMonitor = new HydrationMonitor()
@@ -60,20 +67,25 @@ function deleteUser() {
            cache: 'default'}
 
     fetch("./user", init).then(response =>
-        {
-            if(!response.ok){
-                response.json().then(data => {requestNotification(data.message)})
-            }
-            else{
-                localStorage.removeItem("token")
-                location.href = "./login.html"
-            }
-            }).catch(error => requestNotification(error))
+            response.json().then(response => {
+                if(!response.auth){
+                    localStorage.removeItem("token")
+                    location.href = "./login.html"
+                }
+                else{
+                    if(response.status){
+                        localStorage.removeItem("token")
+                        location.href = "./"
+                    }
+                    else{
+                        requestNotification(response.data.message)
+                    }
+                }})).catch(error => requestNotification(error))
 }
 
 function ExitAccount() {
     localStorage.removeItem("token")
-    location.href = "./login.html"
+    location.href = "./"
 }
 
 // ================================== Validação Formulário ========================================

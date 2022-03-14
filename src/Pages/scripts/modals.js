@@ -97,6 +97,7 @@ function HydrationMonitor(){
                          water: this.water,
                          nextWarning: this.nextwarning}
 
+
         let headers = new Headers({
             "Content-Type": "application/json",
             "x-access-token": localStorage.getItem("token")
@@ -108,7 +109,17 @@ function HydrationMonitor(){
                cache: 'default',
                body: JSON.stringify(hydration)};
 
-        fetch("./user/hydration", init).catch(e => {console.log(e)})
+        fetch("./user/hydration", init).then(response => response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(!response.status){
+                    requestNotification(response.data.message)
+                }
+            }
+        })).catch(e => {requestNotification(e)})
     }
 
     this.openPopup = () =>{

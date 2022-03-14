@@ -2,8 +2,10 @@
 
 let user = null
 
-async function getUser(){
-    if (localStorage.getItem('token')){
+async function getUser(){    
+    if (localStorage.getItem('token') === null){
+        location.href = "./login.html"
+    }
 
     let headers = new Headers({
         "Content-Type": "application/json",
@@ -16,16 +18,21 @@ async function getUser(){
             cache: 'default'};
 
     await fetch(`./user`, init).then(response => {
-        if(!response.ok){
-            response.json().then(data => {requestNotification(data.message)})
-        }
-        else{
-           response.json().then(user_data => {user = user_data; setData()})
-        }})
-    }
-    else{
-        location.href = "./"
-    }
+        response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(response.status){
+                    user = response.data
+                    setData()
+                }
+                else{
+                    requestNotification(response.data.message)
+                }
+            }})
+        }).catch(error => requestNotification(error))
 }
 
 let hydrationMonitor = new HydrationMonitor()
@@ -180,54 +187,6 @@ function svg_start(target){
     circle.style.strokeDasharray = path_length + " " + path_length; 
 }
 
-// ================================== Notification ========================================
-
-function notification(name){
-    const audio = new Audio(`./sounds/${name}`);
-    audio.volume = 0.5;
-    audio.play()
-}
-
-// ================================== Check Inputs ========================================
-
-// ========= Mensagens de Erro ===========
-
-function errorMessage(elemento, message){
-    let rect = elemento.getBoundingClientRect();
-
-    let error_message = createErrorMessage(message);
-    error_message.style.top = (rect.bottom) + "px";
-    error_message.style.left = (rect.left + (rect.right - rect.left)/16) + "px";
-
-    document.body.appendChild(error_message);
-    elemento.focus()
-    setTimeout(()=>{document.body.addEventListener("click", closeMessages)}, 1)
-}
-
-function createErrorMessage(message){
-    let error_message = document.createElement("div");
-    error_message.classList.add("error-message");
-
-    let arrow = document.createElement("div");
-    arrow.classList.add("error-message__arrow");
-
-    let border = document.createElement("div");
-    border.classList.add("error-message__border");
-    border.innerHTML = `<span><span class="fas fa-exclamation-circle"> </span>  ${message}</span>`;
-
-    error_message.appendChild(arrow);
-    error_message.appendChild(border);
-    return(error_message);
-}
-
-function closeMessages(){
-    let messages = document.querySelectorAll(".error-message");
-    for (message of messages){
-        message.remove();
-    }
-    document.body.removeEventListener("click", closeMessages)
-}
-
 // ================================== Validação Formulário ========================================
 
 function Form(){
@@ -251,26 +210,26 @@ function Form(){
         this.check_number(hour)
         this.check_number(minute)
         if (hour.value == 0 && minute.value == 0){
-            errorMessage(hour, "Hora e minutos não podem estar ambos zerados");
+            inputErrorMessage(hour, "Hora e minutos não podem estar ambos zerados");
             throw "inputException";
         }
     },
 
     this.check_number = (element) => {
         if (element.value == null || element.value == ""){
-            errorMessage(element, "Preencha este campo");
+            inputErrorMessage(element, "Preencha este campo");
             throw "inputException";
         }
         if (Math.floor(element.value) != Number(element.value)){
-            errorMessage(element, `O valor deve ser um número inteiro`);
+            inputErrorMessage(element, `O valor deve ser um número inteiro`);
             throw "inputException";
         }
         if (element.min !== "" && Number(element.value) < element.min){
-            errorMessage(element, `O valor deve ser maior ou igual a ${element.min}`);
+            inputErrorMessage(element, `O valor deve ser maior ou igual a ${element.min}`);
         throw "inputException";
         }
         if (element.max !== "" && Number(element.value) > element.max){
-            errorMessage(element, `O valor deve ser menor ou igual a ${element.max}`);
+            inputErrorMessage(element, `O valor deve ser menor ou igual a ${element.max}`);
             throw "inputException";
         }
     },
@@ -290,7 +249,6 @@ function Form(){
         return clock
         }
         catch (e){
-            console.log(e)
             return null
         }
     }
@@ -346,15 +304,18 @@ function stop(){
             mode: 'cors',
             cache: 'default',
             body: JSON.stringify(entry)};
-            fetch("./history", init).then(response =>
-                {
-                    if(!response.ok){
-                        response.json().then(data => {requestNotification(data.message)})
-                    }
-                    else{
-                        requestNotification("Atividade salva com sucesso!", true)
-                    }
-                    }).catch(error => requestNotification(error))
+    fetch(`./history`, init).then(response => {
+        response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(!response.status){
+                    requestNotification(response.data.message)
+                }
+            }})
+        }).catch(error => requestNotification(error))
 }
 
 function startStretch(){

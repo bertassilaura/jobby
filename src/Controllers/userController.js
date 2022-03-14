@@ -21,6 +21,18 @@ function Validator() {
             throw new InputException(`${fieldName} deve ser um número inteiro!`);
         }
     },
+    this.isDate = (value, fieldName= "Data") => {
+        let date = new Date(value)
+        if(date === "Invalid Date" && isNaN(date)){
+            throw new InputException(`${fieldName} deve ser uma data válida!`);
+        }
+    },
+    this.isBool =(value, fieldName) => {
+        this.isEmpty(value, fieldName)
+        if(value !== true && value !== false){
+            throw new InputException(`${fieldName} deve ser um valor booleano!`);
+        }
+    },
     this.validateHours = (value, fieldName) => {
         this.isEmpty(value, fieldName)
         this.isInt(value, fieldName)
@@ -57,15 +69,14 @@ function Validator() {
     },
     this.isDuplicateEmail = async (value, fieldName = "email") => {
         let user = await User.findOne({email: value})
-        console.log(user)
         if (user != null){
             throw new InputException(`${fieldName} já está em uso!`);
         }
     },
     this.isMeasure = (value, fieldName = "unidade") => {
         this.isEmpty(value, fieldName)
-        if(value != "ml" && value != "L"){
-            throw new InputException(`${fieldName} deve ser "ml" ou "L"`);
+        if(value != "mL" && value != "L"){
+            throw new InputException(`${fieldName} deve ser "mL" ou "L"`);
         }
     },
     this.validateQuantity = (value, fieldName = "Quantidade de Água") => {
@@ -94,13 +105,16 @@ exports.getAll = async (req, res) => {
     });
 };
 
-// takes the id on the query, returns the user or null if the user is not found
 exports.get = async (req, res) => {
     await User.findOne({_id: req.body.user_id}).then(user=>{
-        res.json(user);
+        if (user === null){
+            res.status(404).json({auth: true, status: false, data: {type:404, message:"Usuário não encontrado"}});
+            return
+        }
+        res.json({auth: true, status: true, data: user});
     })
     .catch(err =>{
-        res.json({message: err});
+        res.status(503).json({auth: true, status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}});
     });
 };
 
@@ -112,20 +126,23 @@ exports.login = async (req, res) => {
      validator.validateEmail(req.body.email);
      validator.isEmpty(req.body.password, "Senha")}
     catch(e){
-        res.json({status: false, error: e});
+        res.status(400).json({status: false, data: {type:400, message:e.message}});
         return
     }
 
     // Cosnsulta
 
     await User.findOne({email: req.body.email, password: req.body.password}).then(user=>{
+        if(user === null){
+            return res.status(404).json({status: false, data: {type:404, message:"Email ou senha incorretos!"}});
+        }
         const token = jwt.sign({ user_id: user._id }, process.env.SECRET, {
             expiresIn: 86400 // expires in 24h (86400s)
           });
-        return res.json({ auth: true, token: token });
+        return res.json({status: true, data: token });
     })
     .catch(err =>{
-        res.json({status: false, error: err});
+        res.status(503).json({auth: true, status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}});
     });
 };
 
@@ -137,8 +154,8 @@ exports.register = async (req, res) => {
         await validator.isDuplicateEmail(req.body.email,"Email");
         validator.isEmpty(req.body.password, "Senha")}
        catch(e){
-        res.status(400).send(e);
-           return
+            res.status(400).json({status: false, data: {type:400, message:e.message}});
+            return
        }
 
     const user = new User({
@@ -149,35 +166,54 @@ exports.register = async (req, res) => {
 
     await user.save()
     .then(user=>{
-        const token = jwt.sign({ user_id: user._id }, process.env.SECRET, {
+        const token = jwt.sign({user_id: user._id}, process.env.SECRET, {
             expiresIn: 86400 // expires in 24h (86400s)
           });
         historyController.create(user._id)
-        return res.json({ auth: true, token: token });
+        return res.status(201).json({status: true, data: token});
     })
     .catch(err =>{
-        res.status(503).send(err);
+        res.status(503).json({status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}});
     });
 };
 
 exports.patchUser = async (req, res) => {
-    const user = await User.findOne({_id: req.body.user_id})
+    try{
+        validator.isEmpty(req.body.name,"Nome");
+        validator.validateEmail(req.body.email);
+        validator.isEmpty(req.body.password, "Senha")}
+       catch(e){
+            res.status(400).json({auth: true,status: false, data: {type:400, message:e.message}});
+            return
+       }
+
+    const user = await User.findOne({_id: req.body.user_id}).catch(err => {res.status(503).json({status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}}); return})
+
+    if(user === null){
+        res.status(404).json({auth: true, status: false, data: {type:404, message:"Usuário não encontrado!"}});
+        return
+    }
+    
     user.name = req.body.name
     user.email = req.body.email
     user.password = req.body.password
     
     user.save().then(data=>{
-        res.json(data);
+        return res.json({auth: true, status: true, data: {message: "Usuário alterado com sucesso!"}});
     })
     .catch(err =>{
-        res.status(503).send({message: err});
+        res.status(503).json({auth: true, status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}});
     });
 };
 
 exports.deleteUser = async (req, res) => {
     const removedUser = await User.deleteOne({_id: req.body.user_id});
+    if (removedUser === null){
+        res.status(404).json({auth: true, status: false, data: {type:404, message:"Usuário não encontrado!"}});
+        return
+    }
     historyController.delete(req.body.user_id)
-    res.json(removedUser);
+    res.json({auth: true, status: true, data: {message: "Usuário excluído com sucesso!"}});
 };
 
 //======================== Operações no CustomTimes ==========================
@@ -194,8 +230,8 @@ exports.postCustomTime = async (req, res) => {
         validator.validateCombo(req.body.breakInterval.hours, req.body.breakInterval.minutes, "Tempo entre Pausas"); 
     }
         catch(err){
-            res.status(400).send({error: err});
-           return
+            res.status(400).json({auth: true,status: false, data: {type:400, message:err.message}});
+            return
     }
 
     // Encontrar usuário
@@ -208,7 +244,7 @@ exports.postCustomTime = async (req, res) => {
         }
     }
     catch(err){
-        res.status(404).send({error: {message: "Usuário não encontrado", name: "NotFoundException"}});
+        res.status(404).json({auth: true, status: false, data: {type:404, message:"Usuário não encontrado!"}});
         return
     };
 
@@ -225,10 +261,10 @@ exports.postCustomTime = async (req, res) => {
     
     await user.save()
     .then(data=>{
-        res.json({data: data});
+        res.status(201).json({auth: true, status: true, data: {message: "Horário Customizado criado com sucesso!"}});
     })
     .catch(err =>{
-        res.status(503).send({error: err});
+        res.status(503).json({auth: true, status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}});
     });
 };
 
@@ -245,7 +281,7 @@ exports.patchCustomTime = async (req, res) => {
         validator.validateCombo(req.body.breakInterval.hours, req.body.breakInterval.minutes, "Tempo entre Pausas"); 
     }
         catch(err){
-            res.status(400).send({error: err});
+            res.status(400).json({auth: true,status: false, data: {type:400, message:err.message}});
            return
     }
 
@@ -259,7 +295,7 @@ exports.patchCustomTime = async (req, res) => {
         }
     }
     catch(err){
-        res.status(404).send({error: {message: "Usuário não encontrado", name: "NotFoundException"}});
+        res.status(404).json({auth: true, status: false, data: {type:404, message:"Usuário não encontrado!"}});
         return
     };
 
@@ -281,14 +317,14 @@ exports.patchCustomTime = async (req, res) => {
     if(changed){
         await user.save()
         .then(data=>{
-            res.json({data: data});
+            res.json({auth: true, status: true, data: {message: "Horário Customizado alterado com sucesso!"}});
         })
         .catch(err =>{
-            res.status(503).send({error: err});
+            res.status(503).json({auth: true, status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}});
         });
     }
     else{
-        res.status(404).send({status: false, error: {message: "Entrada de tempo não encontrada", name:"NotFoundException"}});
+        res.status(404).json({auth: true, status: false, data: {type:404, message:"Tempo Customizado não encontrado!"}});
     }
 };
 
@@ -300,7 +336,7 @@ exports.deleteCustomTime = async (req, res) => {
         validator.isEmpty(req.body.id)
     }
         catch(err){
-           res.status(400).send({error: err});
+            res.status(400).json({auth: true,status: false, data: {type:400, message:err.message}});
            return
     }
     
@@ -314,29 +350,51 @@ exports.deleteCustomTime = async (req, res) => {
         }
     }
     catch(err){
-        res.status(404).send({error: {message: "Usuário não encontrado", name: "NotFoundException"}});
+        res.status(404).json({auth: true, status: false, data: {type:404, message:"Usuário não encontrado!"}});
         return
     };
 
+    deleted = false
     for (let i = 0; i < user.custom_times.length; i++){
         if (user.custom_times[i].id == req.body.id){
             user.custom_times.splice(i, 1)
+            deleted = true
             break
         }
     }
 
+    if(!deleted){
+        res.status(404).json({auth: true, status: false, data: {type:404, message:"Tempo Customizado não encontrado!"}});
+        return
+    }
+
     await user.save()
     .then(data=>{
-        res.json({data: data});
+        res.json({auth: true, status: true, data: {message: "Horário Customizado alterado com sucesso!"}});
     })
     .catch(err =>{
-        res.status(503).send({error: err});
+        res.status(503).json({auth: true, status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}});
     });
 };
 
 //======================== Operações do Hydration ==========================
 
 exports.patchHydration = async (req, res) => {
+    try{
+        validator.isBool(req.body.on) 
+        if(req.body.on){
+            validator.validateHours(req.body.time.hours, "Horas")
+            validator.validateMinutes(req.body.time.minutes, "Minutos")
+            validator.validateQuantity(req.body.water.quantity, "Quantidade")
+            validator.isMeasure(req.body.water.measure, "Unidade de Medida")
+            validator.isDate(req.body.nextWarning, "Próximo aviso")
+        }
+    }
+        catch(err){
+           res.status(400).json({auth: true,status: false, data: {type:400, message:err.message}});
+           return
+    }
+
     const user = await User.findOne({_id: req.body.user_id});
     user.hydration = {on: req.body.on,
         time:{
@@ -350,9 +408,9 @@ exports.patchHydration = async (req, res) => {
         nextWarning: req.body.nextWarning}
     
     await user.save().then(data=>{
-        res.json(data);
+        res.json({auth: true, status: true, data: {message: "Hidratação atualizada com sucesso!"}});
     })
     .catch(err =>{
-        res.status(503).send({message: err});
+        res.status(503).json({auth: true, status: false, data: {type: 503, message:"Erro de comunicação com o banco de dados!"}});
     });
 };

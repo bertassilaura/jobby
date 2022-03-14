@@ -31,6 +31,7 @@ function configurate_custom_switches(){
 
     custom_switches[i].innerHTML += svg;
     custom_switches[i].addEventListener("click", switch_click)
+    custom_switches[i].addEventListener("switch_change", switch_click)
     }
 }
 

@@ -55,6 +55,7 @@
     left: 50%;
     width: 50vw;
     height: 60vh;
+    max-height: 300px;
     border-radius: 10px;
     transform: translate(-50%, -50%);
     z-index: 99;

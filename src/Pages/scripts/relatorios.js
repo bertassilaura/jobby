@@ -128,8 +128,7 @@ function createPieChart(data_entries){
         valores_ordenados.push("outros")
     }
 
-
-    let colors = ["rgb(65, 82, 159)", "rgb(13, 126, 131)", "rgb(97, 187, 182)", "rgb(216, 180, 226)","rgb(220, 123, 247)", "rgb(100, 141, 229)"]
+    let colors = ["rgb(65, 82, 159)","rgb(100, 141, 229)", "rgb(13, 126, 131)","rgb(97, 187, 182)","rgb(216, 180, 226)", "rgb(220, 123, 247)"]
     let i = 0;
     let percorrido = 0;
     let paths = "";
@@ -139,7 +138,7 @@ function createPieChart(data_entries){
         let path = `<path d="M 250 250 L ${arc_coordinates(percorrido)} A 250 250 0 ${percent >= 0.5?1:0} 1 ${arc_coordinates(percent + percorrido)} z" fill="${colors[i]}" stroke="${colors[i]}" stroke-width="0.5"/>`
         legenda += `<div class="legenda__linha">
         <div class="legenda__color" style="background-color: ${colors[i]};"></div>
-        <span class="legenda__text"  style="color: ${colors[i]};">${atividade}</span>
+        <span class="legenda__text"  style="color: ${colors[i]};">${atividade=="null"?"Cronômetro":atividade}</span>
         </div>`;
         percorrido += values[atividade]/total;
         paths = paths + path;
@@ -312,7 +311,6 @@ function createYScale(maximo){
 
 function semanal(data_entries){
     let dados_filtrados = filterWeek(data_entries);
-    console.log(dados_filtrados)
     let intervalos = getWeekIntervals();
     intervalos.fim.setDate(intervalos.fim.getDate() - 1);
 
@@ -355,10 +353,13 @@ function periodChange(){
 // =================== Start Data ========================
 
 let user = null;
+let hydrationMonitor = new HydrationMonitor()
 let data_entries = [];
 
-async function getUser(){
-    if (localStorage.getItem('token')){
+async function getUser(){    
+    if (localStorage.getItem('token') === null){
+        location.href = "./login.html"
+    }
 
     let headers = new Headers({
         "Content-Type": "application/json",
@@ -371,20 +372,26 @@ async function getUser(){
             cache: 'default'};
 
     await fetch(`./user`, init).then(response => {
-        if(!response.ok){
-            response.json().then(data => {requestNotification(data.message)})
-        }
-        else{
-           response.json().then(user_data => {user = user_data; setUserData()})
-        }})
-    }
-    else{
-        location.href = "./"
-    }
+        response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(response.status){
+                    user = response.data
+                    setUserData()
+                }
+                else{
+                    requestNotification(response.data.message)
+                }
+            }})
+        }).catch(error => requestNotification(error))
 }
 
 function setUserData(){
     document.querySelector(".welcome-text__hello").innerHTML = `Olá, ${user.name}!`
+    hydrationMonitor.setUp(user.hydration)
 }
 
 async function getDataEntries(){
@@ -399,15 +406,22 @@ async function getDataEntries(){
             cache: 'default'};
 
     await fetch(`./history`, init).then(response => {
-        if(!response.ok){
-            response.json().then(data => {requestNotification(data.message)})
-        }
-        else{
-            response.json().then(history => {
-                                              data_entries = history.message.entries;
-                                              data_entries.forEach((element, index, array) => {array[index].date = new Date(element.date)});
-                                              semanal(data_entries);})
-        }})
+        response.json().then(response => {
+            if(!response.auth){
+                localStorage.removeItem("token")
+                location.href = "./login.html"
+            }
+            else{
+                if(response.status){
+                    data_entries = response.data.entries;
+                    data_entries.forEach((element, index, array) => {array[index].date = new Date(element.date)});
+                    semanal(data_entries)
+                }
+                else{
+                    requestNotification(response.data.message)
+                }
+            }})
+        }).catch(error => requestNotification(error))
 
 
 }
