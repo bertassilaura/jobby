@@ -14,7 +14,6 @@ router.get("/", middle.verifyJWT, controller.get);
 router.post("/login", controller.login);
 router.delete("/", middle.verifyJWT, controller.deleteUser);
 
-router.get("/all", controller.getAll); // Lembre de tirar isso daqui, pelo amor de deus
 
 //======================== Rotas do CustomTimes ==========================
 

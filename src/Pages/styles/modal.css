@@ -114,6 +114,7 @@
     .hydration-popup{
         width: 80vw;
         height: 50vh;
+        max-height: 250px;
     }
 }
 

@@ -95,15 +95,8 @@ let validator = new Validator();
 
 //======================== Operações no Usuário ==========================
 
-// Lembre de tirar isso daqui, pelo amor de deus
-exports.getAll = async (req, res) => {
-    await User.find({}).then(users=>{
-        res.json(users);
-    })
-    .catch(err =>{
-        res.json({message: err});
-    });
-};
+
+
 
 exports.get = async (req, res) => {
     await User.findOne({_id: req.body.user_id}).then(user=>{
