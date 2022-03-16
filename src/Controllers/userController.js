@@ -1,6 +1,7 @@
 const User = require('../Models/user');
 const historyController = require("./historyController")
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 require('dotenv/config');
 
 //======================== Validation ==========================
@@ -125,7 +126,7 @@ exports.login = async (req, res) => {
 
     // Cosnsulta
 
-    await User.findOne({email: req.body.email, password: req.body.password}).then(user=>{
+    await User.findOne({email: req.body.email, password: crypto.createHash('sha512').update(req.body.password).digest('hex')}).then(user=>{
         if(user === null){
             return res.status(404).json({status: false, data: {type:404, message:"Email ou senha incorretos!"}});
         }
@@ -154,7 +155,7 @@ exports.register = async (req, res) => {
     const user = new User({
         name: req.body.name,
         email: req.body.email,
-		password: req.body.password,
+		password: crypto.createHash('sha512').update(req.body.password).digest('hex')
     });
 
     await user.save()
@@ -189,7 +190,7 @@ exports.patchUser = async (req, res) => {
     
     user.name = req.body.name
     user.email = req.body.email
-    user.password = req.body.password
+    user.password = crypto.createHash('sha512').update(req.body.password).digest('hex')
     
     user.save().then(data=>{
         return res.json({auth: true, status: true, data: {message: "Usuário alterado com sucesso!"}});

@@ -104,9 +104,7 @@ function Form(){
 
     this.setUp = (user) => {
         this.name.value = user.name
-        this.password.value = user.password
         this.email.value = user.email
-
     },    
 
     this.check_email = (element) => {
